@@ -711,7 +711,6 @@ a:hover {
   display: flex;
   align-items: center;
   font-size: 0.875rem;
-  font-weight: 500;
   color: #fff;
   transition: 0.3;
   background: var(--color-primary);
@@ -720,7 +719,7 @@ a:hover {
 }
 
 .sidebar-nav .nav-link i {
-  font-size: 16px;
+  font-size: 1rem;
   margin-right: 10px;
 }
 

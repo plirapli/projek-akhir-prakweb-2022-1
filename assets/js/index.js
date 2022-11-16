@@ -72,7 +72,7 @@ sidebar.innerHTML = `
     <li class="nav-item">
       <a class="nav-link ${
         sidebar.dataset.activeNav != 'user_list' && 'collapsed'
-      }" href="user_list.php">
+      }" href="user_list.html">
         <i class="bi bi-person"></i>
         <span>User</span>
       </a>

@@ -1,2 +1,5 @@
 ### GET USER
 http://localhost/olive-chicken-delivery/api/user.php?function=get_user
+
+### GET ROLE
+http://localhost/olive-chicken-delivery/api/role.php?function=get_role

@@ -28,27 +28,6 @@ function get_user()
   echo json_encode($response);
 }
 
-
-
-// Select All Data
-function select_all_lab()
-{
-  global $connection;
-
-  // Query Data dari TB mahasiswa (SELECT ALL)
-  $query = "SELECT * FROM lab";
-  $result = mysqli_query($connection, $query);
-
-  // Memasukkan hasil query ke dalam var rows
-  $rows = [];
-  while ($row = mysqli_fetch_assoc($result)) {
-    $rows[] = $row;
-  }
-
-  // Mereturn var rows
-  return $rows;
-}
-
 function add_lab($data)
 {
   global $connection;
