@@ -246,80 +246,81 @@
           </div>
 
           <!-- Isi Modal -->
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="inputNama" class="form-label"> Nama Lengkap </label>
-              <input
-                type="text"
-                class="form-control"
-                id="inputNama"
-                placeholder="Masukkan nama lengkap"
-                required
-              />
+          <form id="addUserForm">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="inputNama" class="form-label"> Nama Lengkap </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputNama"
+                  placeholder="Masukkan nama lengkap"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="inputEmail" class="form-label">
+                  Alamat Email
+                </label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="inputEmail"
+                  placeholder="Masukkan alamat email"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="inputUsername" class="form-label"> Username </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputUsername"
+                  placeholder="Masukkan username"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="inputPassword" class="form-label">
+                  Kata Sandi
+                </label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="inputPassword"
+                  placeholder="********"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="inputConfirmPassword" class="form-label">
+                  Konfirmasi Kata Sandi
+                </label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="inputConfirmPassword"
+                  placeholder="********"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="selectRole" class="form-label">Role</label>
+                <select id="selectRole" class="form-select" required></select>
+              </div>
             </div>
-            <div class="mb-3">
-              <label for="inputEmail" class="form-label"> Alamat Email </label>
-              <input
-                type="email"
-                class="form-control"
-                id="inputEmail"
-                placeholder="Masukkan alamat email"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="inputUsername" class="form-label"> Username </label>
-              <input
-                type="text"
-                class="form-control"
-                id="inputUsername"
-                placeholder="Masukkan username"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="inputPassword" class="form-label"> Kata Sandi </label>
-              <input
-                type="password"
-                class="form-control"
-                id="inputPassword"
-                placeholder="********"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="inputConfirmPassword" class="form-label">
-                Konfirmasi Kata Sandi
-              </label>
-              <input
-                type="password"
-                class="form-control"
-                id="inputConfirmPassword"
-                placeholder="********"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="selectRole" class="form-label">Role</label>
-              <select
-                id="selectRole"
-                class="form-select"
-                aria-label="Default select example"
-              >
-                <option value="" hidden selected>Role</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
-          </div>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-gray" data-bs-dismiss="modal">
-              Tutup
-            </button>
-            <button type="button" class="btn btn-primary">Tambah</button>
-          </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-gray"
+                data-bs-dismiss="modal"
+              >
+                Tutup
+              </button>
+              <button type="submit" class="btn btn-primary">Tambah</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

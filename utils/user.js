@@ -1,3 +1,17 @@
+/* UTILITIES */
+const generateObject = (
+  nama,
+  email,
+  username,
+  password,
+  id_role = '2',
+  telepon = '',
+  created_at = '',
+  updated_at = ''
+) => {
+  return { nama, email, username, password, telepon, created_at, updated_at };
+};
+
 /* API CALL */
 // Base URL
 const baseURL = 'http://localhost/olive-chicken-delivery/api';
@@ -47,7 +61,7 @@ const getRole = () => {
     .then((res) => res.json())
     .then((data) => {
       const roles = data.data;
-      let options = '<option value="" hidden selected>Role</option>';
+      let options = `<option value="" hidden selected>Role</option>`;
 
       roles.forEach((role) => {
         const element = `<option value=${role.id} class="text-capitalize">${role.role}</option>`;
@@ -63,7 +77,30 @@ const addUser = () => {
   getRole();
 
   // Ketika btn tambah diklik
-  // ... ntar aja ngantuk
+  const submitUser = document.querySelector('#addUserForm');
+  submitUser.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const inputNama = submitUser.querySelector('#inputNama').value;
+    const inputEmail = submitUser.querySelector('#inputEmail').value;
+    const inputUsername = submitUser.querySelector('#inputUsername').value;
+    const inputPassword = submitUser.querySelector('#inputPassword').value;
+    const inputConfirmPassword = submitUser.querySelector(
+      '#inputConfirmPassword'
+    );
+    const selectedRole = document.querySelector('#selectRole').value;
+
+    const newUsers = generateObject(
+      inputNama,
+      inputEmail,
+      inputUsername,
+      inputPassword,
+      selectedRole
+    );
+
+    // Dikirim ke database
+    console.log(newUsers);
+  });
 };
 
 /* END API CALL */
