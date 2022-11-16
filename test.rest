@@ -1,0 +1,2 @@
+### GET USER
+http://localhost/olive-chicken-delivery/api/user.php?function=get_user
