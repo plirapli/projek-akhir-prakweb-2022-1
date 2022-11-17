@@ -5,7 +5,7 @@ http://localhost/olive-chicken-delivery/api/user.php?function=get_user
 http://localhost/olive-chicken-delivery/api/role.php?function=get_role
 
 ### POST USER
-http://localhost/projek-akhir-prakweb-2022-1/api/user.php?function=add_user
+http://localhost/olive-chicken-delivery/api/user.php?function=add_user
 Content-Type: application/json;
 
 {
@@ -15,3 +15,6 @@ Content-Type: application/json;
   "password": "12345678",
   "id_role": 2
 }
+
+### DELETE USER
+http://localhost/olive-chicken-delivery/api/user.php?function=delete_user&id=6

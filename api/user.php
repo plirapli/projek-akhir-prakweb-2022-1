@@ -11,7 +11,7 @@ function get_user()
 {
   global $connection;
 
-  $command = "SELECT * FROM user";
+  $command = "SELECT * FROM user INNER JOIN role ON user.id_role = role.id_role";
   $query = mysqli_query($connection, $command);
 
   while ($row = mysqli_fetch_object($query)) {
@@ -28,6 +28,7 @@ function get_user()
   echo json_encode($response);
 }
 
+// POST USER
 function add_user()
 {
   global $connection;
@@ -84,17 +85,27 @@ function add_user()
   echo json_encode($response);
 }
 
-function add_lab($data)
+function delete_user()
 {
   global $connection;
 
-  $nama = htmlspecialchars($data["nama"]);
+  $id = $_GET['id'];
+  $query = "DELETE FROM user WHERE id_user=$id";
 
-  // Query (INSERT DATA)
-  $query = "INSERT INTO lab VALUES( '', '$nama' )";
-  mysqli_query($connection, $query);
+  if (mysqli_query($connection, $query)) {
+    $response = [
+      'status' => 1,
+      'message' => 'Berhasil Meghapus!'
+    ];
+  } else {
+    $response = [
+      'status' => 0,
+      'message' => 'Gagal Menghapus!'
+    ];
+  }
 
-  return mysqli_affected_rows($connection);
+  header('Content-Type: application/json');
+  echo json_encode($response);
 }
 
 function delete_lab($id)
