@@ -3,3 +3,15 @@ http://localhost/olive-chicken-delivery/api/user.php?function=get_user
 
 ### GET ROLE
 http://localhost/olive-chicken-delivery/api/role.php?function=get_role
+
+### POST USER
+http://localhost/projek-akhir-prakweb-2022-1/api/user.php?function=add_user
+Content-Type: application/json;
+
+{
+  "nama": "Komang Yuda Saputra",
+  "email": "komyud@komyud",
+  "username": "komyud",
+  "password": "12345678",
+  "id_role": 2
+}

@@ -9,12 +9,21 @@ const generateObject = (
   created_at = '',
   updated_at = ''
 ) => {
-  return { nama, email, username, password, telepon, created_at, updated_at };
+  return {
+    nama,
+    email,
+    username,
+    password,
+    id_role,
+    telepon,
+    created_at,
+    updated_at,
+  };
 };
 
 /* API CALL */
 // Base URL
-const baseURL = 'http://localhost/olive-chicken-delivery/api';
+const baseURL = 'http://localhost/projek-akhir-prakweb-2022-1/api';
 
 // Get User
 const getUser = () => {
@@ -81,25 +90,54 @@ const addUser = () => {
   submitUser.addEventListener('submit', (e) => {
     e.preventDefault();
 
+    const endpoint = `${baseURL}/user.php?function=add_user`;
     const inputNama = submitUser.querySelector('#inputNama').value;
     const inputEmail = submitUser.querySelector('#inputEmail').value;
     const inputUsername = submitUser.querySelector('#inputUsername').value;
     const inputPassword = submitUser.querySelector('#inputPassword').value;
     const inputConfirmPassword = submitUser.querySelector(
       '#inputConfirmPassword'
-    );
+    ).value;
     const selectedRole = document.querySelector('#selectRole').value;
 
-    const newUsers = generateObject(
-      inputNama,
-      inputEmail,
-      inputUsername,
-      inputPassword,
-      selectedRole
-    );
+    if (inputPassword == inputConfirmPassword) {
+      const newUsers = generateObject(
+        inputNama,
+        inputEmail,
+        inputUsername,
+        inputPassword,
+        parseInt(selectedRole)
+      );
 
-    // Dikirim ke database
-    console.log(newUsers);
+      // Dikirim ke database
+      console.log(newUsers);
+
+      fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newUsers),
+      })
+        .then((res) => console.log(res.json()))
+        .then((data) => {
+          inputNama = '';
+          inputEmail = '';
+          inputUsername = '';
+          inputPassword = '';
+          inputConfirmPassword = '';
+          selectedRole = '';
+
+          const myModalEl = document.querySelector('#inputUserModal');
+          const modal = bootstrap.Modal.getInstance(myModalEl);
+          modal.hide();
+
+          console.log(data);
+          getUser();
+        })
+        .catch((err) => console.log(err));
+    }
   });
 };
 
