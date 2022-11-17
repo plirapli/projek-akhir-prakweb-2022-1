@@ -23,7 +23,7 @@ const generateObject = (
 
 /* API CALL */
 // Base URL
-const baseURL = 'http://localhost/projek-akhir-prakweb-2022-1/api';
+const baseURL = 'http://localhost/olive-chicken-delivery/api';
 
 // Get User
 const getUser = () => {
@@ -90,15 +90,15 @@ const addUser = () => {
   submitUser.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const endpoint = `${baseURL}/user.php?function=add_user`;
-    const inputNama = submitUser.querySelector('#inputNama').value;
-    const inputEmail = submitUser.querySelector('#inputEmail').value;
-    const inputUsername = submitUser.querySelector('#inputUsername').value;
-    const inputPassword = submitUser.querySelector('#inputPassword').value;
-    const inputConfirmPassword = submitUser.querySelector(
+    let endpoint = `${baseURL}/user.php?function=add_user`;
+    let inputNama = submitUser.querySelector('#inputNama').value;
+    let inputEmail = submitUser.querySelector('#inputEmail').value;
+    let inputUsername = submitUser.querySelector('#inputUsername').value;
+    let inputPassword = submitUser.querySelector('#inputPassword').value;
+    let inputConfirmPassword = submitUser.querySelector(
       '#inputConfirmPassword'
     ).value;
-    const selectedRole = document.querySelector('#selectRole').value;
+    let selectedRole = document.querySelector('#selectRole').value;
 
     if (inputPassword == inputConfirmPassword) {
       const newUsers = generateObject(
@@ -110,8 +110,6 @@ const addUser = () => {
       );
 
       // Dikirim ke database
-      console.log(newUsers);
-
       fetch(endpoint, {
         method: 'POST',
         headers: {
@@ -120,7 +118,7 @@ const addUser = () => {
         },
         body: JSON.stringify(newUsers),
       })
-        .then((res) => console.log(res.json()))
+        .then((res) => res.json())
         .then((data) => {
           inputNama = '';
           inputEmail = '';
