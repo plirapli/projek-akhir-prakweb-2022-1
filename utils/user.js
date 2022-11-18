@@ -1,3 +1,5 @@
+import { showFormattedDate } from './convertDate.js';
+
 /* UTILITIES */
 const generateObject = (
   nama,
@@ -40,6 +42,9 @@ const getUser = () => {
       let i = 1;
 
       users.forEach((user) => {
+        const created_at = showFormattedDate(user.created_at);
+        const updated_at = showFormattedDate(user.updated_at);
+
         const accordionBody = `
           <tr class="collapse collapse-detail-${user.id_user}">
             <td></td>
@@ -74,8 +79,8 @@ const getUser = () => {
                       </div>
                       <div class="d-flex ms-5 flex-column">
                         <div><span> : </span>${user.telepon || '-'}</div>
-                        <div><span> : </span>${user.created_at}</div>
-                        <div><span> : </span>${user.updated_at}</div>
+                        <div><span> : </span>${created_at}</div>
+                        <div><span> : </span>${updated_at}</div>
                       </div>
                     </div>
                     <div></div>
