@@ -4,8 +4,9 @@ const generateObject = (
   email,
   username,
   password,
-  id_role = '2',
-  telepon = '',
+  id_role = 2,
+  img_profile = '',
+  telp = '',
   created_at = '',
   updated_at = ''
 ) => {
@@ -14,10 +15,11 @@ const generateObject = (
     email,
     username,
     password,
-    id_role,
-    telepon,
+    img_profile,
+    telp,
     created_at,
     updated_at,
+    id_role,
   };
 };
 
@@ -202,11 +204,12 @@ const addUser = () => {
 
 // Edit User
 const editUser = (id) => {
-  const endpoint = `${baseURL}/user.php?function=get_user_id&id=${id}`;
+  const endpointEdit = `${baseURL}/user.php?function=edit_user&id=${id}`;
+  const endpointGetId = `${baseURL}/user.php?function=get_user_id&id=${id}`;
   const editModal = document.querySelector('#editUserModal');
   const editForm = document.querySelector('#editUserForm');
 
-  fetch(endpoint)
+  fetch(endpointGetId)
     .then((res) => res.json())
     .then((data) => {
       const { nama, email, username, password, img_profile, telepon, id_role } =
@@ -219,9 +222,40 @@ const editUser = (id) => {
       editForm.querySelector('#editPassword').value = password;
       editForm.querySelector('#editPhoneNumber').value = telepon;
       editForm.querySelector('.select-role').value = id_role;
+
+      editForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const editedUser = generateObject(
+          editForm.querySelector('#editNama').value,
+          editForm.querySelector('#editEmail').value,
+          editForm.querySelector('#editUsername').value,
+          editForm.querySelector('#editPassword').value,
+          parseInt(editForm.querySelector('.select-role').value),
+          '',
+          editForm.querySelector('#editPhoneNumber').value
+        );
+
+        // Dikirim ke database
+        fetch(endpointEdit, {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(editedUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            const modalElement = document.querySelector('#editUserModal');
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            modal.hide();
+
+            getUser();
+          })
+          .catch((err) => console.log(err));
+      });
     })
     .catch((err) => console.log(err));
-  // const deleteConfirm = deleteModal.querySelector('.btn-delete');
 };
 
 // Delete User

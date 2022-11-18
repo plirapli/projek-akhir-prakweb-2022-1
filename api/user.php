@@ -112,6 +112,63 @@ function add_user()
   echo json_encode($response);
 }
 
+function edit_user()
+{
+  global $connection;
+
+  $id = $_GET['id'];
+  $check = [
+    'nama' => '',
+    'email' => '',
+    'username' => '',
+    'password' => '',
+    'id_role' => '',
+  ];
+  $req_body = json_decode(file_get_contents('php://input'), true);
+  $check_match = count(array_intersect_key($req_body, $check));
+
+  if ($check_match == count($check)) {
+    $nama = $req_body["nama"];
+    $email = $req_body["email"];
+    $username = $req_body['username'];
+    $password = $req_body['password'];
+    $img_profile = $req_body['img_profile'];
+    $telp = $req_body['telp'];
+    $id_role = $req_body['id_role'];
+
+    $command = "UPDATE user SET 
+      nama = '$nama', 
+      email = '$email', 
+      username = '$username', 
+      password = '$password', 
+      img_profile = '',
+      telepon = '$telp',
+      updated_at = current_timestamp(),
+      id_role = '$id_role'
+      WHERE user.id_user = $id";
+    $query = mysqli_query($connection, $command);
+
+    if ($query) {
+      $response = [
+        'status' => 1,
+        'message' => 'Update Success'
+      ];
+    } else {
+      $response = [
+        'status' => 0,
+        'message' => 'Insert Failed.'
+      ];
+    }
+  } else {
+    $response = [
+      'status' => 0,
+      'message' => 'Wrong Parameter'
+    ];
+  }
+  header('Content-Type: application/json');
+  echo json_encode($response);
+}
+
 function delete_user()
 {
   global $connection;

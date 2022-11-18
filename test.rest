@@ -20,5 +20,20 @@ Content-Type: application/json;
   "id_role": 2
 }
 
+### EDIT USER
+http://localhost/olive-chicken-delivery/api/user.php?function=edit_user&id=8
+Content-Type: application/json;
+
+{
+  "nama": "Komang Yuda S",
+  "email": "komyud@yud",
+  "username": "komyuds",
+  "password": "123210078",
+  "img_profile": "",
+  "telp": "0812312312",
+  "id_role": 3
+}
+
+
 ### DELETE USER
 http://localhost/olive-chicken-delivery/api/user.php?function=delete_user&id=6
