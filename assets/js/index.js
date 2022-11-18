@@ -68,6 +68,15 @@ sidebar.innerHTML = `
       </a>
     </li>
 
+    <li class="nav-item">
+      <a class="nav-link ${
+        sidebar.dataset.activeNav != 'cabang' && 'collapsed'
+      }" href="users-profile.html">
+        <i class="bi bi-person"></i>
+        <span>Cabang</span>
+      </a>
+    </li>
+
     <li class="nav-heading">Daftar Pengguna</li>
     <li class="nav-item">
       <a class="nav-link ${
