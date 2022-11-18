@@ -26,10 +26,6 @@
       rel="stylesheet"
     />
     <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
-    <link
-      href="../assets/vendor/simple-datatables/style.css"
-      rel="stylesheet"
-    />
 
     <!-- Template Main CSS File -->
     <link href="../assets/css/style.css" rel="stylesheet" />
@@ -40,10 +36,6 @@
     <!-- Vendor JS Files -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-      defer
-    ></script>
-    <script
-      src="../assets/vendor/simple-datatables/simple-datatables.js"
       defer
     ></script>
     <script
@@ -166,12 +158,12 @@
               </div>
               <!-- End Card -->
 
-              <!-- Recent Sales -->
+              <!-- Tabel User -->
               <div class="col-12">
                 <div class="card recent-sales overflow-auto">
                   <div class="card-body mt-2">
                     <div
-                      class="d-flex justify-content-between mb-3 align-items-center"
+                      class="d-flex justify-content-between mb-2 align-items-center"
                     >
                       <h5 class="card-title">Daftar Pengguna</h5>
                       <button
@@ -188,7 +180,9 @@
                       </button>
                     </div>
 
-                    <table class="table table-borderless datatable table-user">
+                    <table
+                      class="table table-responsive table-borderless table-user align-middle"
+                    >
                       <thead>
                         <tr>
                           <th scope="col">No</th>
@@ -196,6 +190,7 @@
                           <th scope="col">Username</th>
                           <th scope="col">Role</th>
                           <th scope="col">Aksi</th>
+                          <th scope="col"></th>
                         </tr>
                       </thead>
                       <tbody></tbody>
@@ -305,8 +300,118 @@
                 />
               </div>
               <div class="mb-3">
-                <label for="selectRole" class="form-label">Role</label>
-                <select id="selectRole" class="form-select" required></select>
+                <label class="form-label">Role</label>
+                <select class="form-select select-role" required></select>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-gray"
+                data-bs-dismiss="modal"
+              >
+                Tutup
+              </button>
+              <button type="submit" class="btn btn-primary">Tambah</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Edit User -->
+    <div
+      class="modal fade"
+      id="editUserModal"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="editUserModal"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5 fw-normal" id="staticBackdropLabel">
+              Edit User
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <!-- Isi Modal -->
+          <form id="editUserForm">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="editNama" class="form-label"> Nama Lengkap </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="editNama"
+                  placeholder="Masukkan nama lengkap"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="editEmail" class="form-label"> Alamat Email </label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="editEmail"
+                  placeholder="Masukkan alamat email"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="editUsername" class="form-label"> Username </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="editUsername"
+                  placeholder="Masukkan username"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="editPassword" class="form-label">
+                  Kata Sandi
+                </label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="editPassword"
+                  placeholder="********"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="editImg" class="mb-1">Foto Profil</label>
+                <input
+                  type="file"
+                  accept="image/png, image/jpeg"
+                  class="form-control"
+                  id="editImg"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="editPhoneNumber" class="form-label">
+                  Telepon
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="editPhoneNumber"
+                  placeholder="Nomor telepon"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Role</label>
+                <select class="form-select select-role" required></select>
               </div>
             </div>
 

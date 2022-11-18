@@ -43,6 +43,16 @@ a:hover {
   text-decoration: none;
 }
 
+.w-table-min {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.place-center {
+  justify-content: center;
+  align-items: center;
+}
+
 /* Component */
 .text-gray {
   color: var(--color-dark-gray);
@@ -328,7 +338,6 @@ a:hover {
 
 .accordion-button:not(.collapsed) {
   color: var(--color-black);
-  background-color: #f6f9ff;
 }
 
 .accordion-flush .accordion-button {

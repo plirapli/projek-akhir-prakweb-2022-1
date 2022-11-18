@@ -19,10 +19,37 @@ function get_user()
   }
 
   $response = [
-    'status' => 200,
+    'status' => 1,
     'message' => 'Success',
     'data' => $data
   ];
+
+  header('Content-Type: application/json');
+  echo json_encode($response);
+}
+
+function get_user_id()
+{
+  global $connection;
+
+  $id = $_GET['id'];
+  $query = "SELECT * FROM user INNER JOIN role ON user.id_role = role.id_role WHERE user.id_user = $id LIMIT 1";
+  $result = mysqli_query($connection, $query);
+
+  if ($result) {
+    $data = mysqli_fetch_object($result);
+
+    $response = [
+      'status' => 1,
+      'message' => 'Success',
+      'data' => $data
+    ];
+  } else {
+    $response = [
+      'status' => 0,
+      'message' => mysqli_error($connection)
+    ];
+  }
 
   header('Content-Type: application/json');
   echo json_encode($response);
@@ -95,26 +122,15 @@ function delete_user()
   if (mysqli_query($connection, $query)) {
     $response = [
       'status' => 1,
-      'message' => 'Berhasil Meghapus!'
+      'message' => 'Berhasil Meghapus'
     ];
   } else {
     $response = [
       'status' => 0,
-      'message' => 'Gagal Menghapus!'
+      'message' => 'Gagal Menghapus'
     ];
   }
 
   header('Content-Type: application/json');
   echo json_encode($response);
-}
-
-function delete_lab($id)
-{
-  global $connection;
-
-  // Query (INSERT DATA)
-  $query = "DELETE FROM lab WHERE id='$id'";
-  mysqli_query($connection, $query);
-
-  return mysqli_affected_rows($connection);
 }

@@ -33,3 +33,13 @@
 .btn-gray:hover {
   background: rgba(0, 0, 0, 0.1);
 }
+
+.accordion-button {
+  width: fit-content;
+}
+
+.img-detail {
+  width: 5rem;
+  height: min-content;
+  border-radius: 0.25rem;
+}
