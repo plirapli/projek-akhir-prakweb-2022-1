@@ -1,4 +1,5 @@
 import { showFormattedDate } from './convertDate.js';
+import { getUserId, getUserName } from '../controller/user.js';
 import { getDriverId, addDriver, deleteDriver } from '../controller/driver.js';
 
 /* UTILITIES */
@@ -129,20 +130,6 @@ const getUser = () => {
       editUserHandler();
       deleteUserHandler();
     });
-};
-
-const getUserId = async (id) => {
-  const endpoint = `${baseURL}=get_user_id&id=${id}`;
-  return fetch(endpoint)
-    .then((res) => res.json())
-    .then((data) => data);
-};
-
-const getUserName = async (username) => {
-  const endpoint = `${baseURL}=get_user_username&username=${username}`;
-  return fetch(endpoint)
-    .then((res) => res.json())
-    .then((data) => data);
 };
 
 // Get Role

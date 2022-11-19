@@ -1,13 +1,15 @@
+const baseURL =
+  'http://localhost/olive-chicken-delivery/api/driver.php?function';
+
 const getDriverId = async (id) => {
-  const endpoint = `http://localhost/olive-chicken-delivery/api/driver.php?function=get_user_id&id=${id}`;
+  const endpoint = `${baseURL}=get_user_id&id=${id}`;
   return fetch(endpoint)
     .then((res) => res.json())
     .then((data) => data);
 };
 
 const addDriver = async (id) => {
-  const endpoint =
-    'http://localhost/olive-chicken-delivery/api/driver.php?function=add_user';
+  const endpoint = `${baseURL}=add_user`;
   return fetch(endpoint, {
     method: 'POST',
     headers: {
@@ -21,7 +23,7 @@ const addDriver = async (id) => {
 };
 
 const deleteDriver = async (id) => {
-  const endpoint = `http://localhost/olive-chicken-delivery/api/driver.php?function=delete_user&id=${id}`;
+  const endpoint = `${baseURL}=delete_user&id=${id}`;
   return fetch(endpoint, { method: 'DELETE' });
 };
 

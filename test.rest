@@ -1,3 +1,4 @@
+### USER
 ### GET USER
 http://localhost/olive-chicken-delivery/api/user.php?function=get_user
 
@@ -7,11 +8,8 @@ http://localhost/olive-chicken-delivery/api/user.php?function=get_user_id&id=2
 ### GET USER USERNAME
 http://localhost/olive-chicken-delivery/api/user.php?function=get_user_username&username=driver_satu
 
-### GET DRIVER
-http://localhost/olive-chicken-delivery/api/driver.php?function=get_user
-
-### GET ROLE
-http://localhost/olive-chicken-delivery/api/role.php?function=get_role
+### GET STATUS
+http://localhost/olive-chicken-delivery/api/status.php?function=get_status
 
 ### POST USER
 http://localhost/olive-chicken-delivery/api/user.php?function=add_user
@@ -39,6 +37,49 @@ Content-Type: application/json;
   "id_role": 3
 }
 
-
 ### DELETE USER
 http://localhost/olive-chicken-delivery/api/user.php?function=delete_user&id=6
+
+
+
+
+
+
+### ROLE
+### GET ROLE
+http://localhost/olive-chicken-delivery/api/role.php?function=get_role
+
+
+
+
+
+
+### DRIVER
+### GET DRIVER
+http://localhost/olive-chicken-delivery/api/driver.php?function=get_user
+
+### EDIT STATUS DRIVER
+http://localhost/olive-chicken-delivery/api/status.php?function=edit_status_driver&id=9
+Content-Type: application/json
+
+{
+  "id_status": 3
+}
+
+
+
+### CABANG
+### GET
+http://localhost/olive-chicken-delivery/api/cabang.php?function=get_cabang
+
+### POST
+http://localhost/olive-chicken-delivery/api/cabang.php?function=add_cabang
+Content-Type: application/json
+
+{
+  "cabang": "Tes",
+  "alamat": "Tes Lagi"
+}
+
+### DELETE
+http://localhost/olive-chicken-delivery/api/cabang.php?function=delete_cabang&id=3

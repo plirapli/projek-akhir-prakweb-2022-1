@@ -28,6 +28,7 @@ function get_user()
   echo json_encode($response);
 }
 
+// GET USER BY ID
 function get_user_id()
 {
   global $connection;
@@ -55,6 +56,7 @@ function get_user_id()
   echo json_encode($response);
 }
 
+// GET USER BY USERNAME
 function get_user_username()
 {
   global $connection;

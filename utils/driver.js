@@ -1,3 +1,4 @@
+import { getDriverId } from '../controller/driver.js';
 import { showFormattedDate } from './convertDate.js';
 
 /* UTILITIES */
@@ -29,21 +30,32 @@ const generateObject = (
 // Base URL
 const baseURL = 'http://localhost/olive-chicken-delivery/api';
 
+// Get Status
+const getStatus = async () => {
+  const endpoint = `${baseURL}/status.php?function=get_status`;
+  return fetch(endpoint)
+    .then((res) => res.json())
+    .then((data) => data);
+};
+
 // Get User
 const getUser = () => {
-  const tableBody = document.querySelector('.table-user > tbody');
   const endpoint = `${baseURL}/driver.php?function=get_user`;
+  const tableBody = document.querySelector('.table-driver > tbody');
 
   fetch(endpoint)
     .then((response) => response.json())
-    .then((data) => {
+    .then(async (data) => {
       const users = data.data;
       let tableElement = '';
       let i = 1;
 
-      users.forEach((user) => {
+      for (const user of users) {
         const created_at = showFormattedDate(user.created_at);
         const updated_at = showFormattedDate(user.updated_at);
+        const statusOption = await createStatusElement(user.id_status).then(
+          (data) => data
+        );
 
         const accordionBody = `
           <tr class="collapse collapse-detail-${user.id_user}">
@@ -64,14 +76,14 @@ const getUser = () => {
                         <b>Username</b>
                         <b>Status</b>
                       </div>
-                      <div class="d-flex ms-5 flex-column">
+                      <div class="d-flex ms-2 flex-column">
                         <div><span> : </span>${user.nama}</div>
                         <div><span> : </span>${user?.email || '-'}</div>
                         <div><span> : </span>${user.username}</div>
                         <div><span> : </span>${user?.status || 'Tersedia'}</div>
                       </div>
                     </div>
-                    <div class="d-flex ms-5">
+                    <div class="d-flex ms-2">
                       <div class="d-flex flex-column">
                         <b>Telepon</b>
                         <b>Dibuat Pada</b>
@@ -96,7 +108,9 @@ const getUser = () => {
             <th scope="row" class="w-table-min">${i++}</th>
             <td>${user.nama}</td>
             <td>${user.username}</td>
-            <td>${user.status}</td>
+            <td>
+              ${statusOption}
+            </td>
             <td>${user.jarak} km</td>
             <td>
               <span>Rp</span>
@@ -126,14 +140,31 @@ const getUser = () => {
           </tr>
           ${accordionBody}
         `;
-
         tableElement += element;
-      });
+      }
 
       tableBody.innerHTML = tableElement;
+
+      editStatusHandler();
       editUserHandler();
       deleteUserHandler();
     });
+};
+
+// Edit Status
+const editStatus = (id, status) => {
+  const endpoint = `${baseURL}/status.php?function=edit_status_driver&id=${id}`;
+  fetch(endpoint, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id_status: status }),
+  })
+    .then((res) => res.json())
+    .then((data) => getUser())
+    .catch((err) => console.log(err));
 };
 
 // Edit User
@@ -155,37 +186,41 @@ const editUser = (id) => {
       editForm.querySelector('#editPassword').value = password;
       editForm.querySelector('#editPhoneNumber').value = telepon;
 
-      editForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const editedUser = generateObject(
-          editForm.querySelector('#editNama').value,
-          editForm.querySelector('#editEmail').value,
-          editForm.querySelector('#editUsername').value,
-          editForm.querySelector('#editPassword').value,
-          3,
-          '',
-          editForm.querySelector('#editPhoneNumber').value
-        );
+      editForm.addEventListener(
+        'submit',
+        (e) => {
+          e.preventDefault();
+          const editedUser = generateObject(
+            editForm.querySelector('#editNama').value,
+            editForm.querySelector('#editEmail').value,
+            editForm.querySelector('#editUsername').value,
+            editForm.querySelector('#editPassword').value,
+            3,
+            '',
+            editForm.querySelector('#editPhoneNumber').value
+          );
 
-        // Dikirim ke database
-        fetch(endpointEdit, {
-          method: 'PUT',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(editedUser),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            const modalElement = document.querySelector('#editUserModal');
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            modal.hide();
-
-            getUser();
+          // Dikirim ke database
+          fetch(endpointEdit, {
+            method: 'PUT',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(editedUser),
           })
-          .catch((err) => console.log(err));
-      });
+            .then((res) => res.json())
+            .then((data) => {
+              const modalElement = document.querySelector('#editUserModal');
+              const modal = bootstrap.Modal.getInstance(modalElement);
+              modal.hide();
+
+              getUser();
+            })
+            .catch((err) => console.log(err));
+        },
+        { once: true }
+      );
     })
     .catch((err) => console.log(err));
 };
@@ -198,23 +233,58 @@ const deleteUser = (id, nama) => {
   const deleteConfirm = deleteModal.querySelector('.btn-delete');
 
   modalBody.innerHTML = `Apakah anda ingin menghapus user bernama <b>${nama}</b>?`;
-  deleteConfirm.addEventListener('click', () => {
-    fetch(endpoint, {
-      method: 'DELETE',
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        const modalElement = document.querySelector('#deleteUserModal');
-        const modal = bootstrap.Modal.getInstance(modalElement);
-        modal.hide();
-
-        getUser();
+  deleteConfirm.addEventListener(
+    'click',
+    () => {
+      fetch(endpoint, {
+        method: 'DELETE',
       })
-      .catch((err) => console.log('Error: ' + err));
-  });
+        .then((res) => res.json())
+        .then((data) => {
+          const modalElement = document.querySelector('#deleteUserModal');
+          const modal = bootstrap.Modal.getInstance(modalElement);
+          modal.hide();
+
+          getUser();
+        })
+        .catch((err) => console.log('Error: ' + err));
+    },
+    { once: true }
+  );
 };
 
 /* END API CALL */
+
+const createStatusElement = async (id_status = '1') => {
+  return getStatus().then((data) => {
+    const statusList = data.data;
+    let selectOption = '';
+
+    statusList.forEach((status) => {
+      const { id_status: id, status: name } = status;
+      selectOption += `<option value=${id} ${id_status == id ? 'selected' : ''}>
+          ${name}
+        </option>`;
+    });
+
+    return `
+      <select class="form-select select-status" aria-label="Default select example">
+        ${selectOption}
+      </select>
+    `;
+  });
+};
+
+const editStatusHandler = () => {
+  const selectBtn = document.querySelectorAll('.select-status');
+  selectBtn.forEach((select) => {
+    select.addEventListener('change', (e) => {
+      const id = parseInt(select.parentElement.parentElement.dataset.userId);
+      const status = parseInt(e.target.value);
+      editStatus(id, status);
+    });
+  });
+};
 
 // Edit Handler
 const editUserHandler = () => {
