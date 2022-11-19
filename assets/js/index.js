@@ -89,8 +89,8 @@ sidebar.innerHTML = `
     
     <li class="nav-item">
       <a class="nav-link ${
-        sidebar.dataset.activeNav != 'user_driver' && 'collapsed'
-      }" href="users-profile.html">
+        sidebar.dataset.activeNav != 'driver_list' && 'collapsed'
+      }" href="driver_list.html">
         <i class="bi bi-person"></i>
         <span>Driver</span>
       </a>

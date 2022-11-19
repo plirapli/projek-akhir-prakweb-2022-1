@@ -4,6 +4,11 @@ http://localhost/olive-chicken-delivery/api/user.php?function=get_user
 ### GET USER ID
 http://localhost/olive-chicken-delivery/api/user.php?function=get_user_id&id=2
 
+### GET USER USERNAME
+http://localhost/olive-chicken-delivery/api/user.php?function=get_user_username&username=driver_satu
+
+### GET DRIVER
+http://localhost/olive-chicken-delivery/api/driver.php?function=get_user
 
 ### GET ROLE
 http://localhost/olive-chicken-delivery/api/role.php?function=get_role

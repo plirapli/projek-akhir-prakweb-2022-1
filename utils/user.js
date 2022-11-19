@@ -1,4 +1,5 @@
 import { showFormattedDate } from './convertDate.js';
+import { getDriverId, addDriver, deleteDriver } from '../controller/driver.js';
 
 /* UTILITIES */
 const generateObject = (
@@ -27,12 +28,12 @@ const generateObject = (
 
 /* API CALL */
 // Base URL
-const baseURL = 'http://localhost/olive-chicken-delivery/api';
+const baseURL = 'http://localhost/olive-chicken-delivery/api/user.php?function';
 
 // Get User
 const getUser = () => {
   const tableBody = document.querySelector('.table-user > tbody');
-  const endpoint = `${baseURL}/user.php?function=get_user`;
+  const endpoint = `${baseURL}=get_user`;
 
   fetch(endpoint)
     .then((response) => response.json())
@@ -130,10 +131,25 @@ const getUser = () => {
     });
 };
 
+const getUserId = async (id) => {
+  const endpoint = `${baseURL}=get_user_id&id=${id}`;
+  return fetch(endpoint)
+    .then((res) => res.json())
+    .then((data) => data);
+};
+
+const getUserName = async (username) => {
+  const endpoint = `${baseURL}=get_user_username&username=${username}`;
+  return fetch(endpoint)
+    .then((res) => res.json())
+    .then((data) => data);
+};
+
 // Get Role
 const getRole = () => {
   const selectElement = document.querySelectorAll('.select-role');
-  const endpoint = `${baseURL}/role.php?function=get_role`;
+  const endpoint =
+    'http://localhost/olive-chicken-delivery/api/role.php?function=get_role';
 
   fetch(endpoint)
     .then((res) => res.json())
@@ -159,7 +175,7 @@ const addUser = () => {
   submitUser.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    let endpoint = `${baseURL}/user.php?function=add_user`;
+    const endpoint = `${baseURL}=add_user`;
     let inputNama = submitUser.querySelector('#inputNama').value;
     let inputEmail = submitUser.querySelector('#inputEmail').value;
     let inputUsername = submitUser.querySelector('#inputUsername').value;
@@ -167,7 +183,7 @@ const addUser = () => {
     let inputConfirmPassword = submitUser.querySelector(
       '#inputConfirmPassword'
     ).value;
-    let selectedRole = document.querySelector('#selectRole').value;
+    let selectedRole = submitUser.querySelector('.select-role').value;
 
     if (inputPassword == inputConfirmPassword) {
       const newUsers = generateObject(
@@ -189,6 +205,13 @@ const addUser = () => {
       })
         .then((res) => res.json())
         .then((data) => {
+          if (selectedRole == '3') {
+            getUserName(inputUsername).then((data) => {
+              const userId = parseInt(data.data.id_user);
+              addDriver(userId).then((data) => {});
+            });
+          }
+
           inputNama = '';
           inputEmail = '';
           inputUsername = '';
@@ -209,13 +232,10 @@ const addUser = () => {
 
 // Edit User
 const editUser = (id) => {
-  const endpointEdit = `${baseURL}/user.php?function=edit_user&id=${id}`;
-  const endpointGetId = `${baseURL}/user.php?function=get_user_id&id=${id}`;
-  const editModal = document.querySelector('#editUserModal');
+  const endpointEdit = `${baseURL}=edit_user&id=${id}`;
   const editForm = document.querySelector('#editUserForm');
 
-  fetch(endpointGetId)
-    .then((res) => res.json())
+  getUserId(id)
     .then((data) => {
       const { nama, email, username, password, img_profile, telepon, id_role } =
         data.data;
@@ -228,63 +248,92 @@ const editUser = (id) => {
       editForm.querySelector('#editPhoneNumber').value = telepon;
       editForm.querySelector('.select-role').value = id_role;
 
-      editForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const editedUser = generateObject(
-          editForm.querySelector('#editNama').value,
-          editForm.querySelector('#editEmail').value,
-          editForm.querySelector('#editUsername').value,
-          editForm.querySelector('#editPassword').value,
-          parseInt(editForm.querySelector('.select-role').value),
-          '',
-          editForm.querySelector('#editPhoneNumber').value
-        );
+      editForm.addEventListener(
+        'submit',
+        async (e) => {
+          e.preventDefault();
 
-        // Dikirim ke database
-        fetch(endpointEdit, {
-          method: 'PUT',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(editedUser),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            const modalElement = document.querySelector('#editUserModal');
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            modal.hide();
+          const selectedRole = editForm.querySelector('.select-role').value;
+          const editedUser = generateObject(
+            editForm.querySelector('#editNama').value,
+            editForm.querySelector('#editEmail').value,
+            editForm.querySelector('#editUsername').value,
+            editForm.querySelector('#editPassword').value,
+            parseInt(editForm.querySelector('.select-role').value),
+            '',
+            editForm.querySelector('#editPhoneNumber').value
+          );
 
-            getUser();
+          const isDriver = await getDriverId(id).then((data) => data.data);
+
+          if (isDriver && selectedRole != '3') {
+            deleteDriver(id);
+          } else if (!isDriver && selectedRole == '3') {
+            addDriver(id);
+          }
+
+          console.log(1);
+
+          // Dikirim ke database
+          fetch(endpointEdit, {
+            method: 'PUT',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(editedUser),
           })
-          .catch((err) => console.log(err));
-      });
+            .then((res) => res.json())
+            .then((data) => {
+              const modalElement = document.querySelector('#editUserModal');
+              const modal = bootstrap.Modal.getInstance(modalElement);
+              modal.hide();
+
+              getUser();
+            })
+            .catch((err) => console.log(err));
+        },
+        { once: true }
+      );
     })
     .catch((err) => console.log(err));
 };
 
 // Delete User
-const deleteUser = (id, nama) => {
-  const endpoint = `${baseURL}/user.php?function=delete_user&id=${id}`;
+const deleteUser = async (id, nama) => {
+  const endpoint = `${baseURL}=delete_user&id=${id}`;
   const deleteModal = document.querySelector('#deleteUserModal');
   const modalBody = deleteModal.querySelector('.modal-body');
   const deleteConfirm = deleteModal.querySelector('.btn-delete');
+  const userRole = await getUserId(id).then((data) => data.data.id_role);
 
   modalBody.innerHTML = `Apakah anda ingin menghapus user bernama <b>${nama}</b>?`;
-  deleteConfirm.addEventListener('click', () => {
-    fetch(endpoint, {
-      method: 'DELETE',
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        const modalElement = document.querySelector('#deleteUserModal');
-        const modal = bootstrap.Modal.getInstance(modalElement);
-        modal.hide();
+  deleteConfirm.addEventListener(
+    'click',
+    () => {
+      if (userRole == '3') {
+        const endpointDelDriver = `http://localhost/olive-chicken-delivery/api/driver.php?function=delete_user&id=${id}`;
+        fetch(endpointDelDriver, {
+          method: 'DELETE',
+        })
+          .then((res) => res.json())
+          .then((data) => {})
+          .catch((err) => console.log('Error: ' + err));
+      }
 
-        getUser();
-      })
-      .catch((err) => console.log('Error: ' + err));
-  });
+      fetch(endpoint, { method: 'DELETE' })
+        .then((res) => res.json())
+        .then((data) => {
+          const modalElement = document.querySelector('#deleteUserModal');
+          const modal = bootstrap.Modal.getInstance(modalElement);
+          modal.hide();
+
+          getUser();
+        })
+        .catch((err) => console.log('Error: ' + err));
+    },
+    { once: true }
+  );
 };
 
 /* END API CALL */
