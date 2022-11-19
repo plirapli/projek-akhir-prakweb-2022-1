@@ -84,6 +84,7 @@ function get_user_username()
   echo json_encode($response);
 }
 
+
 // POST USER
 function add_user()
 {

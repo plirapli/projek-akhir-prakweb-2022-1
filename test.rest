@@ -28,9 +28,9 @@ http://localhost/olive-chicken-delivery/api/user.php?function=edit_user&id=8
 Content-Type: application/json;
 
 {
-  "nama": "Komang Yuda S",
-  "email": "komyud@yud",
-  "username": "komyuds",
+  "nama": "Muhammad Rafli",
+  "email": "rafli@rafli",
+  "username": "plirapli",
   "password": "123210078",
   "img_profile": "",
   "telp": "0812312312",
@@ -49,6 +49,8 @@ http://localhost/olive-chicken-delivery/api/user.php?function=delete_user&id=6
 ### GET ROLE
 http://localhost/olive-chicken-delivery/api/role.php?function=get_role
 
+### GET USER TOTAL GROUP BY ROLE
+http://localhost/olive-chicken-delivery/api/role.php?function=get_role_total
 
 
 

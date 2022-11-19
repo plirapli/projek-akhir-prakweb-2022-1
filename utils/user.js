@@ -31,6 +31,11 @@ const generateObject = (
 // Base URL
 const baseURL = 'http://localhost/olive-chicken-delivery/api/user.php?function';
 
+// // Get Total User
+// const getUserTotal = () => {
+
+// }
+
 // Get User
 const getUser = () => {
   const tableBody = document.querySelector('.table-user > tbody');
@@ -232,6 +237,7 @@ const editUser = (id) => {
       editForm.querySelector('#editEmail').value = email;
       editForm.querySelector('#editUsername').value = username;
       editForm.querySelector('#editPassword').value = password;
+      editForm.querySelector('#editImg').value = img_profile;
       editForm.querySelector('#editPhoneNumber').value = telepon;
       editForm.querySelector('.select-role').value = id_role;
 
@@ -239,7 +245,6 @@ const editUser = (id) => {
         'submit',
         async (e) => {
           e.preventDefault();
-
           const selectedRole = editForm.querySelector('.select-role').value;
           const editedUser = generateObject(
             editForm.querySelector('#editNama').value,
@@ -247,7 +252,7 @@ const editUser = (id) => {
             editForm.querySelector('#editUsername').value,
             editForm.querySelector('#editPassword').value,
             parseInt(editForm.querySelector('.select-role').value),
-            '',
+            editForm.querySelector('#editImg').value,
             editForm.querySelector('#editPhoneNumber').value
           );
 
@@ -258,8 +263,6 @@ const editUser = (id) => {
           } else if (!isDriver && selectedRole == '3') {
             addDriver(id);
           }
-
-          console.log(1);
 
           // Dikirim ke database
           fetch(endpointEdit, {
