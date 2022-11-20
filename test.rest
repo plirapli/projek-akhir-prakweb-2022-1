@@ -41,19 +41,12 @@ Content-Type: application/json;
 http://localhost/olive-chicken-delivery/api/user.php?function=delete_user&id=6
 
 
-
-
-
-
 ### ROLE
 ### GET ROLE
 http://localhost/olive-chicken-delivery/api/role.php?function=get_role
 
 ### GET USER TOTAL GROUP BY ROLE
 http://localhost/olive-chicken-delivery/api/role.php?function=get_role_total
-
-
-
 
 
 ### DRIVER
@@ -67,7 +60,6 @@ Content-Type: application/json
 {
   "id_status": 3
 }
-
 
 
 ### CABANG
@@ -85,3 +77,12 @@ Content-Type: application/json
 
 ### DELETE
 http://localhost/olive-chicken-delivery/api/cabang.php?function=delete_cabang&id=3
+
+
+### MENU
+### GET
+http://localhost/olive-chicken-delivery/api/menu.php?function=get_menu
+
+### DELETE
+http://localhost/olive-chicken-delivery/api/menu.php?function=delete_menu&id=5
+

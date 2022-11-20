@@ -61,8 +61,8 @@ sidebar.innerHTML = `
     
     <li class="nav-item">
       <a class="nav-link ${
-        sidebar.dataset.activeNav != 'menu_makanan' && 'collapsed'
-      }" href="users-profile.html">
+        sidebar.dataset.activeNav != 'menu' && 'collapsed'
+      }" href="menu_makanan.php">
         <i class="bi bi-person"></i>
         <span>Menu Makanan</span>
       </a>

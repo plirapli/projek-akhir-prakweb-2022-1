@@ -16,4 +16,11 @@ const getUserName = async (username) => {
     .then((data) => data);
 };
 
-export { getUserId, getUserName };
+const getUserTotalByRole = async () => {
+  const endpoint = `http://localhost/olive-chicken-delivery/api/role.php?function=get_role_total`;
+  return fetch(endpoint)
+    .then((res) => res.json())
+    .then((data) => data);
+};
+
+export { getUserId, getUserName, getUserTotalByRole };

@@ -1,5 +1,9 @@
 import { showFormattedDate } from './convertDate.js';
-import { getUserId, getUserName } from '../controller/user.js';
+import {
+  getUserId,
+  getUserName,
+  getUserTotalByRole,
+} from '../controller/user.js';
 import { getDriverId, addDriver, deleteDriver } from '../controller/driver.js';
 
 /* UTILITIES */
@@ -31,10 +35,43 @@ const generateObject = (
 // Base URL
 const baseURL = 'http://localhost/olive-chicken-delivery/api/user.php?function';
 
-// // Get Total User
-// const getUserTotal = () => {
+// Get Total User
+const getUserTotal = () => {
+  const cardInfo = document.querySelector('.card-info');
 
-// }
+  getUserTotalByRole().then((data) => {
+    const users = data.data;
+    let cardElement = '';
+
+    console.log(users);
+
+    for (const user of users) {
+      const { role, total } = user;
+      const element = `
+        <div class="col-sm">
+          <div class="card info-card revenue-card">
+            <div class="card-body">
+              <h5 class="card-title">${role}</h5>
+
+              <div class="d-flex align-items-center">
+                <div
+                  class="card-icon bg-gray rounded d-flex align-items-center justify-content-center"
+                >
+                  <iconify-icon icon="mdi:user"></iconify-icon>
+                </div>
+                <div class="ps-3">
+                  <h6>${total}</h6>
+                  <span class="text-muted small">Pengguna</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      cardElement += element;
+    }
+    cardInfo.innerHTML = cardElement;
+  });
+};
 
 // Get User
 const getUser = () => {
@@ -132,6 +169,7 @@ const getUser = () => {
       });
 
       tableBody.innerHTML = tableElement;
+      getUserTotal();
       editUserHandler();
       deleteUserHandler();
     });
