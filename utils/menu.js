@@ -5,6 +5,7 @@ import * as controllerMenu from '../controller/menu.js';
 // Get Menu
 const getMenuHandler = () => {
   const menuList = document.querySelector('#menuList');
+  const pathMenuImg = '/olive-chicken-delivery/assets/img/menu';
 
   controllerMenu.getMenu().then((data) => {
     const menus = data.data;
@@ -12,8 +13,8 @@ const getMenuHandler = () => {
 
     menus.forEach((menu) => {
       const element = `
-        <div class="card" data-menu-id=${menu.id_menu}>
-          <img src="..." class="card-img-top" alt="...">
+        <div class="card card-menu-makanan" data-menu-id=${menu.id_menu}>
+          <img src=${pathMenuImg}/${menu.img_menu} class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">${menu.menu}</h5>
             <p class="card-text">
@@ -26,8 +27,11 @@ const getMenuHandler = () => {
               <b>${menu.stok}</b>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Harga</span>
-              <b>${menu.harga}</b>
+              Harga
+              <span>
+                Rp
+                <b class="harga">${menu.harga}</b>
+              </span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <span>Cabang</span>

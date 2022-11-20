@@ -88,3 +88,16 @@
 .cursor-pointer {
   cursor: pointer;
 }
+
+/* Components */
+.card-menu-container {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+/* @media (min-width: 520px) {
+  .card-menu-makanan {
+    max-width: 18rem;
+  }
+} */

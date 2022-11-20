@@ -80,7 +80,7 @@
             </div>
 
             <!-- Daftar Menu -->
-            <div id="menuList" class="col-12"></div>
+            <div id="menuList" class="card-menu-container"></div>
 
           </div>
         </div>
@@ -107,7 +107,7 @@
         </div>
 
         <!-- Isi Modal -->
-        <form method="POST" action="../api/menu.php?function=add_menu" id="addCabangForm">
+        <form method="POST" action="../api/menu.php?function=add_menu" enctype="multipart/form-data" id="addCabangForm">
           <div class="modal-body">
             <div class="mb-3">
               <label for="inputMenu" class="form-label"> Nama Menu </label>
@@ -116,6 +116,10 @@
             <div class="mb-3">
               <label for="inputDeskripsi" class="form-label"> Deskripsi </label>
               <textarea class="form-control" id="inputDeskripsi" name="deskripsi" rows="3" placeholder="Deksripsi" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="inputImg" class="mb-1">Gambar Menu</label>
+              <input type="file" name="img" accept="image/png, image/jpeg" id="inputImg" class="form-control" />
             </div>
             <div class="mb-3 d-flex gap-3">
               <div class="w-25">
