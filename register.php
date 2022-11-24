@@ -23,7 +23,7 @@ if (isset($_GET["pesan"])) {
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <meta content="" name="description" />
   <meta content="" name="keywords" />
-  <title>Login - Olive Chicken Delivery</title>
+  <title>Register - Olive Chicken Delivery</title>
 
   <!-- Favicons -->
   <link href="./assets/img/favicon.png" rel="icon" />
@@ -60,7 +60,7 @@ if (isset($_GET["pesan"])) {
                   <img style="max-width: 8rem;" src="./assets/img/olive-chicken-logo-brand.jpg" alt="">
                 </div>
                 <div class="p-4 pt-0">
-                  <h5 class="card-title text-center mb-0 fs-4 fw-bold text-primary pb-1">LOGIN</h5>
+                  <h5 class="card-title text-center mb-0 fs-4 fw-bold text-primary pb-1">REGISTER</h5>
                   <p class="mb-4 text-center text-secondary"><?= $msg ?></p>
 
                   <form class="row g-3 needs-validation" method="POST" action="./controller/login.php">
@@ -80,7 +80,7 @@ if (isset($_GET["pesan"])) {
                       <button class="btn btn-primary w-100" type="submit">Masuk</button>
                     </div>
                     <div class="col-12">
-                      <p class="small mb-0">Belum mempunyai akun? <a href="register.php">Daftar</a></p>
+                      <p class="small mb-0">Sudah mempunyai akun? <a href="index.php">Masuk</a></p>
                     </div>
                   </form>
 
@@ -89,7 +89,9 @@ if (isset($_GET["pesan"])) {
             </div>
           </div>
         </div>
+
       </section>
+
     </div>
   </main><!-- End #main -->
 </body>

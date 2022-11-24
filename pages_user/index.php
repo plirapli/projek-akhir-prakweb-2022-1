@@ -41,7 +41,7 @@
 
   <main id="main" class="main col">
     <div class="pagetitle">
-      <h1>Dashboard</h1>
+      <h1>Pengguna</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php">Home</a></li>
