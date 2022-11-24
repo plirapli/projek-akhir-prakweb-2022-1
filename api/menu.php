@@ -43,6 +43,43 @@ function get_menu()
   echo json_encode($response);
 }
 
+// GET BY ID
+function get_menu_id()
+{
+  global $connection;
+
+  $id = $_GET['id'];
+  $query = "SELECT * FROM menu INNER JOIN cabang ON menu.id_cabang = cabang.id_cabang
+            WHERE menu.id_menu = $id";
+  $result = mysqli_query($connection, $query);
+
+  if ($query) {
+    $data = mysqli_fetch_object($result);
+
+    if (isset($data)) {
+      $response = [
+        'status' => 1,
+        'message' => 'Success',
+        'data' => $data
+      ];
+    } else {
+      $response = [
+        'status' => 1,
+        'message' => 'Data Kosong',
+        'data' => []
+      ];
+    }
+  } else {
+    $response = [
+      'status' => 0,
+      'message' => 'Failed',
+    ];
+  }
+
+  header('Content-Type: application/json');
+  echo json_encode($response);
+}
+
 // POST
 function add_menu()
 {
@@ -103,6 +140,46 @@ function add_menu()
   } else {
     echo mysqli_error($connection);
   }
+}
+
+function edit_menu()
+{
+  global $connection;
+
+  $req_body = json_decode(file_get_contents('php://input'), true);
+
+  $id = $req_body["id"];
+  $menu = $req_body["menu"];
+  $desc = $req_body["desc"];
+  $stok = $req_body["stok"];
+  $harga = $req_body['harga'];
+  $id_cabang = $req_body['id_cabang'];
+
+  $command = "UPDATE menu 
+              SET 
+                menu = '$menu', 
+                deskripsi = '$desc',
+                stok = '$stok', 
+                harga = '$harga', 
+                id_cabang = '$id_cabang', 
+                updated_at = current_timestamp()
+              WHERE id_menu = $id";
+  $query = mysqli_query($connection, $command);
+
+  if ($query) {
+    $response = [
+      'status' => 1,
+      'message' => 'Update Success'
+    ];
+  } else {
+    $response = [
+      'status' => 0,
+      'message' => 'Error: ' . mysqli_error($connection)
+    ];
+  }
+
+  header('Content-Type: application/json');
+  echo json_encode($response);
 }
 
 // DELETE

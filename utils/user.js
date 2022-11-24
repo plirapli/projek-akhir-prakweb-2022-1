@@ -13,7 +13,6 @@ const generateObject = (
   username,
   password,
   id_role = 2,
-  img_profile = '',
   telp = '',
   created_at = '',
   updated_at = ''
@@ -23,7 +22,6 @@ const generateObject = (
     email,
     username,
     password,
-    img_profile,
     telp,
     created_at,
     updated_at,
@@ -95,11 +93,6 @@ const getUser = () => {
             <td colspan="5" class="py-0">
               <div class="collapse collapse-detail-${user.id_user}">
                 <div class="d-flex align-content-start gap-4">
-                  <img
-                    class="img-detail"
-                    src="../assets/img/profile-default.png"
-                    alt=""
-                  />
                   <aside class="d-flex gap-4">
                     <div class="d-flex">
                       <div class="d-flex flex-column">
@@ -134,6 +127,7 @@ const getUser = () => {
             </td>
           </tr>
         `;
+
         const element = `
           <tr data-user-id = ${user.id_user}>
             <th scope="row" class="w-table-min">${i++}</th>
@@ -210,53 +204,47 @@ const addUser = () => {
     let inputEmail = submitUser.querySelector('#inputEmail').value;
     let inputUsername = submitUser.querySelector('#inputUsername').value;
     let inputPassword = submitUser.querySelector('#inputPassword').value;
-    let inputConfirmPassword = submitUser.querySelector(
-      '#inputConfirmPassword'
-    ).value;
     let selectedRole = submitUser.querySelector('.select-role').value;
 
-    if (inputPassword == inputConfirmPassword) {
-      const newUsers = generateObject(
-        inputNama,
-        inputEmail,
-        inputUsername,
-        inputPassword,
-        parseInt(selectedRole)
-      );
+    const newUsers = generateObject(
+      inputNama,
+      inputEmail,
+      inputUsername,
+      inputPassword,
+      parseInt(selectedRole)
+    );
 
-      // Dikirim ke database
-      fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newUsers),
+    // Dikirim ke database
+    fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newUsers),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (selectedRole == '3') {
+          getUserName(inputUsername).then((data) => {
+            const userId = parseInt(data.data.id_user);
+            addDriver(userId).then((data) => {});
+          });
+        }
+
+        inputNama = '';
+        inputEmail = '';
+        inputUsername = '';
+        inputPassword = '';
+        selectedRole = '';
+
+        const modalElement = document.querySelector('#inputUserModal');
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        modal.hide();
+
+        getUser();
       })
-        .then((res) => res.json())
-        .then((data) => {
-          if (selectedRole == '3') {
-            getUserName(inputUsername).then((data) => {
-              const userId = parseInt(data.data.id_user);
-              addDriver(userId).then((data) => {});
-            });
-          }
-
-          inputNama = '';
-          inputEmail = '';
-          inputUsername = '';
-          inputPassword = '';
-          inputConfirmPassword = '';
-          selectedRole = '';
-
-          const modalElement = document.querySelector('#inputUserModal');
-          const modal = bootstrap.Modal.getInstance(modalElement);
-          modal.hide();
-
-          getUser();
-        })
-        .catch((err) => console.log(err));
-    }
+      .catch((err) => console.log(err));
   });
 };
 
@@ -267,15 +255,13 @@ const editUser = (id) => {
 
   getUserId(id)
     .then((data) => {
-      const { nama, email, username, password, img_profile, telepon, id_role } =
-        data.data;
+      const { nama, email, username, password, telepon, id_role } = data.data;
 
       // Mengambil elemen form
       editForm.querySelector('#editNama').value = nama;
       editForm.querySelector('#editEmail').value = email;
       editForm.querySelector('#editUsername').value = username;
       editForm.querySelector('#editPassword').value = password;
-      editForm.querySelector('#editImg').value = img_profile;
       editForm.querySelector('#editPhoneNumber').value = telepon;
       editForm.querySelector('.select-role').value = id_role;
 
@@ -290,7 +276,6 @@ const editUser = (id) => {
             editForm.querySelector('#editUsername').value,
             editForm.querySelector('#editPassword').value,
             parseInt(editForm.querySelector('.select-role').value),
-            editForm.querySelector('#editImg').value,
             editForm.querySelector('#editPhoneNumber').value
           );
 

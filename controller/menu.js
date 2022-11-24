@@ -9,6 +9,24 @@ const getMenu = async () => {
     .catch((err) => console.log('Error: ' + err));
 };
 
+const getMenuId = async (id) => {
+  return fetch(`${baseURL}=get_menu_id&id=${id}`)
+    .then((res) => res.json())
+    .then((data) => data)
+    .catch((err) => console.log('Error: ' + err));
+};
+
+const editMenu = async (req) => {
+  return fetch(`${baseURL}=edit_menu`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(req),
+  });
+};
+
 const deleteMenu = async (id) => {
   return fetch(`${baseURL}=delete_menu&id=${id}`, { method: 'DELETE' })
     .then((res) => res.json())
@@ -16,4 +34,4 @@ const deleteMenu = async (id) => {
     .catch((err) => console.log('Error: ' + err));
 };
 
-export { getMenu, deleteMenu };
+export { getMenu, getMenuId, editMenu, deleteMenu };

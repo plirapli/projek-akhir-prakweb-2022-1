@@ -81,7 +81,7 @@ sidebar.innerHTML = `
     <li class="nav-item">
       <a class="nav-link ${
         sidebar.dataset.activeNav != 'user_list' && 'collapsed'
-      }" href="user_list.html">
+      }" href="user.php">
         <i class="bi bi-person"></i>
         <span>User</span>
       </a>
@@ -90,7 +90,7 @@ sidebar.innerHTML = `
     <li class="nav-item">
       <a class="nav-link ${
         sidebar.dataset.activeNav != 'driver_list' && 'collapsed'
-      }" href="driver_list.html">
+      }" href="driver.php">
         <i class="bi bi-person"></i>
         <span>Driver</span>
       </a>

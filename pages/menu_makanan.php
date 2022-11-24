@@ -19,34 +19,21 @@
   <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
   <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
 
-  <!-- Template Main CSS File -->
-  <link href="../assets/css/style.css" rel="stylesheet" />
-
   <!-- Custom CSS -->
+  <link href="../assets/css/style.css" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/css/custom.css" />
 
-  <!-- Vendor JS Files -->
+  <!-- BS & Libs -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" defer></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js" defer></script>
 
-  <!-- Template Main JS File -->
-  <script src="../assets/js/main.js" defer></script>
-
   <!-- Custom JS -->
+  <script src="../assets/js/main.js" defer></script>
   <script src="../assets/js/index.js" defer></script>
-
-  <!-- API Calls -->
   <script type="module" src="../utils/menu.js" defer></script>
-
-  <!-- =======================================================
-  * Template Name: NiceAdmin - v2.4.1
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
-<body>
+<body class="min-vh-100 d-flex flex-column">
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center"></header>
   <!-- End Header -->
@@ -54,7 +41,7 @@
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" data-active-nav="menu" class="sidebar d-flex flex-column justify-content-between"></aside>
 
-  <main id="main" class="main">
+  <main id="main" class="main col">
     <div class="pagetitle">
       <h1>Menu Makanan</h1>
       <nav>
@@ -145,6 +132,58 @@
               Tutup
             </button>
             <button type="submit" name="add_menu" class="btn btn-primary">Tambah</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Edit Menu -->
+  <div class="modal fade" id="editMenuModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editMenuModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 fw-normal" id="staticBackdropLabel">
+            Edit Menu
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <!-- Isi Modal -->
+        <form method="POST" id="editMenuForm">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="editMenu" class="form-label"> Nama Menu </label>
+              <input type="text" class="form-control" id="editMenu" name="menu" placeholder="Nama Menu" required />
+            </div>
+            <div class="mb-3">
+              <label for="editDeskripsi" class="form-label"> Deskripsi </label>
+              <textarea class="form-control" id="editDeskripsi" name="deskripsi" rows="3" placeholder="Deksripsi" required></textarea>
+            </div>
+            <div class="mb-3 d-flex gap-3">
+              <div class="w-25">
+                <label for="editStok" class="form-label"> Stok </label>
+                <input type="number" class="form-control" id="editStok" name="stok" placeholder="Stok" required />
+              </div>
+              <div class="w-100">
+                <label for="editHarga" class="form-label"> Harga </label>
+                <div class="d-flex align-items-center gap-2">
+                  <span>Rp</span>
+                  <input type="number" class="form-control" id="editHarga" name="harga" placeholder="Harga" required />
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="selectCabang" class="form-label"> Cabang </label>
+              <select class="form-select select-cabang" name="cabang" id="editCabang" required></select>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-gray" data-bs-dismiss="modal">
+              Tutup
+            </button>
+            <button type="submit" name="add_menu" class="btn btn-primary">Simpan</button>
           </div>
         </form>
       </div>

@@ -1,30 +1,4 @@
-import { getDriverId } from '../controller/driver.js';
 import { showFormattedDate } from './convertDate.js';
-
-/* UTILITIES */
-const generateObject = (
-  nama,
-  email,
-  username,
-  password,
-  id_role = 2,
-  img_profile = '',
-  telp = '',
-  created_at = '',
-  updated_at = ''
-) => {
-  return {
-    nama,
-    email,
-    username,
-    password,
-    img_profile,
-    telp,
-    created_at,
-    updated_at,
-    id_role,
-  };
-};
 
 /* API CALL */
 // Base URL
@@ -63,11 +37,6 @@ const getUser = () => {
             <td colspan="5" class="py-0">
               <div class="collapse collapse-detail-${user.id_user}">
                 <div class="d-flex align-content-start gap-4">
-                  <img
-                    class="img-detail"
-                    src="../assets/img/profile-default.png"
-                    alt=""
-                  />
                   <aside class="d-flex gap-4">
                     <div class="d-flex">
                       <div class="d-flex flex-column">
@@ -117,9 +86,6 @@ const getUser = () => {
               ${user.penghasilan}
             </td>
             <td class="w-table-min">
-              <span class="d-inline text-gray cursor-pointer edit-user" data-bs-toggle="modal" data-bs-target="#editUserModal">
-                <iconify-icon icon="material-symbols:edit" width="20"></iconify-icon>
-              </span>
               <span class="text-danger-sub cursor-pointer delete-user" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
                 <iconify-icon icon="material-symbols:delete" width="20"></iconify-icon>
               </span>
@@ -146,7 +112,6 @@ const getUser = () => {
       tableBody.innerHTML = tableElement;
 
       editStatusHandler();
-      editUserHandler();
       deleteUserHandler();
     });
 };
@@ -164,64 +129,6 @@ const editStatus = (id, status) => {
   })
     .then((res) => res.json())
     .then((data) => getUser())
-    .catch((err) => console.log(err));
-};
-
-// Edit User
-const editUser = (id) => {
-  const endpointEdit = `${baseURL}/user.php?function=edit_user&id=${id}`;
-  const endpointGetId = `${baseURL}/user.php?function=get_user_id&id=${id}`;
-  const editForm = document.querySelector('#editUserForm');
-
-  fetch(endpointGetId)
-    .then((res) => res.json())
-    .then((data) => {
-      const { nama, email, username, password, img_profile, telepon, id_role } =
-        data.data;
-
-      // Mengambil elemen form
-      editForm.querySelector('#editNama').value = nama;
-      editForm.querySelector('#editEmail').value = email;
-      editForm.querySelector('#editUsername').value = username;
-      editForm.querySelector('#editPassword').value = password;
-      editForm.querySelector('#editPhoneNumber').value = telepon;
-
-      editForm.addEventListener(
-        'submit',
-        (e) => {
-          e.preventDefault();
-          const editedUser = generateObject(
-            editForm.querySelector('#editNama').value,
-            editForm.querySelector('#editEmail').value,
-            editForm.querySelector('#editUsername').value,
-            editForm.querySelector('#editPassword').value,
-            3,
-            '',
-            editForm.querySelector('#editPhoneNumber').value
-          );
-
-          // Dikirim ke database
-          fetch(endpointEdit, {
-            method: 'PUT',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(editedUser),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              const modalElement = document.querySelector('#editUserModal');
-              const modal = bootstrap.Modal.getInstance(modalElement);
-              modal.hide();
-
-              getUser();
-            })
-            .catch((err) => console.log(err));
-        },
-        { once: true }
-      );
-    })
     .catch((err) => console.log(err));
 };
 
@@ -282,17 +189,6 @@ const editStatusHandler = () => {
       const id = parseInt(select.parentElement.parentElement.dataset.userId);
       const status = parseInt(e.target.value);
       editStatus(id, status);
-    });
-  });
-};
-
-// Edit Handler
-const editUserHandler = () => {
-  const editBtn = document.querySelectorAll('.edit-user');
-  editBtn.forEach((edit) => {
-    edit.addEventListener('click', () => {
-      const id = edit.parentElement.parentElement.dataset.userId;
-      editUser(parseInt(id));
     });
   });
 };

@@ -66,6 +66,9 @@ Content-Type: application/json
 ### GET
 http://localhost/olive-chicken-delivery/api/cabang.php?function=get_cabang
 
+### GET TOTAL
+http://localhost/olive-chicken-delivery/api/cabang.php?function=get_cabang_total
+
 ### POST
 http://localhost/olive-chicken-delivery/api/cabang.php?function=add_cabang
 Content-Type: application/json
@@ -83,6 +86,29 @@ http://localhost/olive-chicken-delivery/api/cabang.php?function=delete_cabang&id
 ### GET
 http://localhost/olive-chicken-delivery/api/menu.php?function=get_menu
 
+### GET BY ID
+http://localhost/olive-chicken-delivery/api/menu.php?function=get_menu_id&id=4
+
+### EDIT
+http://localhost/olive-chicken-delivery/api/menu.php?function=edit_menu
+Content-Type: application/json
+
+{
+  "id": 4,
+  "menu": "Tes",
+  "desc": "Tes Lagi",
+  "stok": 12,
+  "harga": 12000,
+  "id_cabang": 2
+}
+
 ### DELETE
 http://localhost/olive-chicken-delivery/api/menu.php?function=delete_menu&id=5
+
+
+
+### DASHBOARD
+### GET
+http://localhost/olive-chicken-delivery/api/total.php?function=get_total
+
 

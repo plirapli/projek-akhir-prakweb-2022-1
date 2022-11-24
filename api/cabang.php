@@ -28,6 +28,26 @@ function get_cabang()
   echo json_encode($response);
 }
 
+// GET TOTAL
+function get_cabang_total()
+{
+  global $connection;
+
+  $query = "SELECT COUNT(*) as total FROM cabang";
+  $result = mysqli_query($connection, $query);
+
+  $data = mysqli_fetch_object($result);
+
+  $response = [
+    'status' => 1,
+    'message' => 'Success',
+    'data' => $data
+  ];
+
+  header('Content-Type: application/json');
+  echo json_encode($response);
+}
+
 // POST
 function add_cabang()
 {

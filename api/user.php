@@ -114,7 +114,6 @@ function add_user()
       '$username', 
       '$password', 
       '', 
-      '', 
       current_timestamp(), 
       current_timestamp(), 
       '$id_role'
@@ -162,7 +161,6 @@ function edit_user()
     $email = $req_body["email"];
     $username = $req_body['username'];
     $password = $req_body['password'];
-    $img_profile = $req_body['img_profile'];
     $telp = $req_body['telp'];
     $id_role = $req_body['id_role'];
 
@@ -171,7 +169,6 @@ function edit_user()
       email = '$email', 
       username = '$username', 
       password = '$password', 
-      img_profile = '',
       telepon = '$telp',
       updated_at = current_timestamp(),
       id_role = '$id_role'
@@ -186,7 +183,7 @@ function edit_user()
     } else {
       $response = [
         'status' => 0,
-        'message' => 'Insert Failed.'
+        'message' => 'Error: ' + mysqli_error($connection)
       ];
     }
   } else {

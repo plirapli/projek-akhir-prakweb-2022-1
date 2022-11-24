@@ -3,7 +3,7 @@ import * as controllerMenu from '../controller/menu.js';
 
 /* API CALL */
 // Get Menu
-const getMenuHandler = () => {
+const getMenu = () => {
   const menuList = document.querySelector('#menuList');
   const pathMenuImg = '/olive-chicken-delivery/assets/img/menu';
 
@@ -14,7 +14,7 @@ const getMenuHandler = () => {
     menus.forEach((menu) => {
       const element = `
         <div class="card card-menu-makanan" data-menu-id=${menu.id_menu}>
-          <img src=${pathMenuImg}/${menu.img_menu} class="card-img-top" alt="...">
+          <img style="height: 20rem; object-fit: cover;" src=${pathMenuImg}/${menu.img_menu} class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">${menu.menu}</h5>
             <p class="card-text">
@@ -38,7 +38,11 @@ const getMenuHandler = () => {
               <b>${menu.cabang}</b>
             </li>
             <li class="list-group-item py-3">
-              <button class="btn btn-dark-gray">
+              <button 
+                class="btn btn-dark-gray edit-menu" 
+                data-bs-toggle="modal" 
+                data-bs-target="#editMenuModal"
+              >
                 Edit
               </button>
               <button 
@@ -57,7 +61,52 @@ const getMenuHandler = () => {
     });
 
     menuList.innerHTML = menuElement;
+    editMenuHandler();
     deleteMenuHandler();
+  });
+};
+
+// Edit Menu
+const editMenu = (id) => {
+  const editForm = document.querySelector('#editMenuForm');
+
+  controllerMenu.getMenuId(id).then((data) => {
+    const { menu, deskripsi, stok, harga, id_cabang } = data.data;
+
+    // Mengambil elemen form
+    editForm.querySelector('#editMenu').value = menu;
+    editForm.querySelector('#editDeskripsi').value = deskripsi;
+    editForm.querySelector('#editStok').value = stok;
+    editForm.querySelector('#editHarga').value = harga;
+    editForm.querySelector('#editCabang').value = id_cabang;
+
+    editForm.addEventListener(
+      'submit',
+      (e) => {
+        e.preventDefault();
+        const editedUser = {
+          id: id,
+          menu: editForm.querySelector('#editMenu').value,
+          desc: editForm.querySelector('#editDeskripsi').value,
+          stok: editForm.querySelector('#editStok').value,
+          harga: editForm.querySelector('#editHarga').value,
+          id_cabang: editForm.querySelector('#editCabang').value,
+        };
+
+        // Dikirim ke database
+        controllerMenu
+          .editMenu(editedUser)
+          .then((data) => {
+            const modalElement = document.querySelector('#editMenuModal');
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            modal.hide();
+
+            getMenu();
+          })
+          .catch((err) => console.log(err));
+      },
+      { once: true }
+    );
   });
 };
 
@@ -74,7 +123,7 @@ const deleteMenu = async (id, menu) => {
       controllerMenu.deleteMenu(id).then((data) => {
         const modal = bootstrap.Modal.getInstance(deleteModal);
         modal.hide();
-        getMenuHandler();
+        getMenu();
       });
     },
     { once: true }
@@ -102,6 +151,17 @@ const getCabangHandler = () => {
   });
 };
 
+// Edit Menu
+const editMenuHandler = () => {
+  const editBtn = document.querySelectorAll('.edit-menu');
+  editBtn.forEach((edit) => {
+    edit.addEventListener('click', () => {
+      const id = edit.parentElement.parentElement.parentElement.dataset.menuId;
+      editMenu(parseInt(id));
+    });
+  });
+};
+
 // Delete Handler
 const deleteMenuHandler = () => {
   const deleteBtn = document.querySelectorAll('.delete-menu');
@@ -124,6 +184,6 @@ const deleteMenuHandler = () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  getMenuHandler();
+  getMenu();
   getCabangHandler();
 });
