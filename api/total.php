@@ -14,7 +14,7 @@ function get_total()
   $query_user = "SELECT 'user' AS name, COUNT(*) AS total FROM user WHERE id_role = 2";
   $query_driver = "SELECT 'driver' AS name, COUNT(*) AS total FROM user WHERE id_role = 3";
   $query_cabang = "SELECT 'cabang' AS name, COUNT(*) AS total FROM cabang";
-  $query_menu = "SELECT 'menu' AS name, COUNT(*) AS total FROM menu";
+  $query_menu = "SELECT 'menu makanan' AS name, COUNT(*) AS total FROM menu";
   $query_transaksi = '';
 
   $res_user = mysqli_query($connection, $query_user);

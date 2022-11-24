@@ -2,7 +2,7 @@ const header = document.querySelector('#header');
 header.innerHTML = `
   <div class="d-flex align-items-center justify-content-between">
     <i class="bi bi-list toggle-sidebar-btn"></i>
-    <a href="index.html" class="logo d-flex align-items-center ms-3">
+    <a href="index.php" class="logo d-flex align-items-center ms-3">
       <img src="../assets/img/olive-chicken-logo-brand.jpg" alt="" />
       <!-- <span class="d-none d-lg-block">NiceAdmin</span> -->
     </a>
@@ -52,7 +52,7 @@ sidebar.innerHTML = `
     <li class="nav-item">
       <a class="nav-link ${
         sidebar.dataset.activeNav != 'dashboard' && 'collapsed'
-      }" href="index.html">
+      }" href="index.php">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
       </a>
@@ -118,7 +118,7 @@ sidebar.innerHTML = `
   
   <ul class="sidebar-nav">
     <li class="nav-item">
-      <a class="nav-link collapsed text-danger" href="pages-blank.html">
+      <a class="nav-link collapsed text-danger" href="logout.php">
         <i class="bi bi-file-earmark text-danger"></i>
         <span>Keluar</span>
       </a>

@@ -11,7 +11,7 @@ const getTotal = () => {
       let cardElement = '';
 
       for (const totalData of totals) {
-        const { name, total, unit, icon } = totalData;
+        const { name, total, icon } = totalData;
         const element = `
         <div class="col-6">
           <div class="card info-card revenue-card">
@@ -26,7 +26,7 @@ const getTotal = () => {
                 </div>
                 <div class="ps-3">
                   <h6>${total}</h6>
-                  <span class="text-muted small">Pengguna</span>
+                  <span class="text-muted small text-capitalize">${name}</span>
                 </div>
               </div>
             </div>
