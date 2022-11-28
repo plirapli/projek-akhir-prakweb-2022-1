@@ -46,7 +46,7 @@
   ======================================================== -->
 </head>
 
-<body>
+<body class="min-vh-100 d-flex flex-column">
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center"></header>
   <!-- End Header -->
@@ -54,7 +54,7 @@
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" data-active-nav="driver_list" class="sidebar d-flex flex-column justify-content-between"></aside>
 
-  <main id="main" class="main">
+  <main id="main" class="main col">
     <div class="pagetitle">
       <h1>Driver</h1>
       <nav>

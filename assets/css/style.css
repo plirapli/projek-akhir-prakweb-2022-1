@@ -345,7 +345,7 @@ a:hover {
 }
 
 .breadcrumb a:hover {
-  color: #51678f;
+  color: #474747;
 }
 
 .breadcrumb .breadcrumb-item::before {
@@ -353,15 +353,11 @@ a:hover {
 }
 
 .breadcrumb .active {
-  color: #51678f;
+  color: var(--color-primary);
   font-weight: 600;
 }
 
 /* Bordered Tabs */
-.nav-tabs-bordered {
-  border-bottom: 2px solid #ebeef4;
-}
-
 .nav-tabs-bordered .nav-link {
   margin-bottom: -2px;
   border: none;
@@ -1238,7 +1234,8 @@ a:hover {
   padding: 20px 0;
   font-size: 14px;
   transition: all 0.3s;
-  border-top: 1px solid #cddfff;
+  background: var(--color-primary);
+  color: #fff;
 }
 
 .footer .copyright {

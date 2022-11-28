@@ -121,10 +121,6 @@
                 </div>
               </div>
             </div>
-            <div class="mb-3">
-              <label for="selectCabang" class="form-label"> Cabang </label>
-              <select class="form-select select-cabang" name="cabang" required></select>
-            </div>
           </div>
 
           <div class="modal-footer">
@@ -172,10 +168,6 @@
                   <input type="number" class="form-control" id="editHarga" name="harga" placeholder="Harga" required />
                 </div>
               </div>
-            </div>
-            <div class="mb-3">
-              <label for="selectCabang" class="form-label"> Cabang </label>
-              <select class="form-select select-cabang" name="cabang" id="editCabang" required></select>
             </div>
           </div>
 

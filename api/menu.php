@@ -11,7 +11,7 @@ function get_menu()
 {
   global $connection;
 
-  $query = "SELECT * FROM menu INNER JOIN cabang ON menu.id_cabang = cabang.id_cabang";
+  $query = "SELECT * FROM menu";
   $result = mysqli_query($connection, $query);
 
   if ($query) {
@@ -49,8 +49,7 @@ function get_menu_id()
   global $connection;
 
   $id = $_GET['id'];
-  $query = "SELECT * FROM menu INNER JOIN cabang ON menu.id_cabang = cabang.id_cabang
-            WHERE menu.id_menu = $id";
+  $query = "SELECT * FROM menu WHERE menu.id_menu = $id";
   $result = mysqli_query($connection, $query);
 
   if ($query) {
@@ -119,7 +118,6 @@ function add_menu()
   $deskripsi = htmlspecialchars($_POST["deskripsi"]);
   $stok = htmlspecialchars($_POST["stok"]);
   $harga = htmlspecialchars($_POST["harga"]);
-  $id_cabang = htmlspecialchars($_POST["cabang"]);
 
   // Query (INSERT DATA)
   $query = "INSERT INTO menu VALUES( 
@@ -129,7 +127,6 @@ function add_menu()
               '$deskripsi', 
               '$stok', 
               '$harga', 
-              '$id_cabang',
               current_timestamp(), 
               current_timestamp()
             )";
@@ -153,7 +150,6 @@ function edit_menu()
   $desc = $req_body["desc"];
   $stok = $req_body["stok"];
   $harga = $req_body['harga'];
-  $id_cabang = $req_body['id_cabang'];
 
   $command = "UPDATE menu 
               SET 
@@ -161,7 +157,6 @@ function edit_menu()
                 deskripsi = '$desc',
                 stok = '$stok', 
                 harga = '$harga', 
-                id_cabang = '$id_cabang', 
                 updated_at = current_timestamp()
               WHERE id_menu = $id";
   $query = mysqli_query($connection, $command);

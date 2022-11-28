@@ -1,4 +1,3 @@
-import { getCabang } from '../controller/cabang.js';
 import * as controllerMenu from '../controller/menu.js';
 
 /* API CALL */
@@ -21,7 +20,7 @@ const getMenu = () => {
               ${menu.deskripsi}
             </p>
           </div>
-          <ul class="list-group list-group-flush">
+          <ul class="list-group list-group-flush border-0">
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <span>Stok</span>
               <b>${menu.stok}</b>
@@ -32,10 +31,6 @@ const getMenu = () => {
                 Rp
                 <b class="harga">${menu.harga}</b>
               </span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Cabang</span>
-              <b>${menu.cabang}</b>
             </li>
             <li class="list-group-item py-3">
               <button 
@@ -71,14 +66,13 @@ const editMenu = (id) => {
   const editForm = document.querySelector('#editMenuForm');
 
   controllerMenu.getMenuId(id).then((data) => {
-    const { menu, deskripsi, stok, harga, id_cabang } = data.data;
+    const { menu, deskripsi, stok, harga } = data.data;
 
     // Mengambil elemen form
     editForm.querySelector('#editMenu').value = menu;
     editForm.querySelector('#editDeskripsi').value = deskripsi;
     editForm.querySelector('#editStok').value = stok;
     editForm.querySelector('#editHarga').value = harga;
-    editForm.querySelector('#editCabang').value = id_cabang;
 
     editForm.addEventListener(
       'submit',
@@ -90,7 +84,6 @@ const editMenu = (id) => {
           desc: editForm.querySelector('#editDeskripsi').value,
           stok: editForm.querySelector('#editStok').value,
           harga: editForm.querySelector('#editHarga').value,
-          id_cabang: editForm.querySelector('#editCabang').value,
         };
 
         // Dikirim ke database
@@ -110,7 +103,7 @@ const editMenu = (id) => {
   });
 };
 
-// Delete User
+// Delete Menu
 const deleteMenu = async (id, menu) => {
   const deleteModal = document.querySelector('#deleteMenuModal');
   const modalBody = deleteModal.querySelector('.modal-body');
@@ -132,26 +125,7 @@ const deleteMenu = async (id, menu) => {
 
 /* END API CALL */
 
-// Get Cabang
-const getCabangHandler = () => {
-  const selectElement = document.querySelectorAll('.select-cabang');
-
-  getCabang().then((data) => {
-    const cabangList = data.data;
-
-    selectElement.forEach((selectEl) => {
-      let options = `<option value="" hidden selected>Cabang</option>`;
-
-      cabangList.forEach((cabang) => {
-        const element = `<option value=${cabang.id_cabang} class="text-capitalize">${cabang.cabang}</option>`;
-        options += element;
-      });
-      selectEl.innerHTML = options;
-    });
-  });
-};
-
-// Edit Menu
+// Edit Handler
 const editMenuHandler = () => {
   const editBtn = document.querySelectorAll('.edit-menu');
   editBtn.forEach((edit) => {
@@ -185,5 +159,4 @@ const deleteMenuHandler = () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   getMenu();
-  getCabangHandler();
 });

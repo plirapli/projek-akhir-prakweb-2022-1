@@ -4,10 +4,8 @@ header.innerHTML = `
     <i class="bi bi-list toggle-sidebar-btn"></i>
     <a href="index.php" class="logo d-flex align-items-center ms-3">
       <img src="../assets/img/olive-chicken-logo-brand.jpg" alt="" />
-      <!-- <span class="d-none d-lg-block">NiceAdmin</span> -->
     </a>
   </div>
-  <!-- End Logo -->
 
   <nav class="header-nav ms-auto">
     <ul class="d-flex align-items-center">
@@ -33,7 +31,6 @@ header.innerHTML = `
       <!-- End Profile Nav -->
     </ul>
   </nav>
-  <!-- End Icons Navigation -->
 `;
 
 // Expand Toggle Click
@@ -50,40 +47,31 @@ const url = sidebar.dataset.activeNav;
 sidebar.innerHTML = `
   <ul class="sidebar-nav" id="sidebar-nav">
     <li class="nav-item">
-      <a class="nav-link ${
+      <a class="nav-link d-flex align-items-center ${
         sidebar.dataset.activeNav != 'dashboard' && 'collapsed'
       }" href="index.php">
-        <i class="bi bi-grid"></i>
-        <span>Dashboard</span>
+        <iconify-icon icon="material-symbols:window" width="18"></iconify-icon>
+        <span class="ms-2">Dashboard</span>
       </a>
     </li>
     <!-- End Dashboard Nav -->
     
     <li class="nav-item">
-      <a class="nav-link ${
+      <a class="nav-link d-flex align-items-center ${
         sidebar.dataset.activeNav != 'menu' && 'collapsed'
       }" href="menu_makanan.php">
-        <i class="bi bi-person"></i>
-        <span>Menu Makanan</span>
-      </a>
-    </li>
-
-    <li class="nav-item">
-      <a class="nav-link ${
-        sidebar.dataset.activeNav != 'cabang' && 'collapsed'
-      }" href="cabang.php">
-        <i class="bi bi-person"></i>
-        <span>Cabang</span>
+        <iconify-icon icon="mdi:food-drumstick" width="18"></iconify-icon>
+        <span class="ms-2">Menu Makanan</span>
       </a>
     </li>
 
     <li class="nav-heading">Daftar Pengguna</li>
     <li class="nav-item">
-      <a class="nav-link ${
+      <a class="nav-link d-flex align-items-center ${
         sidebar.dataset.activeNav != 'user_list' && 'collapsed'
       }" href="user.php">
-        <i class="bi bi-person"></i>
-        <span>User</span>
+        <iconify-icon icon="mdi:user" width="18"></iconify-icon>
+        <span class="ms-2">User</span>
       </a>
     </li>
     
@@ -91,8 +79,8 @@ sidebar.innerHTML = `
       <a class="nav-link ${
         sidebar.dataset.activeNav != 'driver_list' && 'collapsed'
       }" href="driver.php">
-        <i class="bi bi-person"></i>
-        <span>Driver</span>
+        <iconify-icon icon="mdi:racing-helmet" width="18"></iconify-icon>
+        <span class="ms-2">Driver</span>
       </a>
     </li>
     
@@ -101,16 +89,16 @@ sidebar.innerHTML = `
       <a class="nav-link ${
         sidebar.dataset.activeNav != 'transaksi_berlangsung' && 'collapsed'
       }" href="users-profile.html">
-        <i class="bi bi-person"></i>
-        <span>Transaksi Berlangsung</span>
+        <iconify-icon icon="mdi:clipboard-text" width="18"></iconify-icon>
+        <span class="ms-2">Transaksi Berlangsung</span>
       </a>
     </li>
     <li class="nav-item">
       <a class="nav-link ${
         sidebar.dataset.activeNav != 'riwayat_transaksi' && 'collapsed'
       }" href="users-profile.html">
-        <i class="bi bi-person"></i>
-        <span>Riwayat Transaksi</span>
+        <iconify-icon icon="mdi:clipboard-text-history" width="18"></iconify-icon>
+        <span class="ms-2">Riwayat Transaksi</span>
       </a>
     </li>
 
@@ -119,8 +107,8 @@ sidebar.innerHTML = `
   <ul class="sidebar-nav">
     <li class="nav-item">
       <a class="nav-link collapsed text-danger" href="logout.php">
-        <i class="bi bi-file-earmark text-danger"></i>
-        <span>Keluar</span>
+        <iconify-icon icon="material-symbols:exit-to-app-rounded" width="18"></iconify-icon>
+        <span class="ms-2">Keluar</span>
       </a>
     </li>
     <!-- End Blank Page Nav -->
@@ -129,7 +117,7 @@ sidebar.innerHTML = `
 
 const footer = document.querySelector('#footer');
 footer.innerHTML = `
-  <div class="copyright">
-    &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+  <div class="d-flex justify-content-center align-items-center">
+    &copy; 2022 Copyright &nbsp; <b>Olive Chicken</b>. All Rights Reserved
   </div>
 `;

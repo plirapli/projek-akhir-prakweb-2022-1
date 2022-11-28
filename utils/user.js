@@ -41,8 +41,6 @@ const getUserTotal = () => {
     const users = data.data;
     let cardElement = '';
 
-    console.log(users);
-
     for (const user of users) {
       const { role, total } = user;
       const element = `

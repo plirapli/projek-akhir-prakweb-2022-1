@@ -109,8 +109,14 @@ a:hover {
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
 
-/* @media (min-width: 520px) {
-  .card-menu-makanan {
-    max-width: 18rem;
-  }
-} */
+/* Components */
+.card-menu-container-user {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 320px));
+}
+
+.card-menu-makanan {
+  overflow: hidden;
+  border-radius: 1rem;
+}

@@ -27,49 +27,65 @@
   <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js" defer></script>
 
   <script src="../assets/js/main.js" defer></script>
-  <script src="../assets/js/index.js" defer></script>
-  <script type="module" src="../utils/dashboard.js" defer></script>
+  <script type="module" src="../assets/js/indexUser.js" defer></script>
+  <script type="module" src="../utils_user/menu.js" defer></script>
 </head>
 
-<body class="min-vh-100 d-flex flex-column">
-  <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center"></header>
-  <!-- End Header -->
+<body class="min-vh-100 d-flex flex-column" data-id-user=5>
+  <header id="header-user" class="header d-flex align-items-center">
+  </header>
 
-  <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" data-active-nav="dashboard" class="sidebar d-flex flex-column justify-content-between"></aside>
-
-  <main id="main" class="main col">
-    <div class="pagetitle">
-      <h1>Pengguna</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard</li>
-        </ol>
-      </nav>
+  <div class="bg-white border-2 border-bottom">
+    <div class="container">
+      <ul class="nav nav-tabs border-0 nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+        <li class="nav-item flex-fill" role="presentation">
+          <button class="nav-link p-3 w-100" id="home-tab" data-bs-toggle="tab" data-bs-target="#menu" type="button" role="tab" aria-controls="home" aria-selected="false">
+            Menu
+          </button>
+        </li>
+        <li class="nav-item flex-fill" role="presentation">
+          <button class="nav-link p-3 w-100 active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#cart" type="button" role="tab" aria-controls="cart" aria-selected="true">
+            Keranjang
+          </button>
+        </li>
+        <li class="nav-item flex-fill" role="presentation">
+          <button class="nav-link p-3 w-100" id="contact-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-contact" type="button" role="tab" aria-controls="contact" aria-selected="false">
+            Riwayat Transaksi
+          </button>
+        </li>
+      </ul>
     </div>
-    <!-- End Page Title -->
+  </div>
 
-    <section class="section dashboard">
-      <div class="row">
-        <!-- Left side columns -->
+  <div class="col container pb-3">
+    <div class="tab-content" id="borderedTabJustifiedContent">
+      <div class="tab-pane fade mt-4" id="menu" role="tabpanel" aria-labelledby="menu-tab">
         <div class="col-lg-12">
-          <div class="row">
-            <div class="row card-info">
-            </div>
-          </div>
+          <h5 class="mb-3">Daftar Menu</h5>
+
+          <!-- Daftar Menu -->
+          <div id="menuList" class="card-menu-container-user"></div>
+
         </div>
-        <!-- End Left side columns -->
       </div>
-    </section>
-  </main>
-  <!-- End #main -->
 
-  <footer id="footer" class="footer"></footer>
+      <div class="tab-pane fade show active mt-4" id="cart" role="tabpanel" aria-labelledby="cart-tab">
+        <div class="customer-info"></div>
+        <div class="mt-3">
+          <h5>Keranjang</h5>
+          <div id="shoppingCart"></div>
+        </div>
+        <a href="pesan.php" class="btn btn-primary w-100 mt-4">Pesan Sekarang</a>
+      </div>
 
-  <!-- Back to Top -->
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+      <div class="tab-pane fade" id="bordered-justified-contact" role="tabpanel" aria-labelledby="contact-tab">
+        Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
+      </div>
+
+    </div>
+  </div>
+
 </body>
 
 </html>

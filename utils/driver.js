@@ -27,9 +27,10 @@ const getUser = () => {
       for (const user of users) {
         const created_at = showFormattedDate(user.created_at);
         const updated_at = showFormattedDate(user.updated_at);
-        const statusOption = await createStatusElement(user.id_status).then(
-          (data) => data
-        );
+        const status = user.is_available == 1 ? 'Tersedia' : 'Sibuk';
+        // const statusOption = await createStatusElement(user.id_status).then(
+        //   (data) => data
+        // );
 
         const accordionBody = `
           <tr class="collapse collapse-detail-${user.id_user}">
@@ -49,7 +50,7 @@ const getUser = () => {
                         <div><span> : </span>${user.nama}</div>
                         <div><span> : </span>${user?.email || '-'}</div>
                         <div><span> : </span>${user.username}</div>
-                        <div><span> : </span>${user?.status || 'Tersedia'}</div>
+                        <div><span> : </span>${status || 'Tersedia'}</div>
                       </div>
                     </div>
                     <div class="d-flex ms-2">
@@ -78,7 +79,7 @@ const getUser = () => {
             <td>${user.nama}</td>
             <td>${user.username}</td>
             <td>
-              ${statusOption}
+              ${status}
             </td>
             <td>${user.jarak} km</td>
             <td>
@@ -111,26 +112,25 @@ const getUser = () => {
 
       tableBody.innerHTML = tableElement;
 
-      editStatusHandler();
       deleteUserHandler();
     });
 };
 
-// Edit Status
-const editStatus = (id, status) => {
-  const endpoint = `${baseURL}/status.php?function=edit_status_driver&id=${id}`;
-  fetch(endpoint, {
-    method: 'PUT',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ id_status: status }),
-  })
-    .then((res) => res.json())
-    .then((data) => getUser())
-    .catch((err) => console.log(err));
-};
+// // Edit Status
+// const editStatus = (id, status) => {
+//   const endpoint = `${baseURL}/status.php?function=edit_status_driver&id=${id}`;
+//   fetch(endpoint, {
+//     method: 'PUT',
+//     headers: {
+//       Accept: 'application/json',
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({ id_status: status }),
+//   })
+//     .then((res) => res.json())
+//     .then((data) => getUser())
+//     .catch((err) => console.log(err));
+// };
 
 // Delete User
 const deleteUser = (id, nama) => {
@@ -182,16 +182,16 @@ const createStatusElement = async (id_status = '1') => {
   });
 };
 
-const editStatusHandler = () => {
-  const selectBtn = document.querySelectorAll('.select-status');
-  selectBtn.forEach((select) => {
-    select.addEventListener('change', (e) => {
-      const id = parseInt(select.parentElement.parentElement.dataset.userId);
-      const status = parseInt(e.target.value);
-      editStatus(id, status);
-    });
-  });
-};
+// const editStatusHandler = () => {
+//   const selectBtn = document.querySelectorAll('.select-status');
+//   selectBtn.forEach((select) => {
+//     select.addEventListener('change', (e) => {
+//       const id = parseInt(select.parentElement.parentElement.dataset.userId);
+//       const status = parseInt(e.target.value);
+//       editStatus(id, status);
+//     });
+//   });
+// };
 
 // Delete Handler
 const deleteUserHandler = () => {

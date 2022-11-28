@@ -1,0 +1,21 @@
+############# MENU #############
+### GET
+http://localhost/olive-chicken-delivery/api/menu.php?function=get_menu
+
+### GET BY ID
+http://localhost/olive-chicken-delivery/api/menu.php?function=get_menu_id&id=4
+
+### EDIT
+http://localhost/olive-chicken-delivery/api/menu.php?function=edit_menu
+Content-Type: application/json
+
+{
+  "id": 4,
+  "menu": "Tes",
+  "desc": "Tes Lagi",
+  "stok": 12,
+  "harga": 12000,
+}
+
+### DELETE
+http://localhost/olive-chicken-delivery/api/menu.php?function=delete_menu&id=5

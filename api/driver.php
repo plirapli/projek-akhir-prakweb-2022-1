@@ -14,7 +14,6 @@ function get_user()
   $command = "SELECT * FROM user 
               INNER JOIN role ON user.id_role = role.id_role
               INNER JOIN driver ON user.id_user = driver.id_user
-              INNER JOIN status ON driver.id_status = status.id_status
               WHERE role.id_role = 3";
   $query = mysqli_query($connection, $command);
 
@@ -39,7 +38,7 @@ function get_user()
   } else {
     $response = [
       'status' => 0,
-      'message' => 'Failed',
+      'message' => 'Error: ' . mysqli_error($connection),
     ];
   }
 
@@ -55,7 +54,6 @@ function get_user_id()
   $query = "SELECT * FROM user 
             INNER JOIN role ON user.id_role = role.id_role 
             INNER JOIN driver ON user.id_user = driver.id_user
-            INNER JOIN status ON driver.id_status = status.id_status
             WHERE user.id_user = $id LIMIT 1";
   $result = mysqli_query($connection, $query);
 
@@ -92,7 +90,7 @@ function add_user()
   if ($check_match == count($check)) {
     $id_user = $req_body["id_user"];
 
-    $command = "INSERT INTO driver VALUE ('', 0, 0, '$id_user', 1)";
+    $command = "INSERT INTO driver VALUE ('', 1, '', '', $id_user)";
     $query = mysqli_query($connection, $command);
 
     if ($query) {
