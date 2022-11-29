@@ -17,5 +17,14 @@ Content-Type: application/json
   "harga": 12000,
 }
 
+### EDIT STOCK
+http://localhost/olive-chicken-delivery/api/menu.php?function=edit_menu_stock
+Content-Type: application/json
+
+{
+  "id": 9,
+  "stok": 10
+}
+
 ### DELETE
 http://localhost/olive-chicken-delivery/api/menu.php?function=delete_menu&id=5
