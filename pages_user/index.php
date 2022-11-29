@@ -14,9 +14,6 @@
 
   <!-- BS CSS Files -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
-  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
-  <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
 
   <!-- Custom CSS -->
   <link href="../assets/css/style.css" rel="stylesheet" />
@@ -39,17 +36,17 @@
     <div class="container">
       <ul class="nav nav-tabs border-0 nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
         <li class="nav-item flex-fill" role="presentation">
-          <button class="nav-link p-3 w-100" id="home-tab" data-bs-toggle="tab" data-bs-target="#menu" type="button" role="tab" aria-controls="home" aria-selected="false">
+          <button class="nav-link p-3 w-100" id="menu-tab" data-bs-toggle="tab" data-bs-target="#menu" type="button" role="tab" aria-controls="home" aria-selected="false">
             Menu
           </button>
         </li>
         <li class="nav-item flex-fill" role="presentation">
-          <button class="nav-link p-3 w-100 active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#cart" type="button" role="tab" aria-controls="cart" aria-selected="true">
+          <button class="nav-link p-3 w-100" id="cart-tab" data-bs-toggle="tab" data-bs-target="#cart" type="button" role="tab" aria-controls="cart" aria-selected="false">
             Keranjang
           </button>
         </li>
         <li class="nav-item flex-fill" role="presentation">
-          <button class="nav-link p-3 w-100" id="contact-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-contact" type="button" role="tab" aria-controls="contact" aria-selected="false">
+          <button class="nav-link p-3 w-100 active" id="transaksi-tab" data-bs-toggle="tab" data-bs-target="#transaksi" type="button" role="tab" aria-controls="transaction" aria-selected="true">
             Riwayat Transaksi
           </button>
         </li>
@@ -69,7 +66,7 @@
         </div>
       </div>
 
-      <div class="tab-pane fade show active mt-4" id="cart" role="tabpanel" aria-labelledby="cart-tab">
+      <div class="tab-pane fade mt-4" id="cart" role="tabpanel" aria-labelledby="cart-tab">
         <div class="customer-info"></div>
         <div class="mt-3">
           <h5>Keranjang</h5>
@@ -85,8 +82,28 @@
       </div>
 
 
-      <div class="tab-pane fade" id="bordered-justified-contact" role="tabpanel" aria-labelledby="contact-tab">
-        Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
+      <div class="tab-pane fade mt-4 show active" id="transaksi" role="tabpanel" aria-labelledby="transaction-tab">
+        <h5>Transaksi</h5>
+        <table id="transactionList" class="table table-responsive align-middle">
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Tanggal</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-user-id=${user.id_user}>
+              <th scope="row" class="w-table-min">1</th>
+              <td>[Tanggal]</td>
+              <td class="w-table-min accordion-header" id="flush-heading-${user.id_user}">
+                <button class="btn btn-gray btn-sm mb-1" type="button" data-bs-toggle="collapse" data-bs-target=".collapse-detail-${user.id_user}">
+                  Detail
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
     </div>

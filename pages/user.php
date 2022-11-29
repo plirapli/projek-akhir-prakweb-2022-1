@@ -15,9 +15,6 @@
 
   <!-- Vendor CSS Files -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
-  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
-  <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
 
   <!-- Template Main CSS File -->
   <link href="../assets/css/style.css" rel="stylesheet" />
@@ -29,21 +26,10 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" defer></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js" defer></script>
 
-  <!-- Template Main JS File -->
-  <script src="../assets/js/main.js" defer></script>
-
   <!-- Custom JS -->
+  <script src="../assets/js/main.js" defer></script>
   <script src="../assets/js/index.js" defer></script>
-
-  <!-- API Calls -->
   <script type="module" src="../utils/user.js" defer></script>
-
-  <!-- =======================================================
-  * Template Name: NiceAdmin - v2.4.1
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body class="min-vh-100 d-flex flex-column">

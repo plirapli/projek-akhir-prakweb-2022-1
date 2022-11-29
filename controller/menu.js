@@ -24,7 +24,9 @@ const editMenu = async (req) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(req),
-  });
+  })
+    .then((res) => res.json())
+    .then((data) => data);
 };
 
 const editMenuStock = async (req) => {
@@ -35,7 +37,9 @@ const editMenuStock = async (req) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(req),
-  });
+  })
+    .then((res) => res.json())
+    .then((data) => data);
 };
 
 const deleteMenu = async (id) => {

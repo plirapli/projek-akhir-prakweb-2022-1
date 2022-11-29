@@ -6,6 +6,43 @@ if (function_exists($_GET['function'])) {
   $_GET['function']();
 }
 
+// GET ORDER
+function get_order()
+{
+  global $connection;
+
+  $query = "SELECT * FROM order";
+  $result = mysqli_query($connection, $query);
+
+  if ($query) {
+    while ($row = mysqli_fetch_object($result)) {
+      $data[] = $row;
+    }
+
+    if (isset($data)) {
+      $response = [
+        'status' => 1,
+        'message' => 'Success',
+        'data' => $data
+      ];
+    } else {
+      $response = [
+        'status' => 1,
+        'message' => 'Data Kosong',
+        'data' => []
+      ];
+    }
+  } else {
+    $response = [
+      'status' => 0,
+      'message' => 'Failed',
+    ];
+  }
+
+  header('Content-Type: application/json');
+  echo json_encode($response);
+}
+
 // POST ORDER
 function add_order()
 {

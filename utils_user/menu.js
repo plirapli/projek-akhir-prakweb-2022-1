@@ -1,11 +1,10 @@
 import * as controllerMenu from '../controller/menu.js';
 import { addOrder, addTransaction } from '../controller/order.js';
-import { getUserId } from '../controller/user.js';
+import { getUserId, getUsers } from '../controller/user.js';
 
 // Global Variable
 const CartMenus = [];
 
-/* API CALL */
 // Get User by ID
 const getUserByID = () => {
   const id = document.querySelector('body').dataset.idUser;
@@ -103,8 +102,6 @@ const getMenu = () => {
     addCartHandler();
   });
 };
-
-/* END API CALL */
 
 /* CART PROCESS */
 const RENDER_EVENT = 'render-cart';
@@ -256,12 +253,12 @@ transactionBtn.addEventListener('click', (e) => {
 
   if (CartMenus.length) {
     // Add to Order
-    addOrder(userID).then((data) => {
+    addOrder(userID).then(async (data) => {
       if (data.status) {
         const { id_order } = data.data;
 
         // Add to transaction
-        const cartPromises = CartMenus.map((cartMenu) => {
+        const promises = CartMenus.map(async (cartMenu) => {
           const { id, qty } = cartMenu;
           const newTransaction = {
             id_order,
@@ -269,15 +266,17 @@ transactionBtn.addEventListener('click', (e) => {
             qty,
           };
 
-          addTransaction(newTransaction).then((data) => {
+          return addTransaction(newTransaction).then((data) => {
             if (data.status) {
               // Reduce stock
-              controllerMenu.editMenuStock({ id, qty }).then((data) => {});
+              return controllerMenu
+                .editMenuStock({ id, qty })
+                .then((data) => data);
             }
           });
         });
 
-        Promise.all(cartPromises).then((result) => {
+        Promise.all(promises).then((result) => {
           window.location.href = '../pages_user/pesan.php';
         });
       }
@@ -288,6 +287,103 @@ transactionBtn.addEventListener('click', (e) => {
 });
 
 /* END TRANSACTION PROCESS */
+
+/* TRANSACTION HISTORY */
+const getAllTransaction = () => {
+  const tableBody = document.querySelector('#transactionList > tbody');
+
+  getTransacti().then((data) => {
+    const { users } = data.data;
+    let tableElement = '';
+    let i = 1;
+
+    users.forEach((user) => {
+      const created_at = showFormattedDate(user.created_at);
+      const updated_at = showFormattedDate(user.updated_at);
+
+      const accordionBody = `
+        <tr class="collapse collapse-detail-${user.id_user}">
+          <td></td>
+          <td colspan="5" class="py-0">
+            <div class="collapse collapse-detail-${user.id_user}">
+              <div class="d-flex align-content-start gap-4">
+                <aside class="d-flex gap-4">
+                  <div class="d-flex">
+                    <div class="d-flex flex-column">
+                      <b>Nama</b>
+                      <b>Email</b>
+                      <b>Username</b>
+                      <b>Role</b>
+                    </div>
+                    <div class="d-flex ms-5 flex-column">
+                      <div><span> : </span>${user.nama}</div>
+                      <div><span> : </span>${user?.email || '-'}</div>
+                      <div><span> : </span>${user.username}</div>
+                      <div><span> : </span>${user.role}</div>
+                    </div>
+                  </div>
+                  <div class="d-flex ms-5">
+                    <div class="d-flex flex-column">
+                      <b>Telepon</b>
+                      <b>Dibuat Pada</b>
+                      <b>Diperbarui Pada</b>
+                    </div>
+                    <div class="d-flex ms-5 flex-column">
+                      <div><span> : </span>${user.telepon || '-'}</div>
+                      <div><span> : </span>${created_at}</div>
+                      <div><span> : </span>${updated_at}</div>
+                    </div>
+                  </div>
+                  <div></div>
+                </aside>
+              </div>
+            </div>
+          </td>
+        </tr>
+      `;
+
+      const element = `
+        <tr data-user-id = ${user.id_user}>
+          <th scope="row" class="w-table-min">${i++}</th>
+          <td>${user.nama}</td>
+          <td>${user.username}</td>
+          <td class="text-capitalize">${user.role}</td>
+          <td class="w-table-min">
+            <span class="d-inline text-gray cursor-pointer edit-user" data-bs-toggle="modal" data-bs-target="#editUserModal">
+              <iconify-icon icon="material-symbols:edit" width="20"></iconify-icon>
+            </span>
+            <span class="text-danger-sub cursor-pointer delete-user" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+              <iconify-icon icon="material-symbols:delete" width="20"></iconify-icon>
+            </span>
+          </td>
+          <td 
+            class="w-table-min accordion-header" 
+            id="flush-heading-${user.id_user}"
+          >
+            <button 
+              class="btn btn-gray btn-sm mb-1" 
+              type="button" 
+              data-bs-toggle="collapse" 
+              data-bs-target=".collapse-detail-${user.id_user}" 
+            >
+              Detail
+            </button>
+          </td>
+        </tr>
+        ${accordionBody}
+      `;
+
+      tableElement += element;
+    });
+
+    tableBody.innerHTML = tableElement;
+    getUserTotal();
+    editUserHandler();
+    deleteUserHandler();
+  });
+};
+
+/* END TRANSACTION HISTORY */
 
 document.addEventListener('DOMContentLoaded', () => {
   getUserByID();
