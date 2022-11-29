@@ -1,5 +1,9 @@
 import * as controllerMenu from '../controller/menu.js';
+import { addOrder } from '../controller/order.js';
 import { getUserId } from '../controller/user.js';
+
+// Global Variable
+const CartMenus = [];
 
 /* API CALL */
 // Get User by ID
@@ -102,14 +106,18 @@ const getMenu = () => {
 
 /* END API CALL */
 
+/* CART PROCESS */
 const RENDER_EVENT = 'render-cart';
-const CartMenus = [];
 
 document.addEventListener(RENDER_EVENT, async () => {
   const pathMenuImg = '/olive-chicken-delivery/assets/img/menu';
+
   const cartList = document.getElementById('shoppingCart');
+  const cartTotal = document.getElementById('cartTotal');
   cartList.innerHTML = '';
+
   let cartElement = '';
+  let total = 0;
 
   for (const cartMenu of CartMenus) {
     const { id, qty } = cartMenu;
@@ -117,6 +125,7 @@ document.addEventListener(RENDER_EVENT, async () => {
       .getMenuId(id)
       .then((data) => data.data);
 
+    const subtotal = harga * qty;
     const element = `
       <div 
         class="card-cart bg-gray p-4 rounded-3 d-flex gap-3 align-items-center mt-3" 
@@ -140,13 +149,16 @@ document.addEventListener(RENDER_EVENT, async () => {
             </div>
           </div>
           <div style="font-weight: 500;">
-            Rp<span>${harga * qty},-</span>
+            Rp<span>${subtotal}</span>
           </div>
         </div>
       </div>`;
 
+    total += subtotal;
     cartElement += element;
   }
+
+  cartTotal.innerHTML = total;
   cartList.innerHTML = cartElement;
 });
 
@@ -232,6 +244,28 @@ const changeInputQty = (id, stok) => {
     document.dispatchEvent(new Event(RENDER_EVENT));
   };
 };
+
+/* END CART PROCESS */
+
+/* TRANSACTION PROCESS */
+const userID = document.querySelector('body').dataset.idUser;
+const transactionBtn = document.querySelector('#processTransaction');
+
+transactionBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+
+  // Add to Order
+  addOrder(userID).then((data) => {
+    if (data.status) {
+      // Add to transaction
+      for (const cartMenu of CartMenus) {
+      }
+    }
+  });
+  // Reduce stock
+});
+
+/* END TRANSACTION PROCESS */
 
 document.addEventListener('DOMContentLoaded', () => {
   getUserByID();

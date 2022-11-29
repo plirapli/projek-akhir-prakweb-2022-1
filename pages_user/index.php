@@ -74,8 +74,14 @@
         <div class="mt-3">
           <h5>Keranjang</h5>
           <div id="shoppingCart"></div>
+          <div class="text-end mt-3">
+            <span>Total: </span>
+            <span class="fw-bold">
+              Rp<span id="cartTotal">0</span>
+            </span>
+          </div>
         </div>
-        <a href="pesan.php" class="btn btn-primary w-100 mt-4">Pesan Sekarang</a>
+        <a href="pesan.php" id="processTransaction" class="btn btn-primary w-100 mt-4">Pesan Sekarang</a>
       </div>
 
 

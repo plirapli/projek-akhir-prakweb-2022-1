@@ -34,12 +34,11 @@ Content-Type: application/json;
   "password": "123210078",
   "img_profile": "",
   "telp": "0812312312",
-  "id_role": 3
+  "id_role": 2
 }
 
 ### DELETE USER
 http://localhost/olive-chicken-delivery/api/user.php?function=delete_user&id=6
-
 
 ### ROLE
 ### GET ROLE
@@ -47,20 +46,6 @@ http://localhost/olive-chicken-delivery/api/role.php?function=get_role
 
 ### GET USER TOTAL GROUP BY ROLE
 http://localhost/olive-chicken-delivery/api/role.php?function=get_role_total
-
-
-### DRIVER
-### GET DRIVER
-http://localhost/olive-chicken-delivery/api/driver.php?function=get_user
-
-### EDIT STATUS DRIVER
-http://localhost/olive-chicken-delivery/api/status.php?function=edit_status_driver&id=9
-Content-Type: application/json
-
-{
-  "id_status": 3
-}
-
 
 ### DASHBOARD
 ### GET

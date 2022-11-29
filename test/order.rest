@@ -1,0 +1,18 @@
+############# MENU #############
+### GET
+http://localhost/olive-chicken-delivery/api/menu.php?function=get_menu
+
+### GET BY ID
+http://localhost/olive-chicken-delivery/api/menu.php?function=get_menu_id&id=4
+
+### POST
+http://localhost/olive-chicken-delivery/api/order.php?function=add_order
+Content-Type: application/json;
+
+{
+  "id_user": 5
+}
+
+
+### DELETE
+http://localhost/olive-chicken-delivery/api/menu.php?function=delete_menu&id=5

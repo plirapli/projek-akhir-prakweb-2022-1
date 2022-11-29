@@ -75,15 +75,6 @@ sidebar.innerHTML = `
       </a>
     </li>
     
-    <li class="nav-item">
-      <a class="nav-link ${
-        sidebar.dataset.activeNav != 'driver_list' && 'collapsed'
-      }" href="driver.php">
-        <iconify-icon icon="mdi:racing-helmet" width="18"></iconify-icon>
-        <span class="ms-2">Driver</span>
-      </a>
-    </li>
-    
     <li class="nav-heading">Transaksi</li>
     <li class="nav-item">
       <a class="nav-link ${

@@ -35,7 +35,7 @@
   <header id="header-user" class="header d-flex align-items-center">
   </header>
 
-  <main class="col col-sm-4 container">
+  <main class="col col-lg-6 container">
     <div class="p-4 bg-white mt-4 shadow rounded-2 text-center">
       <h5 class="text-primary fw-bold">Berhasil Memesan Makanan</h5>
       <div>Makanan anda telah berhasil dipesan.</div>

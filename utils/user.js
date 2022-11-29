@@ -4,7 +4,6 @@ import {
   getUserName,
   getUserTotalByRole,
 } from '../controller/user.js';
-import { getDriverId, addDriver, deleteDriver } from '../controller/driver.js';
 
 /* UTILITIES */
 const generateObject = (
@@ -223,13 +222,6 @@ const addUser = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (selectedRole == '3') {
-          getUserName(inputUsername).then((data) => {
-            const userId = parseInt(data.data.id_user);
-            addDriver(userId).then((data) => {});
-          });
-        }
-
         inputNama = '';
         inputEmail = '';
         inputUsername = '';
@@ -277,14 +269,6 @@ const editUser = (id) => {
             editForm.querySelector('#editPhoneNumber').value
           );
 
-          const isDriver = await getDriverId(id).then((data) => data.data);
-
-          if (isDriver && selectedRole != '3') {
-            deleteDriver(id);
-          } else if (!isDriver && selectedRole == '3') {
-            addDriver(id);
-          }
-
           // Dikirim ke database
           fetch(endpointEdit, {
             method: 'PUT',
@@ -322,16 +306,6 @@ const deleteUser = async (id, nama) => {
   deleteConfirm.addEventListener(
     'click',
     () => {
-      if (userRole == '3') {
-        const endpointDelDriver = `http://localhost/olive-chicken-delivery/api/driver.php?function=delete_user&id=${id}`;
-        fetch(endpointDelDriver, {
-          method: 'DELETE',
-        })
-          .then((res) => res.json())
-          .then((data) => {})
-          .catch((err) => console.log('Error: ' + err));
-      }
-
       fetch(endpoint, { method: 'DELETE' })
         .then((res) => res.json())
         .then((data) => {
