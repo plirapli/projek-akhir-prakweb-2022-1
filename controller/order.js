@@ -1,6 +1,20 @@
 const baseURL =
   'http://localhost/olive-chicken-delivery/api/order.php?function';
 
+const getAllTransaction = async () => {
+  const endpoint = `${baseURL}=get_order`;
+  return fetch(endpoint)
+    .then((res) => res.json())
+    .then((data) => data);
+};
+
+const getTransactionById = async (id_user) => {
+  const endpoint = `${baseURL}=get_order_id&id_user=${id}`;
+  return fetch(endpoint)
+    .then((res) => res.json())
+    .then((data) => data);
+};
+
 const addOrder = async (id_user) => {
   const endpoint = `${baseURL}=add_order`;
 
@@ -31,4 +45,4 @@ const addTransaction = async (menu) => {
     .then((data) => data);
 };
 
-export { addOrder, addTransaction };
+export { getAllTransaction, getTransactionById, addOrder, addTransaction };

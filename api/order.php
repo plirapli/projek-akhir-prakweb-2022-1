@@ -11,7 +11,7 @@ function get_order()
 {
   global $connection;
 
-  $query = "SELECT * FROM order";
+  $query = "SELECT * FROM pesanan INNER JOIN user ON pesanan.id_user = user.id_user";
   $result = mysqli_query($connection, $query);
 
   if ($query) {
@@ -35,7 +35,45 @@ function get_order()
   } else {
     $response = [
       'status' => 0,
-      'message' => 'Failed',
+      'message' => 'Error: ' . mysqli_error($connection),
+    ];
+  }
+
+  header('Content-Type: application/json');
+  echo json_encode($response);
+}
+
+// GET ORDER BY ID
+function get_order_id()
+{
+  global $connection;
+
+  $id_user = $_GET["id_user"];
+  $query = "SELECT * FROM pesanan INNER JOIN user ON pesanan.id_user = user.id_user WHERE pesanan.id_user = $id_user";
+  $result = mysqli_query($connection, $query);
+
+  if ($query) {
+    while ($row = mysqli_fetch_object($result)) {
+      $data[] = $row;
+    }
+
+    if (isset($data)) {
+      $response = [
+        'status' => 1,
+        'message' => 'Success',
+        'data' => $data
+      ];
+    } else {
+      $response = [
+        'status' => 1,
+        'message' => 'Data Kosong',
+        'data' => []
+      ];
+    }
+  } else {
+    $response = [
+      'status' => 0,
+      'message' => 'Error: ' . mysqli_error($connection),
     ];
   }
 

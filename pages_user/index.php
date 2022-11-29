@@ -88,6 +88,7 @@
           <thead>
             <tr>
               <th scope="col">No</th>
+              <th scope="col">Nomor Order</th>
               <th scope="col">Tanggal</th>
               <th scope="col"></th>
             </tr>
@@ -95,6 +96,7 @@
           <tbody>
             <tr data-user-id=${user.id_user}>
               <th scope="row" class="w-table-min">1</th>
+              <td>#[Nomor Order]</td>
               <td>[Tanggal]</td>
               <td class="w-table-min accordion-header" id="flush-heading-${user.id_user}">
                 <button class="btn btn-gray btn-sm mb-1" type="button" data-bs-toggle="collapse" data-bs-target=".collapse-detail-${user.id_user}">

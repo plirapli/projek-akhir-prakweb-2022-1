@@ -1,9 +1,9 @@
 ############# MENU #############
 ### GET
-http://localhost/olive-chicken-delivery/api/menu.php?function=get_menu
+http://localhost/olive-chicken-delivery/api/order.php?function=get_order
 
 ### GET BY ID
-http://localhost/olive-chicken-delivery/api/menu.php?function=get_menu_id&id=4
+http://localhost/olive-chicken-delivery/api/order.php?function=get_order_id&id_user=5
 
 ### POST ORDER
 http://localhost/olive-chicken-delivery/api/order.php?function=add_order
