@@ -14,19 +14,23 @@ function add_order()
   $req_body = json_decode(file_get_contents('php://input'), true);
   $id_user = $req_body["id_user"];
 
-  $command = "INSERT INTO pesanan 
-              VALUE ( '', '$id_user', current_timestamp())";
-  $query = mysqli_query($connection, $command);
+  $query = "INSERT INTO pesanan 
+            VALUE ( '', $id_user, current_timestamp())";
+  $result = mysqli_query($connection, $query);
+  $id = mysqli_query($connection, "SELECT LAST_INSERT_ID() AS id_order");
 
-  if ($query) {
+  $data = mysqli_fetch_object($id);
+
+  if ($result) {
     $response = [
       'status' => 1,
       'message' => 'Insert Success',
+      'data' => $data,
     ];
   } else {
     $response = [
       'status' => 0,
-      'message' => 'Insert Failed.'
+      'message' => 'Error: ' . mysqli_error($connection)
     ];
   }
 

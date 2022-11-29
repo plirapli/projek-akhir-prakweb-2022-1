@@ -1,5 +1,5 @@
 import * as controllerMenu from '../controller/menu.js';
-import { addOrder } from '../controller/order.js';
+import { addOrder, addTransaction } from '../controller/order.js';
 import { getUserId } from '../controller/user.js';
 
 // Global Variable
@@ -254,15 +254,29 @@ const transactionBtn = document.querySelector('#processTransaction');
 transactionBtn.addEventListener('click', (e) => {
   e.preventDefault();
 
-  // Add to Order
-  addOrder(userID).then((data) => {
-    if (data.status) {
-      // Add to transaction
-      for (const cartMenu of CartMenus) {
+  if (CartMenus.length) {
+    // Add to Order
+    addOrder(userID).then((data) => {
+      if (data.status) {
+        const { id_order } = data.data;
+
+        // Add to transaction
+        for (const cartMenu of CartMenus) {
+          const newTransaction = {
+            id_order,
+            id_menu: cartMenu.id,
+            qty: cartMenu.qty,
+          };
+
+          addTransaction(newTransaction).then((data) => {
+            // Reduce stock
+          });
+        }
       }
-    }
-  });
-  // Reduce stock
+    });
+  } else {
+    console.log('Masih kosong');
+  }
 });
 
 /* END TRANSACTION PROCESS */

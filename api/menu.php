@@ -177,6 +177,36 @@ function edit_menu()
   echo json_encode($response);
 }
 
+function edit_menu_stock()
+{
+  global $connection;
+
+  $req_body = json_decode(file_get_contents('php://input'), true);
+
+  $id = $req_body["id"];
+  $stok = $req_body["stok"];
+
+  $command = "UPDATE menu 
+              SET stok = '$stok', updated_at = current_timestamp()
+              WHERE id_menu = $id";
+  $query = mysqli_query($connection, $command);
+
+  if ($query) {
+    $response = [
+      'status' => 1,
+      'message' => 'Update Success'
+    ];
+  } else {
+    $response = [
+      'status' => 0,
+      'message' => 'Error: ' . mysqli_error($connection)
+    ];
+  }
+
+  header('Content-Type: application/json');
+  echo json_encode($response);
+}
+
 // DELETE
 function delete_menu()
 {

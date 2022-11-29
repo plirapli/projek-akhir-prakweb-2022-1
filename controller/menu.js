@@ -27,6 +27,17 @@ const editMenu = async (req) => {
   });
 };
 
+const editMenuStock = async (qty) => {
+  return fetch(`${baseURL}=edit_menu`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(qty),
+  });
+};
+
 const deleteMenu = async (id) => {
   return fetch(`${baseURL}=delete_menu&id=${id}`, { method: 'DELETE' })
     .then((res) => res.json())
@@ -34,4 +45,4 @@ const deleteMenu = async (id) => {
     .catch((err) => console.log('Error: ' + err));
 };
 
-export { getMenu, getMenuId, editMenu, deleteMenu };
+export { getMenu, getMenuId, editMenu, editMenuStock, deleteMenu };
