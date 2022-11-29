@@ -84,27 +84,16 @@
 
       <div class="tab-pane fade mt-4 show active" id="transaksi" role="tabpanel" aria-labelledby="transaction-tab">
         <h5>Transaksi</h5>
-        <table id="transactionList" class="table table-responsive align-middle">
+        <table id="orderList" class="table table-responsive align-middle">
           <thead>
             <tr>
               <th scope="col">No</th>
               <th scope="col">Nomor Order</th>
               <th scope="col">Tanggal</th>
-              <th scope="col"></th>
+              <th scope="col">Aksi</th>
             </tr>
           </thead>
-          <tbody>
-            <tr data-user-id=${user.id_user}>
-              <th scope="row" class="w-table-min">1</th>
-              <td>#[Nomor Order]</td>
-              <td>[Tanggal]</td>
-              <td class="w-table-min accordion-header" id="flush-heading-${user.id_user}">
-                <button class="btn btn-gray btn-sm mb-1" type="button" data-bs-toggle="collapse" data-bs-target=".collapse-detail-${user.id_user}">
-                  Detail
-                </button>
-              </td>
-            </tr>
-          </tbody>
+          <tbody></tbody>
         </table>
       </div>
 

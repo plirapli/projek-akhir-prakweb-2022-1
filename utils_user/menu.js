@@ -1,16 +1,17 @@
 import * as controllerMenu from '../controller/menu.js';
-import { addOrder, addTransaction } from '../controller/order.js';
+import { addOrder, addTransaction, getOrderById } from '../controller/order.js';
 import { getUserId, getUsers } from '../controller/user.js';
+import { showFormattedDate } from '../utils/convertDate.js';
 
 // Global Variable
 const CartMenus = [];
+const userID = document.querySelector('body').dataset.idUser;
 
 // Get User by ID
 const getUserByID = () => {
-  const id = document.querySelector('body').dataset.idUser;
   const infoElement = document.querySelector('.customer-info');
 
-  getUserId(id).then((data) => {
+  getUserId(userID).then((data) => {
     const user = data.data;
     infoElement.innerHTML = `
       <h5>Informasi Pelanggan</h5>
@@ -47,12 +48,15 @@ const getMenu = () => {
 
     menus.forEach((menu) => {
       const element = `
-        <div class="card card-menu-makanan mb-0 shadow" data-menu-id=${
-          menu.id_menu
-        } data-stok=${menu.stok}>
-          <img style="height: 20rem; object-fit: cover;" src=${pathMenuImg}/${
-        menu.img_menu
-      } class="card-img-top" alt="...">
+        <div 
+          class="card card-menu-makanan mb-0 shadow" 
+          data-menu-id=${menu.id_menu} 
+          data-stok=${menu.stok}
+        >
+          <img style="height: 20rem; object-fit: cover;" 
+            src=${pathMenuImg}/${menu.img_menu} 
+            class="card-img-top" alt="..."
+          >
           <div class="card-body">
             <h5 class="card-title">${menu.menu}</h5>
             <p class="card-text">
@@ -62,7 +66,7 @@ const getMenu = () => {
           <ul class="list-group list-group-flush border-0">
             <li class="list-group-item d-flex justify-content-between align-items-center">
               Stok
-              <b class="harga">${menu.stok}</b>
+              <b class="stok">${menu.stok}</b>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
               Harga
@@ -113,8 +117,8 @@ document.addEventListener(RENDER_EVENT, async () => {
   const cartTotal = document.getElementById('cartTotal');
   cartList.innerHTML = '';
 
-  let cartElement = '';
   let total = 0;
+  let cartElement = '';
 
   for (const cartMenu of CartMenus) {
     const { id, qty } = cartMenu;
@@ -164,12 +168,13 @@ const addCartHandler = () => {
   addCartBtn.forEach((addCart) => {
     const card = addCart.parentElement.parentElement.parentElement;
     const id = card.dataset.menuId;
+    const harga = parseInt(card.querySelector('.harga').textContent);
     const stok = card.dataset.stok;
     const qtyBtn = card.querySelector('.qty-btn');
     const deleteCartBtn = card.querySelector('.delete-cart');
 
     addCart.addEventListener('click', () => {
-      const newMenu = { id, qty: 1 };
+      const newMenu = { id, qty: 1, harga };
 
       addCart.style.display = 'none';
       qtyBtn.style.display = 'flex';
@@ -245,7 +250,6 @@ const changeInputQty = (id, stok) => {
 /* END CART PROCESS */
 
 /* TRANSACTION PROCESS */
-const userID = document.querySelector('body').dataset.idUser;
 const transactionBtn = document.querySelector('#processTransaction');
 
 transactionBtn.addEventListener('click', (e) => {
@@ -259,11 +263,12 @@ transactionBtn.addEventListener('click', (e) => {
 
         // Add to transaction
         const promises = CartMenus.map(async (cartMenu) => {
-          const { id, qty } = cartMenu;
+          const { id, qty, harga } = cartMenu;
           const newTransaction = {
             id_order,
             id_menu: id,
             qty,
+            harga,
           };
 
           return addTransaction(newTransaction).then((data) => {
@@ -289,83 +294,45 @@ transactionBtn.addEventListener('click', (e) => {
 /* END TRANSACTION PROCESS */
 
 /* TRANSACTION HISTORY */
-const getAllTransaction = () => {
-  const tableBody = document.querySelector('#transactionList > tbody');
+const getAllTransactionHandler = async () => {
+  const tableBody = document.querySelector('#orderList > tbody');
 
-  getTransacti().then((data) => {
-    const { users } = data.data;
+  getOrderById(userID).then((data) => {
+    const orders = data.data;
     let tableElement = '';
     let i = 1;
 
-    users.forEach((user) => {
-      const created_at = showFormattedDate(user.created_at);
-      const updated_at = showFormattedDate(user.updated_at);
+    orders.forEach((order) => {
+      let totalCost = 0;
+      const created_at = showFormattedDate(order.created_at);
 
       const accordionBody = `
-        <tr class="collapse collapse-detail-${user.id_user}">
+        <tr class="collapse collapse-detail-${order.id_pesanan} py-3">
           <td></td>
-          <td colspan="5" class="py-0">
-            <div class="collapse collapse-detail-${user.id_user}">
-              <div class="d-flex align-content-start gap-4">
-                <aside class="d-flex gap-4">
-                  <div class="d-flex">
-                    <div class="d-flex flex-column">
-                      <b>Nama</b>
-                      <b>Email</b>
-                      <b>Username</b>
-                      <b>Role</b>
-                    </div>
-                    <div class="d-flex ms-5 flex-column">
-                      <div><span> : </span>${user.nama}</div>
-                      <div><span> : </span>${user?.email || '-'}</div>
-                      <div><span> : </span>${user.username}</div>
-                      <div><span> : </span>${user.role}</div>
-                    </div>
-                  </div>
-                  <div class="d-flex ms-5">
-                    <div class="d-flex flex-column">
-                      <b>Telepon</b>
-                      <b>Dibuat Pada</b>
-                      <b>Diperbarui Pada</b>
-                    </div>
-                    <div class="d-flex ms-5 flex-column">
-                      <div><span> : </span>${user.telepon || '-'}</div>
-                      <div><span> : </span>${created_at}</div>
-                      <div><span> : </span>${updated_at}</div>
-                    </div>
-                  </div>
-                  <div></div>
-                </aside>
-              </div>
+          <td colspan="5" class="py-2">
+            <div class="collapse collapse-detail-${order.id_pesanan}">
+                <table id="transactionList" class="table table-borderless table-responsive align-middle">
+                <thead>
+                  <tr>
+                    <th scope="col">Nama Menu</th>
+                    <th scope="col">Jumlah</th>
+                    <th scope="col">Harga</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
             </div>
           </td>
         </tr>
       `;
 
       const element = `
-        <tr data-user-id = ${user.id_user}>
-          <th scope="row" class="w-table-min">${i++}</th>
-          <td>${user.nama}</td>
-          <td>${user.username}</td>
-          <td class="text-capitalize">${user.role}</td>
-          <td class="w-table-min">
-            <span class="d-inline text-gray cursor-pointer edit-user" data-bs-toggle="modal" data-bs-target="#editUserModal">
-              <iconify-icon icon="material-symbols:edit" width="20"></iconify-icon>
-            </span>
-            <span class="text-danger-sub cursor-pointer delete-user" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
-              <iconify-icon icon="material-symbols:delete" width="20"></iconify-icon>
-            </span>
-          </td>
-          <td 
-            class="w-table-min accordion-header" 
-            id="flush-heading-${user.id_user}"
-          >
-            <button 
-              class="btn btn-gray btn-sm mb-1" 
-              type="button" 
-              data-bs-toggle="collapse" 
-              data-bs-target=".collapse-detail-${user.id_user}" 
-            >
+        <tr data-user-id=${order.id_user}>
+          <th scope="row" class="w-table-min">1</th>
+          <td>#${order.id_pesanan}</td>
+          <td>${created_at}</td>
+          <td class="w-table-min accordion-header" id="flush-heading-${order.id_pesanan}">
+            <button class="btn btn-gray btn-sm mb-1" type="button" data-bs-toggle="collapse" data-bs-target=".collapse-detail-${order.id_pesanan}">
               Detail
             </button>
           </td>
@@ -377,9 +344,6 @@ const getAllTransaction = () => {
     });
 
     tableBody.innerHTML = tableElement;
-    getUserTotal();
-    editUserHandler();
-    deleteUserHandler();
   });
 };
 
@@ -388,4 +352,5 @@ const getAllTransaction = () => {
 document.addEventListener('DOMContentLoaded', () => {
   getUserByID();
   getMenu();
+  getAllTransactionHandler();
 });
