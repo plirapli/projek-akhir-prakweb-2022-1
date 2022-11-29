@@ -261,17 +261,25 @@ transactionBtn.addEventListener('click', (e) => {
         const { id_order } = data.data;
 
         // Add to transaction
-        for (const cartMenu of CartMenus) {
+        const cartPromises = CartMenus.map((cartMenu) => {
+          const { id, qty } = cartMenu;
           const newTransaction = {
             id_order,
-            id_menu: cartMenu.id,
-            qty: cartMenu.qty,
+            id_menu: id,
+            qty,
           };
 
           addTransaction(newTransaction).then((data) => {
-            // Reduce stock
+            if (data.status) {
+              // Reduce stock
+              controllerMenu.editMenuStock({ id, qty }).then((data) => {});
+            }
           });
-        }
+        });
+
+        Promise.all(cartPromises).then((result) => {
+          window.location.href = '../pages_user/pesan.php';
+        });
       }
     });
   } else {

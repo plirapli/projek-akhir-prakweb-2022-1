@@ -27,14 +27,14 @@ const editMenu = async (req) => {
   });
 };
 
-const editMenuStock = async (qty) => {
-  return fetch(`${baseURL}=edit_menu`, {
+const editMenuStock = async (req) => {
+  return fetch(`${baseURL}=edit_menu_stock`, {
     method: 'PUT',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(qty),
+    body: JSON.stringify(req),
   });
 };
 

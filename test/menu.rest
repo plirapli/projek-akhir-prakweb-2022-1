@@ -23,7 +23,7 @@ Content-Type: application/json
 
 {
   "id": 9,
-  "stok": 10
+  "qty": 1
 }
 
 ### DELETE
