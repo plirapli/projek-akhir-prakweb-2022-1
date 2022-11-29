@@ -119,9 +119,10 @@ function get_transaction_id()
   global $connection;
 
   $id_order = $_GET["id_order"];
-  $query = "SELECT * FROM transaksi 
-            INNER JOIN menu ON transaksi.id_menu = menu.id_menu 
-            WHERE transaksi.id_pesanan = $id_order";
+  $query = "SELECT id_transaksi, id_pesanan, menu.menu AS menu, qty, t.harga AS harga
+            FROM transaksi t
+            INNER JOIN menu ON t.id_menu = menu.id_menu 
+            WHERE t.id_pesanan = $id_order";
   $result = mysqli_query($connection, $query);
 
   if ($query) {

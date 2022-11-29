@@ -15,6 +15,13 @@ const getOrderById = async (id_user) => {
     .then((data) => data);
 };
 
+const getTransactionById = async (id_order) => {
+  const endpoint = `${baseURL}=get_transaction_id&id_order=${id_order}`;
+  return fetch(endpoint)
+    .then((res) => res.json())
+    .then((data) => data);
+};
+
 const addOrder = async (id_user) => {
   const endpoint = `${baseURL}=add_order`;
 
@@ -45,4 +52,10 @@ const addTransaction = async (menu) => {
     .then((data) => data);
 };
 
-export { getAllOrder, getOrderById, addOrder, addTransaction };
+export {
+  getAllOrder,
+  getOrderById,
+  getTransactionById,
+  addOrder,
+  addTransaction,
+};

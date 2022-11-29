@@ -113,7 +113,13 @@ a:hover {
 .card-menu-container-user {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 320px));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+@media only screen and (max-width: 767px) {
+  .card-menu-container-user {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
 }
 
 .card-menu-makanan {

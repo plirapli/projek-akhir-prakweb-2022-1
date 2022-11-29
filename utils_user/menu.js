@@ -1,5 +1,10 @@
 import * as controllerMenu from '../controller/menu.js';
-import { addOrder, addTransaction, getOrderById } from '../controller/order.js';
+import {
+  addOrder,
+  addTransaction,
+  getOrderById,
+  getTransactionById,
+} from '../controller/order.js';
 import { getUserId, getUsers } from '../controller/user.js';
 import { showFormattedDate } from '../utils/convertDate.js';
 
@@ -294,56 +299,84 @@ transactionBtn.addEventListener('click', (e) => {
 /* END TRANSACTION PROCESS */
 
 /* TRANSACTION HISTORY */
-const getAllTransactionHandler = async () => {
+const getAllTransactionHandler = () => {
   const tableBody = document.querySelector('#orderList > tbody');
 
-  getOrderById(userID).then((data) => {
+  getOrderById(userID).then(async (data) => {
     const orders = data.data;
     let tableElement = '';
     let i = 1;
 
-    orders.forEach((order) => {
-      let totalCost = 0;
+    const tes = orders.map(async (order) => {
+      const { id_pesanan: id_order } = order;
       const created_at = showFormattedDate(order.created_at);
 
-      const accordionBody = `
-        <tr class="collapse collapse-detail-${order.id_pesanan} py-3">
-          <td></td>
-          <td colspan="5" class="py-2">
-            <div class="collapse collapse-detail-${order.id_pesanan}">
-                <table id="transactionList" class="table table-borderless table-responsive align-middle">
-                <thead>
-                  <tr>
-                    <th scope="col">Nama Menu</th>
-                    <th scope="col">Jumlah</th>
-                    <th scope="col">Harga</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-          </td>
-        </tr>
-      `;
+      const subTable = await getTransactionById(id_order).then((data) => {
+        const transactions = data.data;
+        let subTableEelement = '';
 
-      const element = `
-        <tr data-user-id=${order.id_user}>
-          <th scope="row" class="w-table-min">1</th>
-          <td>#${order.id_pesanan}</td>
-          <td>${created_at}</td>
-          <td class="w-table-min accordion-header" id="flush-heading-${order.id_pesanan}">
-            <button class="btn btn-gray btn-sm mb-1" type="button" data-bs-toggle="collapse" data-bs-target=".collapse-detail-${order.id_pesanan}">
-              Detail
-            </button>
-          </td>
-        </tr>
-        ${accordionBody}
-      `;
+        transactions.forEach((transaction) => {
+          const subElement = `
+            <tr data-transaction-id=${transaction.id_transaksi}>
+              <td>${transaction.menu}</td>
+              <td class="text-center">${transaction.qty}</td>
+              <td>Rp${transaction.harga}</td>
+            </tr>
+          `;
 
-      tableElement += element;
+          subTableEelement += subElement;
+        });
+
+        return subTableEelement;
+      });
+
+      const accordionBody = async () => {
+        return `
+          <tr class="collapse collapse-detail-${id_order} py-3">
+            <td></td>
+            <td colspan="3" class="py-2">
+              <div class="collapse collapse-detail-${id_order}">
+                  <table id="transactionList" class="table table-borderless table-responsive align-middle">
+                  <thead>
+                    <tr>
+                      <th scope="col">Nama Menu</th>
+                      <th scope="col" class="text-center">Jumlah</th>
+                      <th scope="col">Harga</th>
+                    </tr>
+                  </thead>
+                  <tbody>${subTable}</tbody>
+                </table>
+              </div>
+            </td>
+          </tr>
+        `;
+      };
+
+      const element = async () => {
+        return `
+          <tr data-order-id=${id_order}>
+            <th scope="row" class="w-table-min">${i++}</th>
+            <td>#${id_order}</td>
+            <td>${created_at}</td>
+            <td class="w-table-min accordion-header" id="flush-heading-${id_order}">
+              <button class="btn btn-gray btn-sm mb-1" type="button" data-bs-toggle="collapse" data-bs-target=".collapse-detail-${id_order}">
+                Detail
+              </button>
+            </td>
+          </tr>
+          ${await accordionBody()}
+        `;
+      };
+
+      return element().then((result) => {
+        tableElement += result;
+        return tableElement;
+      });
     });
 
-    tableBody.innerHTML = tableElement;
+    Promise.all(tes).then((result) => {
+      tableBody.innerHTML = result.at(-1);
+    });
   });
 };
 
