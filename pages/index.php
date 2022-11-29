@@ -1,3 +1,8 @@
+<?php
+require '../utils/cek_session.php';
+cek_session();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

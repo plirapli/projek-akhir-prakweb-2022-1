@@ -374,8 +374,12 @@ const getAllTransactionHandler = () => {
       });
     });
 
+    const emptyTable = `
+      <div class="mt-3">Anda belum pernah memesan</div>
+    `;
+
     Promise.all(tes).then((result) => {
-      tableBody.innerHTML = result.at(-1);
+      tableBody.innerHTML = result.at(-1) || emptyTable;
     });
   });
 };

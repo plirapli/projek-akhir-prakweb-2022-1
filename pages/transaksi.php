@@ -43,15 +43,15 @@ cek_session();
   <!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" data-active-nav="user_list" class="sidebar d-flex flex-column justify-content-between"></aside>
+  <aside id="sidebar" data-active-nav="transaksi" class="sidebar d-flex flex-column justify-content-between"></aside>
 
   <main id="main" class="main col">
     <div class="pagetitle">
-      <h1>User</h1>
+      <h1>Transaksi</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-          <li class="breadcrumb-item active">User</li>
+          <li class="breadcrumb-item active">Riwayat Transaksi</li>
         </ol>
       </nav>
     </div>

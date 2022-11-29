@@ -15,15 +15,10 @@ header.innerHTML = `
             <div>
               Seva Giantama
             </div> 
-            <div class="sub-text">
+            <div class="sub-text text-end">
               Admin
             </div> 
           </span>
-          <img
-            src="../assets/img/profile-default.png"
-            alt="Profile"
-            class="rounded"
-          />
         </div>
         <!-- End Profile Iamge Icon -->
       
@@ -78,21 +73,12 @@ sidebar.innerHTML = `
     <li class="nav-heading">Transaksi</li>
     <li class="nav-item">
       <a class="nav-link ${
-        sidebar.dataset.activeNav != 'transaksi_berlangsung' && 'collapsed'
-      }" href="users-profile.html">
+        sidebar.dataset.activeNav != 'transaksi' && 'collapsed'
+      }" href="transaksi.php">
         <iconify-icon icon="mdi:clipboard-text" width="18"></iconify-icon>
-        <span class="ms-2">Transaksi Berlangsung</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link ${
-        sidebar.dataset.activeNav != 'riwayat_transaksi' && 'collapsed'
-      }" href="users-profile.html">
-        <iconify-icon icon="mdi:clipboard-text-history" width="18"></iconify-icon>
         <span class="ms-2">Riwayat Transaksi</span>
       </a>
     </li>
-
   </ul>
   
   <ul class="sidebar-nav">

@@ -14,21 +14,16 @@ getUserId(id).then((data) => {
   
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-        <li class="nav-item dropdown pe-3 position-relative">
+        <li class="nav-item dropdown pe-2 position-relative">
           <div class="nav-link nav-profile d-flex align-items-center pe-0">
             <span class="d-none d-md-block pe-2">
               <div>
                 ${user?.nama}
               </div> 
-              <div class="sub-text">
+              <div class="sub-text text-end">
                 ${user?.role}
               </div> 
             </span>
-            <img
-              src="../assets/img/profile-default.png"
-              alt="Profile"
-              class="rounded"
-            />
           </div>
         </li>
         <li class="nav-item dropdown pe-3 position-relative">
