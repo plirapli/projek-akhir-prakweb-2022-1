@@ -4,7 +4,7 @@ import * as controllerMenu from '../controller/menu.js';
 // Get Menu
 const getMenu = () => {
   const menuList = document.querySelector('#menuList');
-  const pathMenuImg = '/olive-chicken-delivery/assets/img/menu';
+  const pathMenuImg = '/olive-chicken/assets/img/menu';
 
   controllerMenu.getMenu().then((data) => {
     const menus = data.data;

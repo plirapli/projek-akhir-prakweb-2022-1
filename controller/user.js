@@ -1,4 +1,4 @@
-const baseURL = 'http://localhost/olive-chicken-delivery/api/user.php?function';
+const baseURL = 'http://localhost/olive-chicken/api/user.php?function';
 
 // Get All User
 const getUsers = async () => {
@@ -25,7 +25,7 @@ const getUserName = async (username) => {
 };
 
 const getUserTotalByRole = async () => {
-  const endpoint = `http://localhost/olive-chicken-delivery/api/role.php?function=get_role_total`;
+  const endpoint = `http://localhost/olive-chicken/api/role.php?function=get_role_total`;
   return fetch(endpoint)
     .then((res) => res.json())
     .then((data) => data);

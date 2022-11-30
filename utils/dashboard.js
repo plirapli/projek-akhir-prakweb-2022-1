@@ -1,7 +1,7 @@
 // Get Total
 const getTotal = () => {
   const endpoint =
-    'http://localhost/olive-chicken-delivery/api/total.php?function=get_total';
+    'http://localhost/olive-chicken/api/total.php?function=get_total';
   const cardInfo = document.querySelector('.card-info');
 
   fetch(endpoint)

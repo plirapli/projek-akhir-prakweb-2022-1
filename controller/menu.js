@@ -1,5 +1,5 @@
 // Base URL
-const baseURL = 'http://localhost/olive-chicken-delivery/api/menu.php?function';
+const baseURL = 'http://localhost/olive-chicken/api/menu.php?function';
 
 // Get User
 const getMenu = async () => {

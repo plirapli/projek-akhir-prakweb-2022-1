@@ -30,7 +30,7 @@ const generateObject = (
 
 /* API CALL */
 // Base URL
-const baseURL = 'http://localhost/olive-chicken-delivery/api/user.php?function';
+const baseURL = 'http://localhost/olive-chicken/api/user.php?function';
 
 // Get Total User
 const getUserTotal = () => {
@@ -170,7 +170,7 @@ const getUser = () => {
 const getRole = () => {
   const selectElement = document.querySelectorAll('.select-role');
   const endpoint =
-    'http://localhost/olive-chicken-delivery/api/role.php?function=get_role';
+    'http://localhost/olive-chicken/api/role.php?function=get_role';
 
   fetch(endpoint)
     .then((res) => res.json())
