@@ -9,14 +9,12 @@ cek_session();
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-
   <title>Dashboard - NiceAdmin Bootstrap Template</title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
 
   <!-- Favicons -->
   <link href="../assets/img/favicon.png" rel="icon" />
-  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
   <!-- Vendor CSS Files -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -33,11 +31,11 @@ cek_session();
 
   <!-- Custom JS -->
   <script src="../assets/js/main.js" defer></script>
-  <script src="../assets/js/index.js" defer></script>
-  <script type="module" src="../utils/user.js" defer></script>
+  <script type="module" src="../assets/js/index.js" defer></script>
+  <script type="module" src="../utils/transaksi.js" defer></script>
 </head>
 
-<body class="min-vh-100 d-flex flex-column">
+<body class="min-vh-100 d-flex flex-column" data-user-id=<?= $_SESSION["userID"] ?>>
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center"></header>
   <!-- End Header -->
@@ -62,73 +60,23 @@ cek_session();
         <!-- Left side columns -->
         <div class="col-lg-12">
           <div class="row">
-            <div class="row card-info">
-              <!-- Card -->
-
-              <!-- End Card -->
-
-              <!-- Card -->
-              <div class="col-sm">
-                <div class="card info-card revenue-card">
-                  <div class="card-body">
-                    <h5 class="card-title">Driver</h5>
-
-                    <div class="d-flex align-items-center">
-                      <div class="card-icon bg-gray rounded d-flex align-items-center justify-content-center">
-                        <iconify-icon icon="mdi:user"></iconify-icon>
-                      </div>
-                      <div class="ps-3">
-                        <h6>27</h6>
-                        <span class="text-muted small">Pengguna</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- End Card -->
-
-              <!-- Card -->
-              <div class="col-sm">
-                <div class="card info-card revenue-card">
-                  <div class="card-body">
-                    <h5 class="card-title">Admin</h5>
-
-                    <div class="d-flex align-items-center">
-                      <div class="card-icon bg-gray rounded d-flex align-items-center justify-content-center">
-                        <iconify-icon icon="mdi:user"></iconify-icon>
-                      </div>
-                      <div class="ps-3">
-                        <h6>3</h6>
-                        <span class="text-muted small">Pengguna</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- End Card -->
-            </div>
+            <div class="row card-info"></div>
 
             <!-- Tabel User -->
             <div class="col-12">
               <div class="card recent-sales overflow-auto">
                 <div class="card-body mt-2">
                   <div class="d-flex justify-content-between mb-2 align-items-center">
-                    <h5 class="card-title">Daftar Pengguna</h5>
-                    <button id="addUserBtn" data-bs-toggle="modal" data-bs-target="#inputUserModal" class="btn btn-primary d-flex align-items-center gap-2">
-                      Tambah User
-                      <iconify-icon icon="material-symbols:add" width="20"></iconify-icon>
-                    </button>
+                    <h5 class="card-title">Daftar Transaksi</h5>
                   </div>
 
-                  <table class="table table-responsive table-borderless table-user align-middle">
+                  <table id="orderList" class="table table-responsive table-borderless align-middle">
                     <thead>
                       <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Nama</th>
-                        <th scope="col">Username</th>
-                        <th scope="col">Role</th>
-                        <th scope="col">Aksi</th>
-                        <th scope="col"></th>
+                        <th scope="col" class="text-center">No</th>
+                        <th scope="col">Nomor Order</th>
+                        <th scope="col">Tanggal</th>
+                        <th scope="col">Dipesan Oleh</th>
                       </tr>
                     </thead>
                     <tbody></tbody>
@@ -149,135 +97,6 @@ cek_session();
 
   <!-- Back to Top -->
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Modal Add User -->
-  <div class="modal fade" id="inputUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="inputUserModal" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5 fw-normal" id="staticBackdropLabel">
-            Tambah User
-          </h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <!-- Isi Modal -->
-        <form id="addUserForm">
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="inputNama" class="form-label"> Nama Lengkap </label>
-              <input type="text" class="form-control" id="inputNama" placeholder="Masukkan nama lengkap" required />
-            </div>
-            <div class="mb-3">
-              <label for="inputEmail" class="form-label">
-                Alamat Email
-              </label>
-              <input type="email" class="form-control" id="inputEmail" placeholder="Masukkan alamat email" required />
-            </div>
-            <div class="mb-3">
-              <label for="inputUsername" class="form-label"> Username </label>
-              <input type="text" class="form-control" id="inputUsername" placeholder="Masukkan username" required />
-            </div>
-            <div class="mb-3">
-              <label for="inputPassword" class="form-label">
-                Kata Sandi
-              </label>
-              <input type="password" class="form-control" id="inputPassword" placeholder="********" required />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Role</label>
-              <select class="form-select select-role" required></select>
-            </div>
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-gray" data-bs-dismiss="modal">
-              Tutup
-            </button>
-            <button type="submit" class="btn btn-primary">Tambah</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Edit User -->
-  <div class="modal fade" id="editUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editUserModal" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5 fw-normal" id="staticBackdropLabel">
-            Edit User
-          </h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <!-- Isi Modal -->
-        <form id="editUserForm">
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="editNama" class="form-label"> Nama Lengkap </label>
-              <input type="text" class="form-control" id="editNama" placeholder="Masukkan nama lengkap" required />
-            </div>
-            <div class="mb-3">
-              <label for="editEmail" class="form-label"> Alamat Email </label>
-              <input type="email" class="form-control" id="editEmail" placeholder="Masukkan alamat email" required />
-            </div>
-            <div class="mb-3">
-              <label for="editUsername" class="form-label"> Username </label>
-              <input type="text" class="form-control" id="editUsername" placeholder="Masukkan username" required />
-            </div>
-            <div class="mb-3">
-              <label for="editPassword" class="form-label">
-                Kata Sandi
-              </label>
-              <input type="password" class="form-control" id="editPassword" placeholder="********" required />
-            </div>
-            <div class="mb-3">
-              <label for="editPhoneNumber" class="form-label">
-                Telepon
-              </label>
-              <input type="text" class="form-control" id="editPhoneNumber" placeholder="Nomor telepon" />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Role</label>
-              <select class="form-select select-role" required></select>
-            </div>
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-gray" data-bs-dismiss="modal">
-              Tutup
-            </button>
-            <button type="submit" class="btn btn-primary">Simpan</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Delete User -->
-  <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5 fw-normal" id="exampleModalLabel">
-            Hapus User
-          </h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body"></div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-gray" data-bs-dismiss="modal">
-            Tutup
-          </button>
-          <button type="button" class="btn btn-danger btn-delete">
-            Hapus
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 </body>
 
 </html>

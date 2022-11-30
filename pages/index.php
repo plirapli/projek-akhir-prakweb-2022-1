@@ -1,6 +1,7 @@
 <?php
 require '../utils/cek_session.php';
 cek_session();
+cek_admin();
 ?>
 
 <!DOCTYPE html>
@@ -9,13 +10,12 @@ cek_session();
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Dashboard - Olive Chicken Delivery</title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
-  <title>Dashboard - Olive Chicken Delivery</title>
 
   <!-- Favicons -->
   <link href="../assets/img/favicon.png" rel="icon" />
-  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
   <!-- BS CSS Files -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -29,11 +29,11 @@ cek_session();
   <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js" defer></script>
 
   <script src="../assets/js/main.js" defer></script>
-  <script src="../assets/js/index.js" defer></script>
+  <script type="module" src="../assets/js/index.js" defer></script>
   <script type="module" src="../utils/dashboard.js" defer></script>
 </head>
 
-<body class="min-vh-100 d-flex flex-column">
+<body class="min-vh-100 d-flex flex-column" data-user-id=<?= $_SESSION["userID"] ?>>
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center"></header>
   <!-- End Header -->

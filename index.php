@@ -1,4 +1,13 @@
 <?php
+session_start();
+
+if (isset($_SESSION["userID"])) {
+  if ($_SESSION["role"] != 1) {
+    header("location: ./pages_user/index.php");
+  } else {
+    header("location: ./pages/index.php");
+  }
+}
 
 if (isset($_GET["pesan"])) {
   $pesan = $_GET["pesan"];
@@ -8,6 +17,8 @@ if (isset($_GET["pesan"])) {
     $msg = 'Username atau Password salah!';
   } else if ($pesan == 'logout') {
     $msg = 'Anda telah berhasil logout.';
+  } else {
+    $msg = 'Login Gagal';
   }
 } else {
   $msg = '';
@@ -42,10 +53,6 @@ if (isset($_GET["pesan"])) {
   <!-- BS & Libs -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" defer></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js" defer></script>
-
-  <script src="./assets/js/main.js" defer></script>
-  <script src="./assets/js/index.js" defer></script>
-  <script type="module" src="../utils/dashboard.js" defer></script>
 </head>
 
 <body class="min-vh-100 d-flex flex-column">

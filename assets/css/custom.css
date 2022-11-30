@@ -25,6 +25,9 @@ a:hover {
   color: var(--color-dark-gray);
   transition: all 0.2s;
 }
+.text-btn.text-gray:hover {
+  color: var(--color-black);
+}
 
 .text-danger-sub {
   color: var(--color-danger-sub);

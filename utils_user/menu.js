@@ -5,7 +5,7 @@ import {
   getOrderById,
   getTransactionById,
 } from '../controller/order.js';
-import { getUserId, getUsers } from '../controller/user.js';
+import { getUserId } from '../controller/user.js';
 import { showFormattedDate } from '../utils/convertDate.js';
 
 // Global Variable

@@ -132,7 +132,7 @@ const getUser = () => {
             <td>${user.username}</td>
             <td class="text-capitalize">${user.role}</td>
             <td class="w-table-min">
-              <span class="d-inline text-gray cursor-pointer edit-user" data-bs-toggle="modal" data-bs-target="#editUserModal">
+              <span class="d-inline text-btn text-gray cursor-pointer edit-user" data-bs-toggle="modal" data-bs-target="#editUserModal">
                 <iconify-icon icon="material-symbols:edit" width="20"></iconify-icon>
               </span>
               <span class="text-danger-sub cursor-pointer delete-user" data-bs-toggle="modal" data-bs-target="#deleteUserModal">

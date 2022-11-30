@@ -1,32 +1,42 @@
-const header = document.querySelector('#header');
-header.innerHTML = `
-  <div class="d-flex align-items-center justify-content-between">
-    <i class="bi bi-list toggle-sidebar-btn"></i>
-    <a href="index.php" class="logo d-flex align-items-center ms-3">
-      <img src="../assets/img/olive-chicken-logo-brand.jpg" alt="" />
-    </a>
-  </div>
+import { getUserId } from '../../controller/user.js';
 
-  <nav class="header-nav ms-auto">
-    <ul class="d-flex align-items-center">
-      <li class="nav-item dropdown pe-3">
-        <div class="nav-link nav-profile d-flex align-items-center pe-0">
-          <span class="d-none d-md-block pe-2">
-            <div>
-              Seva Giantama
-            </div> 
-            <div class="sub-text text-end">
-              Admin
-            </div> 
-          </span>
-        </div>
-        <!-- End Profile Iamge Icon -->
-      
-      </li>
-      <!-- End Profile Nav -->
-    </ul>
-  </nav>
-`;
+const getUserHandler = () => {
+  const header = document.querySelector('#header');
+  const userID = document.querySelector('body').dataset.userId;
+
+  getUserId(userID).then((data) => {
+    const user = data.data;
+
+    header.innerHTML = `
+      <div class="d-flex align-items-center justify-content-between">
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+        <a href="index.php" class="logo d-flex align-items-center ms-3">
+          <img src="../assets/img/olive-chicken-logo-brand.jpg" alt="" />
+        </a>
+      </div>
+  
+      <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+          <li class="nav-item dropdown pe-3">
+            <div class="nav-link nav-profile d-flex align-items-center pe-0">
+              <span class="d-none d-md-block pe-2">
+                <div>
+                  ${user?.nama}
+                </div> 
+                <div class="sub-text text-end">
+                  ${user?.role}
+                </div> 
+              </span>
+            </div>
+            <!-- End Profile Iamge Icon -->
+          
+          </li>
+          <!-- End Profile Nav -->
+        </ul>
+      </nav>
+    `;
+  });
+};
 
 // Expand Toggle Click
 header.addEventListener('click', (e) => {
@@ -98,3 +108,7 @@ footer.innerHTML = `
     &copy; 2022 Copyright &nbsp; <b>Olive Chicken</b>. All Rights Reserved
   </div>
 `;
+
+document.addEventListener('DOMContentLoaded', () => {
+  getUserHandler();
+});

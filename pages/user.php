@@ -9,14 +9,12 @@ cek_session();
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-
   <title>Dashboard - NiceAdmin Bootstrap Template</title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
 
   <!-- Favicons -->
   <link href="../assets/img/favicon.png" rel="icon" />
-  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
   <!-- Vendor CSS Files -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -33,11 +31,11 @@ cek_session();
 
   <!-- Custom JS -->
   <script src="../assets/js/main.js" defer></script>
-  <script src="../assets/js/index.js" defer></script>
+  <script type="module" src="../assets/js/index.js" defer></script>
   <script type="module" src="../utils/user.js" defer></script>
 </head>
 
-<body class="min-vh-100 d-flex flex-column">
+<body class="min-vh-100 d-flex flex-column" data-user-id=<?= $_SESSION["userID"] ?>>
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center"></header>
   <!-- End Header -->

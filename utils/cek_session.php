@@ -8,3 +8,10 @@ function cek_session()
     header("location: ../index.php?pesan=belum_login");
   }
 }
+
+function cek_admin()
+{
+  if ($_SESSION["role"] != 1) {
+    header("location: ../pages_user/index.php");
+  }
+}
