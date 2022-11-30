@@ -255,7 +255,6 @@ const changeInputQty = (id, stok) => {
 
 /* TRANSACTION PROCESS */
 const transactionBtn = document.querySelector('#processTransaction');
-
 transactionBtn.addEventListener('click', (e) => {
   e.preventDefault();
 
@@ -310,7 +309,7 @@ const getAllTransactionHandler = () => {
       const { id_pesanan: id_order } = order;
       const created_at = showFormattedDate(order.created_at);
 
-      const subTable = await getTransactionById(id_order).then((data) => {
+      const subTable = getTransactionById(id_order).then((data) => {
         const transactions = data.data;
         let subTableEelement = '';
 
@@ -322,7 +321,6 @@ const getAllTransactionHandler = () => {
               <td>Rp${transaction.harga}</td>
             </tr>
           `;
-
           subTableEelement += subElement;
         });
 
@@ -343,7 +341,7 @@ const getAllTransactionHandler = () => {
                       <th scope="col">Harga</th>
                     </tr>
                   </thead>
-                  <tbody>${subTable}</tbody>
+                  <tbody>${await subTable}</tbody>
                 </table>
               </div>
             </td>
@@ -367,10 +365,7 @@ const getAllTransactionHandler = () => {
         `;
       };
 
-      return element().then((result) => {
-        tableElement += result;
-        return tableElement;
-      });
+      return await element();
     });
 
     const emptyTable = `
@@ -378,7 +373,10 @@ const getAllTransactionHandler = () => {
     `;
 
     Promise.all(tes).then((result) => {
-      tableBody.innerHTML = result.at(-1) || emptyTable;
+      result.forEach((res) => {
+        tableElement += res;
+      });
+      tableBody.innerHTML = tableElement || emptyTable;
     });
   });
 };
