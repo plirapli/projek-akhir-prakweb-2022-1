@@ -32,20 +32,20 @@ const getMenu = () => {
                 <b class="harga">${menu.harga}</b>
               </span>
             </li>
-            <li class="list-group-item py-3">
+            <li class="list-group-item py-3 d-flex">
               <button 
-                class="btn btn-dark-gray edit-menu" 
+                class="btn btn-secondary edit-menu w-100" 
                 data-bs-toggle="modal" 
                 data-bs-target="#editMenuModal"
               >
                 Edit
               </button>
               <button 
-                class="ms-1 btn btn-danger-sub delete-menu" 
+                class="ms-1 btn btn-danger-sub delete-menu d-flex align-items-center p-2" 
                 data-bs-toggle="modal" 
                 data-bs-target="#deleteMenuModal"
               >
-                Delete
+                <iconify-icon icon="material-symbols:delete" width="24"></iconify-icon>
               </button>
             </li>
           </ul>

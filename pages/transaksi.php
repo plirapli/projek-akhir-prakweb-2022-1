@@ -96,7 +96,9 @@ cek_session();
   <footer id="footer" class="footer"></footer>
 
   <!-- Back to Top -->
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+    <iconify-icon icon="material-symbols:arrow-upward-rounded" width="24"></iconify-icon>
+  </a>
 </body>
 
 </html>

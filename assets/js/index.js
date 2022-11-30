@@ -9,8 +9,8 @@ const getUserHandler = () => {
 
     header.innerHTML = `
       <div class="d-flex align-items-center justify-content-between">
-        <i class="bi bi-list toggle-sidebar-btn"></i>
-        <a href="index.php" class="logo d-flex align-items-center ms-3">
+        <iconify-icon class="sidebar-btn toggle-sidebar-btn" icon="charm:menu-hamburger" width="24"></iconify-icon>
+        <a href="index.php" class="logo d-flex align-items-center">
           <img src="../assets/img/olive-chicken-logo-brand.jpg" alt="" />
         </a>
       </div>
@@ -46,69 +46,77 @@ header.addEventListener('click', (e) => {
 });
 
 // Sidebar
-const sidebar = document.querySelector('#sidebar');
-const url = sidebar.dataset.activeNav;
+const generateSidebar = () => {
+  const sidebar = document.querySelector('#sidebar');
+  const url = sidebar.dataset.activeNav;
 
-sidebar.innerHTML = `
-  <ul class="sidebar-nav" id="sidebar-nav">
-    <li class="nav-item">
-      <a class="nav-link d-flex align-items-center ${
-        sidebar.dataset.activeNav != 'dashboard' && 'collapsed'
-      }" href="index.php">
-        <iconify-icon icon="material-symbols:window" width="18"></iconify-icon>
-        <span class="ms-2">Dashboard</span>
-      </a>
-    </li>
-    <!-- End Dashboard Nav -->
-    
-    <li class="nav-item">
-      <a class="nav-link d-flex align-items-center ${
-        sidebar.dataset.activeNav != 'menu' && 'collapsed'
-      }" href="menu_makanan.php">
-        <iconify-icon icon="mdi:food-drumstick" width="18"></iconify-icon>
-        <span class="ms-2">Menu Makanan</span>
-      </a>
-    </li>
-
-    <li class="nav-heading">Daftar Pengguna</li>
-    <li class="nav-item">
-      <a class="nav-link d-flex align-items-center ${
-        sidebar.dataset.activeNav != 'user_list' && 'collapsed'
-      }" href="user.php">
-        <iconify-icon icon="mdi:user" width="18"></iconify-icon>
-        <span class="ms-2">User</span>
-      </a>
-    </li>
-    
-    <li class="nav-heading">Transaksi</li>
-    <li class="nav-item">
-      <a class="nav-link ${
-        sidebar.dataset.activeNav != 'transaksi' && 'collapsed'
-      }" href="transaksi.php">
-        <iconify-icon icon="mdi:clipboard-text" width="18"></iconify-icon>
-        <span class="ms-2">Riwayat Transaksi</span>
-      </a>
-    </li>
-  </ul>
+  sidebar.innerHTML = `
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center ${
+          sidebar.dataset.activeNav != 'dashboard' && 'collapsed'
+        }" href="index.php">
+          <iconify-icon icon="material-symbols:window" width="18"></iconify-icon>
+          <span class="ms-2">Dashboard</span>
+        </a>
+      </li>
+      <!-- End Dashboard Nav -->
+      
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center ${
+          sidebar.dataset.activeNav != 'menu' && 'collapsed'
+        }" href="menu_makanan.php">
+          <iconify-icon icon="mdi:food-drumstick" width="18"></iconify-icon>
+          <span class="ms-2">Menu Makanan</span>
+        </a>
+      </li>
   
-  <ul class="sidebar-nav">
-    <li class="nav-item">
-      <a class="nav-link collapsed text-danger" href="logout.php">
-        <iconify-icon icon="material-symbols:exit-to-app-rounded" width="18"></iconify-icon>
-        <span class="ms-2">Keluar</span>
-      </a>
-    </li>
-    <!-- End Blank Page Nav -->
-  </ul>
-`;
+      <li class="nav-heading">Daftar Pengguna</li>
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center ${
+          sidebar.dataset.activeNav != 'user_list' && 'collapsed'
+        }" href="user.php">
+          <iconify-icon icon="mdi:user" width="18"></iconify-icon>
+          <span class="ms-2">User</span>
+        </a>
+      </li>
+      
+      <li class="nav-heading">Transaksi</li>
+      <li class="nav-item">
+        <a class="nav-link ${
+          sidebar.dataset.activeNav != 'transaksi' && 'collapsed'
+        }" href="transaksi.php">
+          <iconify-icon icon="mdi:clipboard-text" width="18"></iconify-icon>
+          <span class="ms-2">Riwayat Transaksi</span>
+        </a>
+      </li>
+    </ul>
+    
+    <ul class="sidebar-nav">
+      <li class="nav-item">
+        <a class="nav-link collapsed text-danger" href="logout.php">
+          <iconify-icon icon="material-symbols:exit-to-app-rounded" width="18"></iconify-icon>
+          <span class="ms-2">Keluar</span>
+        </a>
+      </li>
+      <!-- End Blank Page Nav -->
+    </ul>
+  `;
+};
 
-const footer = document.querySelector('#footer');
-footer.innerHTML = `
-  <div class="d-flex justify-content-center align-items-center">
-    &copy; 2022 Copyright &nbsp; <b>Olive Chicken</b>. All Rights Reserved
-  </div>
-`;
+const generateFooter = () => {
+  const footer = document.querySelector('#footer');
+  const date = new Date().getFullYear();
+
+  footer.innerHTML = `
+    <div class="d-flex justify-content-center align-items-center">
+      &copy; ${date} Copyright &nbsp; <b>Olive Chicken</b>. All Rights Reserved
+    </div>
+  `;
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   getUserHandler();
+  generateSidebar();
+  generateFooter();
 });

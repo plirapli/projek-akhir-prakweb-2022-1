@@ -1,13 +1,22 @@
 <?php
+session_start();
+
+if (isset($_SESSION["userID"])) {
+  if ($_SESSION["role"] != 1) {
+    header("location: ./pages_user/index.php");
+  } else {
+    header("location: ./pages/index.php");
+  }
+}
 
 if (isset($_GET["pesan"])) {
   $pesan = $_GET["pesan"];
-  if ($pesan == 'belum_login') {
-    $msg = 'Anda perlu login terlebih dahulu.';
-  } else if ($pesan == 'login_gagal') {
-    $msg = 'Username atau Password salah!';
-  } else if ($pesan == 'logout') {
-    $msg = 'Anda telah berhasil logout.';
+  if ($pesan == 'username_ada') {
+    $msg = 'Username telah terdaftar.';
+  } else if ($pesan == 'password_beda') {
+    $msg = 'Pastikan isi password dan konfirmasi password sudah benar.';
+  } else {
+    $msg = 'Login Gagal';
   }
 } else {
   $msg = '';
@@ -27,13 +36,9 @@ if (isset($_GET["pesan"])) {
 
   <!-- Favicons -->
   <link href="./assets/img/favicon.png" rel="icon" />
-  <link href="./assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
   <!-- BS CSS Files -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="./assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
-  <link href="./assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
-  <link href="./assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
 
   <!-- Custom CSS -->
   <link href="./assets/css/style.css" rel="stylesheet" />
@@ -42,10 +47,6 @@ if (isset($_GET["pesan"])) {
   <!-- BS & Libs -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" defer></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js" defer></script>
-
-  <script src="./assets/js/main.js" defer></script>
-  <script src="./assets/js/index.js" defer></script>
-  <script type="module" src="../utils/dashboard.js" defer></script>
 </head>
 
 <body class="min-vh-100 d-flex flex-column">
@@ -62,25 +63,45 @@ if (isset($_GET["pesan"])) {
                 <div class="p-4 pt-0">
                   <h5 class="card-title text-center mb-0 fs-4 fw-bold text-primary pb-1">REGISTER</h5>
                   <p class="mb-4 text-center text-secondary"><?= $msg ?></p>
+                  <form class="row" method="POST" action="./controller/register.php">
+                    <div class="mb-3">
+                      <label for="yourName" class="form-label text-black fw-bold">Nama</label>
+                      <div class="input-group has-validation">
+                        <input type="text" name="nama" class="form-control" id="yourName" placeholder="Username atau email" required>
+                      </div>
+                    </div>
 
-                  <form class="row g-3 needs-validation" method="POST" action="./controller/login.php">
-                    <div class="col-12">
-                      <label for="yourUsername" class="form-label text-black fw-bold">Username / Email</label>
+                    <div class="mb-3">
+                      <label for="yourEmail" class="form-label text-black fw-bold">Email</label>
+                      <div class="input-group has-validation">
+                        <input type="email" name="email" class="form-control" id="yourEmail" placeholder="Username atau email" required>
+                      </div>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="yourUsername" class="form-label text-black fw-bold">Username</label>
                       <div class="input-group has-validation">
                         <input type="text" name="username" class="form-control" id="yourUsername" placeholder="Username atau email" required>
                       </div>
                     </div>
 
-                    <div class="col-12">
+                    <div class="mb-3">
                       <label for="yourPassword" class="form-label text-black fw-bold">Password</label>
                       <input type="password" name="password" class="form-control" id="yourPassword" placeholder="********" required>
                     </div>
 
-                    <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Masuk</button>
+                    <div class="mb-3">
+                      <label for="yourPasswordConfirm" class="form-label text-black fw-bold">Confirm Password</label>
+                      <input type="password" name="confirm_password" class="form-control" id="yourPasswordConfirm" placeholder="********" required>
                     </div>
-                    <div class="col-12">
-                      <p class="small mb-0">Sudah mempunyai akun? <a href="index.php">Masuk</a></p>
+
+                    <div class="mb-3">
+                      <button class="btn btn-primary w-100" type="submit">Daftar</button>
+                    </div>
+                    <div class="">
+                      <p class="small mb-0">
+                        Sudah mempunyai akun? <a href="index.php">Masuk</a>
+                      </p>
                     </div>
                   </form>
 
@@ -89,11 +110,9 @@ if (isset($_GET["pesan"])) {
             </div>
           </div>
         </div>
-
       </section>
-
     </div>
-  </main><!-- End #main -->
+  </main>
 </body>
 
 </html>

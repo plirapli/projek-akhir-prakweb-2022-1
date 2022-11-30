@@ -60,51 +60,7 @@ cek_session();
         <!-- Left side columns -->
         <div class="col-lg-12">
           <div class="row">
-            <div class="row card-info">
-              <!-- Card -->
-
-              <!-- End Card -->
-
-              <!-- Card -->
-              <div class="col-sm">
-                <div class="card info-card revenue-card">
-                  <div class="card-body">
-                    <h5 class="card-title">Driver</h5>
-
-                    <div class="d-flex align-items-center">
-                      <div class="card-icon bg-gray rounded d-flex align-items-center justify-content-center">
-                        <iconify-icon icon="mdi:user"></iconify-icon>
-                      </div>
-                      <div class="ps-3">
-                        <h6>27</h6>
-                        <span class="text-muted small">Pengguna</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- End Card -->
-
-              <!-- Card -->
-              <div class="col-sm">
-                <div class="card info-card revenue-card">
-                  <div class="card-body">
-                    <h5 class="card-title">Admin</h5>
-
-                    <div class="d-flex align-items-center">
-                      <div class="card-icon bg-gray rounded d-flex align-items-center justify-content-center">
-                        <iconify-icon icon="mdi:user"></iconify-icon>
-                      </div>
-                      <div class="ps-3">
-                        <h6>3</h6>
-                        <span class="text-muted small">Pengguna</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- End Card -->
-            </div>
+            <div class="row card-info"></div>
 
             <!-- Tabel User -->
             <div class="col-12">
@@ -146,7 +102,9 @@ cek_session();
   <footer id="footer" class="footer"></footer>
 
   <!-- Back to Top -->
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+    <iconify-icon icon="material-symbols:arrow-upward-rounded" width="24"></iconify-icon>
+  </a>
 
   <!-- Modal Add User -->
   <div class="modal fade" id="inputUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="inputUserModal" aria-hidden="true">

@@ -9,13 +9,12 @@ cek_session();
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Dashboard - Olive Chicken Delivery</title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
-  <title>Dashboard - Olive Chicken Delivery</title>
 
   <!-- Favicons -->
   <link href="../assets/img/favicon.png" rel="icon" />
-  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
   <!-- BS CSS Files -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -33,7 +32,7 @@ cek_session();
   <script type="module" src="../utils_user/menu.js" defer></script>
 </head>
 
-<body class="min-vh-100 d-flex flex-column" data-id-user=5>
+<body class="min-vh-100 d-flex flex-column" data-id-user=<?= $_SESSION["userID"] ?>>
   <header id="header-user" class="header d-flex align-items-center">
   </header>
 
@@ -41,7 +40,7 @@ cek_session();
     <div class="container">
       <ul class="nav nav-tabs border-0 nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
         <li class="nav-item flex-fill" role="presentation">
-          <button class="nav-link p-3 w-100" id="menu-tab" data-bs-toggle="tab" data-bs-target="#menu" type="button" role="tab" aria-controls="home" aria-selected="false">
+          <button class="nav-link p-3 w-100 active" id="menu-tab" data-bs-toggle="tab" data-bs-target="#menu" type="button" role="tab" aria-controls="home" aria-selected="true">
             Menu
           </button>
         </li>
@@ -51,7 +50,7 @@ cek_session();
           </button>
         </li>
         <li class="nav-item flex-fill" role="presentation">
-          <button class="nav-link p-3 w-100 active" id="transaksi-tab" data-bs-toggle="tab" data-bs-target="#transaksi" type="button" role="tab" aria-controls="transaction" aria-selected="true">
+          <button class="nav-link p-3 w-100" id="transaksi-tab" data-bs-toggle="tab" data-bs-target="#transaksi" type="button" role="tab" aria-controls="transaction" aria-selected="false">
             Riwayat Transaksi
           </button>
         </li>
@@ -61,7 +60,7 @@ cek_session();
 
   <div class="col container pb-3">
     <div class="tab-content" id="borderedTabJustifiedContent">
-      <div class="tab-pane fade mt-4" id="menu" role="tabpanel" aria-labelledby="menu-tab">
+      <div class="tab-pane fade mt-4 show active" id="menu" role="tabpanel" aria-labelledby="menu-tab">
         <div class="col-lg-12">
           <h5 class="mb-3">Daftar Menu</h5>
 
@@ -87,7 +86,7 @@ cek_session();
       </div>
 
 
-      <div class="tab-pane fade mt-4 show active" id="transaksi" role="tabpanel" aria-labelledby="transaction-tab">
+      <div class="tab-pane fade mt-4" id="transaksi" role="tabpanel" aria-labelledby="transaction-tab">
         <h5>Transaksi</h5>
         <table id="orderList" class="table table-responsive align-middle">
           <thead>

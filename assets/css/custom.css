@@ -65,6 +65,14 @@ a:hover {
   opacity: 100% !important;
 }
 
+.btn-secondary {
+  background: var(--color-secondary) !important;
+  color: #fff;
+}
+.btn-secondary:hover {
+  background: var(--color-secondary-hover) !important;
+}
+
 .btn-gray {
   color: var(--color-black);
   background: var(--color-gray);
@@ -92,6 +100,14 @@ a:hover {
   background-color: var(--bs-danger);
   color: #ffdbdf;
   transition: all 0.2s;
+}
+
+.sidebar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  width: 60px;
 }
 
 .accordion-button {

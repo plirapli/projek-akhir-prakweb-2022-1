@@ -9,13 +9,12 @@ cek_session();
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Dashboard - Olive Chicken Delivery</title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
-  <title>Dashboard - Olive Chicken Delivery</title>
 
   <!-- Favicons -->
   <link href="../assets/img/favicon.png" rel="icon" />
-  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
   <!-- BS CSS Files -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -33,7 +32,7 @@ cek_session();
   <script type="module" src="../utils_user/menu.js" defer></script>
 </head>
 
-<body class="min-vh-100 d-flex flex-column" data-id-user=5>
+<body class="min-vh-100 d-flex flex-column" data-id-user=<?= $_SESSION["userID"] ?>>
   <header id="header-user" class="header d-flex align-items-center">
   </header>
 

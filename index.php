@@ -15,6 +15,8 @@ if (isset($_GET["pesan"])) {
     $msg = 'Anda perlu login terlebih dahulu.';
   } else if ($pesan == 'login_gagal') {
     $msg = 'Username atau Password salah!';
+  } else if ($pesan == 'register_success') {
+    $msg = 'Berhasil melakukan pendaftaran. <br/> Silakan login';
   } else if ($pesan == 'logout') {
     $msg = 'Anda telah berhasil logout.';
   } else {
@@ -38,13 +40,9 @@ if (isset($_GET["pesan"])) {
 
   <!-- Favicons -->
   <link href="./assets/img/favicon.png" rel="icon" />
-  <link href="./assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
   <!-- BS CSS Files -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="./assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
-  <link href="./assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
-  <link href="./assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
 
   <!-- Custom CSS -->
   <link href="./assets/css/style.css" rel="stylesheet" />
