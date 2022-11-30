@@ -40,7 +40,7 @@ cek_session();
     <div class="container">
       <ul class="nav nav-tabs border-0 nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
         <li class="nav-item flex-fill" role="presentation">
-          <button class="nav-link p-3 w-100 active" id="menu-tab" data-bs-toggle="tab" data-bs-target="#menu" type="button" role="tab" aria-controls="home" aria-selected="true">
+          <button class="nav-link p-3 w-100" id="menu-tab" data-bs-toggle="tab" data-bs-target="#menu" type="button" role="tab" aria-controls="home" aria-selected="false">
             Menu
           </button>
         </li>
@@ -50,7 +50,7 @@ cek_session();
           </button>
         </li>
         <li class="nav-item flex-fill" role="presentation">
-          <button class="nav-link p-3 w-100" id="transaksi-tab" data-bs-toggle="tab" data-bs-target="#transaksi" type="button" role="tab" aria-controls="transaction" aria-selected="false">
+          <button class="nav-link p-3 w-100 active" id="transaksi-tab" data-bs-toggle="tab" data-bs-target="#transaksi" type="button" role="tab" aria-controls="transaction" aria-selected="true">
             Riwayat Transaksi
           </button>
         </li>
@@ -60,7 +60,7 @@ cek_session();
 
   <div class="col container pb-3">
     <div class="tab-content" id="borderedTabJustifiedContent">
-      <div class="tab-pane fade mt-4 show active" id="menu" role="tabpanel" aria-labelledby="menu-tab">
+      <div class="tab-pane fade mt-4" id="menu" role="tabpanel" aria-labelledby="menu-tab">
         <div class="col-lg-12">
           <h5 class="mb-3">Daftar Menu</h5>
 
@@ -86,7 +86,7 @@ cek_session();
       </div>
 
 
-      <div class="tab-pane fade mt-4" id="transaksi" role="tabpanel" aria-labelledby="transaction-tab">
+      <div class="tab-pane fade mt-4 show active" id="transaksi" role="tabpanel" aria-labelledby="transaction-tab">
         <h5>Transaksi</h5>
         <table id="orderList" class="table table-responsive align-middle">
           <thead>

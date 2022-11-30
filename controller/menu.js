@@ -1,5 +1,7 @@
+import { URL } from '../config/config.js';
+
 // Base URL
-const baseURL = 'http://localhost/olive-chicken/api/menu.php?function';
+const baseURL = `${URL}/api/menu.php?function`;
 
 // Get User
 const getMenu = async () => {

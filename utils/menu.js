@@ -1,10 +1,11 @@
+import { rootURL } from '../config/config.js';
 import * as controllerMenu from '../controller/menu.js';
 
 /* API CALL */
 // Get Menu
 const getMenu = () => {
   const menuList = document.querySelector('#menuList');
-  const pathMenuImg = '/olive-chicken/assets/img/menu';
+  const pathMenuImg = `/${rootURL}/assets/img/menu`;
 
   controllerMenu.getMenu().then((data) => {
     const menus = data.data;

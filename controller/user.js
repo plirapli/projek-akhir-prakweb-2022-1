@@ -1,4 +1,6 @@
-const baseURL = 'http://localhost/olive-chicken/api/user.php?function';
+import { URL } from '../config/config.js';
+
+const baseURL = `${URL}/api/user.php?function`;
 
 // Get All User
 const getUsers = async () => {
@@ -17,7 +19,7 @@ const getUserId = async (id) => {
 };
 
 const getUserTotalByRole = async () => {
-  const endpoint = `http://localhost/olive-chicken/api/role.php?function=get_role_total`;
+  const endpoint = `${URL}/api/role.php?function=get_role_total`;
   return fetch(endpoint)
     .then((res) => res.json())
     .then((data) => data);

@@ -1,3 +1,4 @@
+import { rootURL } from '../config/config.js';
 import * as controllerMenu from '../controller/menu.js';
 import {
   addOrder,
@@ -11,6 +12,7 @@ import { showFormattedDate } from '../utils/convertDate.js';
 // Global Variable
 const CartMenus = [];
 const userID = document.querySelector('body').dataset.idUser;
+const pathMenuImg = `/${rootURL}/assets/img/menu`;
 
 // Get User by ID
 const getUserByID = () => {
@@ -45,7 +47,6 @@ const getUserByID = () => {
 // Get Menu
 const getMenu = () => {
   const menuList = document.querySelector('#menuList');
-  const pathMenuImg = '/olive-chicken/assets/img/menu';
 
   controllerMenu.getMenu().then((data) => {
     const menus = data.data;
@@ -116,8 +117,6 @@ const getMenu = () => {
 const RENDER_EVENT = 'render-cart';
 
 document.addEventListener(RENDER_EVENT, async () => {
-  const pathMenuImg = '/olive-chicken/assets/img/menu';
-
   const cartList = document.getElementById('shoppingCart');
   const cartTotal = document.getElementById('cartTotal');
   cartList.innerHTML = '';

@@ -1,4 +1,6 @@
-const baseURL = 'http://localhost/olive-chicken/api/order.php?function';
+import { URL } from '../config/config.js';
+
+const baseURL = `${URL}/api/order.php?function`;
 
 const getAllOrder = async () => {
   const endpoint = `${baseURL}=get_order`;
