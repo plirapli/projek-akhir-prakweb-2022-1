@@ -1,9 +1,5 @@
 import { showFormattedDate } from './convertDate.js';
-import {
-  getUserId,
-  getUserName,
-  getUserTotalByRole,
-} from '../controller/user.js';
+import { getUserId, getUserTotalByRole } from '../controller/user.js';
 
 /* UTILITIES */
 const generateObject = (
@@ -300,7 +296,6 @@ const deleteUser = async (id, nama) => {
   const deleteModal = document.querySelector('#deleteUserModal');
   const modalBody = deleteModal.querySelector('.modal-body');
   const deleteConfirm = deleteModal.querySelector('.btn-delete');
-  const userRole = await getUserId(id).then((data) => data.data.id_role);
 
   modalBody.innerHTML = `Apakah anda ingin menghapus user bernama <b>${nama}</b>?`;
   deleteConfirm.addEventListener(

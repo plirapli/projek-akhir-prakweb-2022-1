@@ -11,24 +11,24 @@ const getTotal = () => {
       let cardElement = '';
 
       for (const totalData of totals) {
-        const { name, total, icon } = totalData;
+        const { name, total, icon, url } = totalData;
         const element = `
-        <div class="col-6">
+        <div class="col-md-6">
           <div class="card info-card revenue-card">
             <div class="card-body">
               <h5 class="card-title text-capitalize">${name}</h5>
-
               <div class="d-flex align-items-center">
-                <div
-                  class="card-icon bg-gray rounded d-flex align-items-center justify-content-center"
-                >
-                  <iconify-icon icon="mdi:user"></iconify-icon>
+                <div class="card-icon bg-gray rounded d-flex align-items-center justify-content-center">
+                  <iconify-icon icon="${icon}" width="32"></iconify-icon>
                 </div>
                 <div class="ps-3">
                   <h6>${total}</h6>
                   <span class="text-muted small text-capitalize">${name}</span>
                 </div>
               </div>
+              <a class="mt-3 btn btn-primary w-100" href="${
+                url || 'index.php'
+              }">Lihat Semua</a>
             </div>
           </div>
         </div>`;

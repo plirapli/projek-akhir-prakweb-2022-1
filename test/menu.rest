@@ -1,12 +1,12 @@
 ############# MENU #############
 ### GET
-http://localhost/olive-chicken-delivery/api/menu.php?function=get_menu
+http://localhost/olive-chicken/api/menu.php?function=get_menu
 
 ### GET BY ID
-http://localhost/olive-chicken-delivery/api/menu.php?function=get_menu_id&id=4
+http://localhost/olive-chicken/api/menu.php?function=get_menu_id&id=4
 
 ### EDIT
-http://localhost/olive-chicken-delivery/api/menu.php?function=edit_menu
+http://localhost/olive-chicken/api/menu.php?function=edit_menu
 Content-Type: application/json
 
 {
@@ -18,7 +18,7 @@ Content-Type: application/json
 }
 
 ### EDIT STOCK
-http://localhost/olive-chicken-delivery/api/menu.php?function=edit_menu_stock
+http://localhost/olive-chicken/api/menu.php?function=edit_menu_stock
 Content-Type: application/json
 
 {
@@ -27,4 +27,4 @@ Content-Type: application/json
 }
 
 ### DELETE
-http://localhost/olive-chicken-delivery/api/menu.php?function=delete_menu&id=5
+http://localhost/olive-chicken/api/menu.php?function=delete_menu&id=5

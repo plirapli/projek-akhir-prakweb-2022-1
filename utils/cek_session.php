@@ -13,5 +13,6 @@ function cek_admin()
 {
   if ($_SESSION["role"] != 1) {
     header("location: ../pages_user/index.php");
+    exit;
   }
 }

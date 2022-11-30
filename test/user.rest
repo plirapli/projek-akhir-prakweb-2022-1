@@ -1,18 +1,18 @@
 ### USER
 ### GET USER
-http://localhost/olive-chicken-delivery/api/user.php?function=get_user
+http://localhost/olive-chicken/api/user.php?function=get_user
 
 ### GET USER ID
-http://localhost/olive-chicken-delivery/api/user.php?function=get_user_id&id=2
+http://localhost/olive-chicken/api/user.php?function=get_user_id&id=2
 
 ### GET USER USERNAME
-http://localhost/olive-chicken-delivery/api/user.php?function=get_user_username&username=driver_satu
+http://localhost/olive-chicken/api/user.php?function=get_user_username&username=plirapli
 
 ### GET STATUS
-http://localhost/olive-chicken-delivery/api/status.php?function=get_status
+http://localhost/olive-chicken/api/status.php?function=get_status
 
 ### POST USER
-http://localhost/olive-chicken-delivery/api/user.php?function=add_user
+http://localhost/olive-chicken/api/user.php?function=add_user
 Content-Type: application/json;
 
 {
@@ -24,7 +24,7 @@ Content-Type: application/json;
 }
 
 ### EDIT USER
-http://localhost/olive-chicken-delivery/api/user.php?function=edit_user&id=8
+http://localhost/olive-chicken/api/user.php?function=edit_user&id=8
 Content-Type: application/json;
 
 {
@@ -38,17 +38,17 @@ Content-Type: application/json;
 }
 
 ### DELETE USER
-http://localhost/olive-chicken-delivery/api/user.php?function=delete_user&id=6
+http://localhost/olive-chicken/api/user.php?function=delete_user&id=6
 
 ### ROLE
 ### GET ROLE
-http://localhost/olive-chicken-delivery/api/role.php?function=get_role
+http://localhost/olive-chicken/api/role.php?function=get_role
 
 ### GET USER TOTAL GROUP BY ROLE
-http://localhost/olive-chicken-delivery/api/role.php?function=get_role_total
+http://localhost/olive-chicken/api/role.php?function=get_role_total
 
 ### DASHBOARD
 ### GET
-http://localhost/olive-chicken-delivery/api/total.php?function=get_total
+http://localhost/olive-chicken/api/total.php?function=get_total
 
 

@@ -55,7 +55,7 @@ if (isset($_GET["pesan"])) {
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+            <div class="col-lg-6 col-md-8 d-flex flex-column align-items-center justify-content-center">
               <div style="overflow: hidden;" class="card card-body p-0 rounded-3">
                 <div class="px-4 py-2 text-center bg-secondary">
                   <img style="max-width: 8rem;" src="./assets/img/olive-chicken-logo-brand.jpg" alt="">
@@ -66,33 +66,42 @@ if (isset($_GET["pesan"])) {
                   <form class="row" method="POST" action="./controller/register.php">
                     <div class="mb-3">
                       <label for="yourName" class="form-label text-black fw-bold">Nama</label>
-                      <div class="input-group has-validation">
-                        <input type="text" name="nama" class="form-control" id="yourName" placeholder="Username atau email" required>
+                      <div class="input-container">
+                        <iconify-icon icon="bxs:id-card" width="20"></iconify-icon>
+                        <input type="text" name="nama" class="form-control-custom w-100" id="yourName" placeholder="Nama Lengkap" required>
                       </div>
                     </div>
 
                     <div class="mb-3">
                       <label for="yourEmail" class="form-label text-black fw-bold">Email</label>
-                      <div class="input-group has-validation">
-                        <input type="email" name="email" class="form-control" id="yourEmail" placeholder="Username atau email" required>
+                      <div class="input-container">
+                        <iconify-icon icon="material-symbols:alternate-email-rounded" width="20"></iconify-icon>
+                        <input type="email" name="email" class="form-control-custom w-100" id="yourEmail" placeholder="Email" required>
                       </div>
                     </div>
 
                     <div class="mb-3">
                       <label for="yourUsername" class="form-label text-black fw-bold">Username</label>
-                      <div class="input-group has-validation">
-                        <input type="text" name="username" class="form-control" id="yourUsername" placeholder="Username atau email" required>
+                      <div class="input-container">
+                        <iconify-icon icon="mdi:user" width="20"></iconify-icon>
+                        <input type="text" name="username" class="form-control-custom w-100" id="yourUsername" placeholder="Username" required>
                       </div>
                     </div>
 
                     <div class="mb-3">
                       <label for="yourPassword" class="form-label text-black fw-bold">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" placeholder="********" required>
+                      <div class="input-container">
+                        <iconify-icon icon="mdi:password" width="20"></iconify-icon>
+                        <input type="password" name="password" class="form-control-custom w-100" id="yourPassword" placeholder="********" required>
+                      </div>
                     </div>
 
                     <div class="mb-3">
                       <label for="yourPasswordConfirm" class="form-label text-black fw-bold">Confirm Password</label>
-                      <input type="password" name="confirm_password" class="form-control" id="yourPasswordConfirm" placeholder="********" required>
+                      <div class="input-container">
+                        <iconify-icon icon="mdi:password" width="20"></iconify-icon>
+                        <input type="password" name="confirm_password" class="form-control-custom w-100" id="yourPasswordConfirm" placeholder="********" required>
+                      </div>
                     </div>
 
                     <div class="mb-3">

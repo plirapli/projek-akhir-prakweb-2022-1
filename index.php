@@ -59,7 +59,7 @@ if (isset($_GET["pesan"])) {
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+            <div class="col-lg-6 col-md-8 d-flex flex-column align-items-center justify-content-center">
               <div style="overflow: hidden;" class="card card-body p-0 rounded-3">
                 <div class="px-4 py-2 text-center bg-secondary">
                   <img style="max-width: 8rem;" src="./assets/img/olive-chicken-logo-brand.jpg" alt="">
@@ -68,23 +68,27 @@ if (isset($_GET["pesan"])) {
                   <h5 class="card-title text-center mb-0 fs-4 fw-bold text-primary pb-1">LOGIN</h5>
                   <p class="mb-4 text-center text-secondary"><?= $msg ?></p>
 
-                  <form class="row g-3 needs-validation" method="POST" action="./controller/login.php">
-                    <div class="col-12">
-                      <label for="yourUsername" class="form-label text-black fw-bold">Username / Email</label>
-                      <div class="input-group has-validation">
-                        <input type="text" name="username" class="form-control" id="yourUsername" placeholder="Username atau email" required>
+                  <form class="row needs-validation" method="POST" action="./controller/login.php">
+                    <div class="w-100 mb-3">
+                      <label for="yourUsername" class="form-label text-black fw-bold">Email atau Username</label>
+                      <div class="input-container">
+                        <iconify-icon icon="mdi:user" width="20"></iconify-icon>
+                        <input type="text" name="email_username" class="form-control-custom w-100" id="yourUsername" placeholder="Email atau username" required>
                       </div>
                     </div>
 
-                    <div class="col-12">
+                    <div class="w-100 mb-3">
                       <label for="yourPassword" class="form-label text-black fw-bold">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" placeholder="********" required>
+                      <div class="input-container">
+                        <iconify-icon icon="mdi:password" width="20"></iconify-icon>
+                        <input type="password" name="password" class="form-control-custom w-100" id="yourPassword" placeholder="********" required>
+                      </div>
                     </div>
 
-                    <div class="col-12">
+                    <div class="w-100 mb-3">
                       <button class="btn btn-primary w-100" type="submit">Masuk</button>
                     </div>
-                    <div class="col-12">
+                    <div class="w-100">
                       <p class="small mb-0">Belum mempunyai akun? <a href="register.php">Daftar</a></p>
                     </div>
                   </form>

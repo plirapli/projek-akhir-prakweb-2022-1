@@ -56,34 +56,6 @@ function get_user_id()
   echo json_encode($response);
 }
 
-// GET USER BY USERNAME
-function get_user_username()
-{
-  global $connection;
-
-  $username = $_GET['username'];
-  $query = "SELECT * FROM user INNER JOIN role ON user.id_role = role.id_role WHERE user.username = '$username' LIMIT 1";
-  $result = mysqli_query($connection, $query);
-
-  if ($result) {
-    $data = mysqli_fetch_object($result);
-
-    $response = [
-      'status' => 1,
-      'message' => 'Success',
-      'data' => $data
-    ];
-  } else {
-    $response = [
-      'status' => 0,
-      'message' => mysqli_error($connection)
-    ];
-  }
-
-  header('Content-Type: application/json');
-  echo json_encode($response);
-}
-
 
 // POST USER
 function add_user()
