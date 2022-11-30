@@ -116,6 +116,12 @@ const getMenu = () => {
 /* CART PROCESS */
 const RENDER_EVENT = 'render-cart';
 
+const checkButton = () => {
+  const pesanBtn = document.querySelector('#processTransaction');
+  console.log(pesanBtn);
+  pesanBtn.disabled = !CartMenus.length;
+};
+
 document.addEventListener(RENDER_EVENT, async () => {
   const cartList = document.getElementById('shoppingCart');
   const cartTotal = document.getElementById('cartTotal');
@@ -165,6 +171,7 @@ document.addEventListener(RENDER_EVENT, async () => {
 
   cartTotal.innerHTML = total;
   cartList.innerHTML = cartElement;
+  checkButton();
 });
 
 const addCartHandler = () => {
@@ -302,6 +309,7 @@ const getAllTransactionHandler = () => {
 
   getOrderById(userID).then(async (data) => {
     const orders = data.data;
+    const emptyTable = '<div class="mt-3">Anda belum pernah memesan</div>';
     let tableElement = '';
     let i = 1;
 
@@ -368,10 +376,6 @@ const getAllTransactionHandler = () => {
       return await element();
     });
 
-    const emptyTable = `
-      <div class="mt-3">Anda belum pernah memesan</div>
-    `;
-
     Promise.all(tes).then((result) => {
       result.forEach((res) => {
         tableElement += res;
@@ -387,4 +391,5 @@ document.addEventListener('DOMContentLoaded', () => {
   getUserByID();
   getMenu();
   getAllTransactionHandler();
+  checkButton();
 });
