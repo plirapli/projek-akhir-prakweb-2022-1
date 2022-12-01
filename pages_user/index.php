@@ -13,29 +13,20 @@ cek_session();
   <meta content="" name="description" />
   <meta content="" name="keywords" />
 
-  <!-- Favicons -->
   <link href="../assets/img/favicon.png" rel="icon" />
-
-  <!-- BS CSS Files -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-  <!-- Custom CSS -->
   <link href="../assets/css/style.css" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/css/custom.css" />
 
-  <!-- BS & Libs -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" defer></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js" defer></script>
-
   <script src="../assets/js/main.js" defer></script>
   <script type="module" src="../assets/js/indexUser.js" defer></script>
   <script type="module" src="../utils_user/menu.js" defer></script>
 </head>
 
 <body class="min-vh-100 d-flex flex-column" data-id-user=<?= $_SESSION["userID"] ?>>
-  <header id="header-user" class="header d-flex align-items-center">
-  </header>
-
+  <header id="header-user" class="header d-flex align-items-center"></header>
   <div class="bg-white border-2 border-bottom">
     <div class="container">
       <ul class="nav nav-tabs border-0 nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
@@ -63,10 +54,8 @@ cek_session();
       <div class="tab-pane fade mt-4 show active" id="menu" role="tabpanel" aria-labelledby="menu-tab">
         <div class="col-lg-12">
           <h5 class="mb-3">Daftar Menu</h5>
-
           <!-- Daftar Menu -->
           <div id="menuList" class="card-menu-container-user"></div>
-
         </div>
       </div>
 
@@ -94,7 +83,7 @@ cek_session();
               <th scope="col">No</th>
               <th scope="col">Nomor Order</th>
               <th scope="col">Tanggal</th>
-              <th scope="col">Aksi</th>
+              <th scope="col" class="text-center">Aksi</th>
             </tr>
           </thead>
           <tbody></tbody>

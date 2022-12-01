@@ -313,7 +313,7 @@ const getAllTransactionHandler = () => {
     let tableElement = '';
     let i = 1;
 
-    const tes = orders.map(async (order) => {
+    const promises = orders.map(async (order) => {
       const { id_pesanan: id_order } = order;
       const created_at = showFormattedDate(order.created_at);
 
@@ -376,7 +376,7 @@ const getAllTransactionHandler = () => {
       return await element();
     });
 
-    Promise.all(tes).then((result) => {
+    Promise.all(promises).then((result) => {
       result.forEach((res) => {
         tableElement += res;
       });

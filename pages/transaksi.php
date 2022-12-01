@@ -1,6 +1,7 @@
 <?php
 require '../utils/cek_session.php';
 cek_session();
+cek_admin();
 ?>
 
 <!DOCTYPE html>
@@ -13,19 +14,11 @@ cek_session();
   <meta content="" name="description" />
   <meta content="" name="keywords" />
 
-  <!-- Favicons -->
   <link href="../assets/img/favicon.png" rel="icon" />
-
-  <!-- Vendor CSS Files -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-  <!-- Template Main CSS File -->
   <link href="../assets/css/style.css" rel="stylesheet" />
-
-  <!-- Custom CSS -->
   <link rel="stylesheet" href="../assets/css/custom.css" />
 
-  <!-- Vendor JS Files -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" defer></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js" defer></script>
 
@@ -36,11 +29,7 @@ cek_session();
 </head>
 
 <body class="min-vh-100 d-flex flex-column" data-user-id=<?= $_SESSION["userID"] ?>>
-  <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center"></header>
-  <!-- End Header -->
-
-  <!-- ======= Sidebar ======= -->
   <aside id="sidebar" data-active-nav="transaksi" class="sidebar d-flex flex-column justify-content-between"></aside>
 
   <main id="main" class="main col">
@@ -53,30 +42,28 @@ cek_session();
         </ol>
       </nav>
     </div>
-    <!-- End Page Title -->
-
     <section class="section dashboard">
       <div class="row">
-        <!-- Left side columns -->
         <div class="col-lg-12">
           <div class="row">
             <div class="row card-info"></div>
 
             <!-- Tabel User -->
             <div class="col-12">
-              <div class="card recent-sales overflow-auto">
+              <div class="card overflow-auto">
                 <div class="card-body mt-2">
                   <div class="d-flex justify-content-between mb-2 align-items-center">
                     <h5 class="card-title">Daftar Transaksi</h5>
                   </div>
 
-                  <table id="orderList" class="table table-responsive table-borderless align-middle">
+                  <table id="orderList" class="table table-responsive align-middle">
                     <thead>
                       <tr>
                         <th scope="col" class="text-center">No</th>
                         <th scope="col">Nomor Order</th>
                         <th scope="col">Tanggal</th>
                         <th scope="col">Dipesan Oleh</th>
+                        <th scope="col" class="text-center">Aksi</th>
                       </tr>
                     </thead>
                     <tbody></tbody>
@@ -84,14 +71,11 @@ cek_session();
                 </div>
               </div>
             </div>
-            <!-- End Recent Sales -->
           </div>
         </div>
-        <!-- End Left side columns -->
       </div>
     </section>
   </main>
-  <!-- End #main -->
 
   <footer id="footer" class="footer"></footer>
 

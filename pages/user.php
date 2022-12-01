@@ -1,6 +1,7 @@
 <?php
 require '../utils/cek_session.php';
 cek_session();
+cek_admin();
 ?>
 
 <!DOCTYPE html>
