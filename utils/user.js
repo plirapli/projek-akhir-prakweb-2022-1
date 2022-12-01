@@ -46,9 +46,7 @@ const getUserTotal = () => {
               <h5 class="card-title">${role}</h5>
 
               <div class="d-flex align-items-center">
-                <div
-                  class="card-icon bg-gray rounded d-flex align-items-center justify-content-center"
-                >
+                <div class="card-icon bg-gray rounded d-flex align-items-center justify-content-center">
                   <iconify-icon icon="mdi:user"></iconify-icon>
                 </div>
                 <div class="ps-3">

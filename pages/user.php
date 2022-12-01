@@ -24,6 +24,7 @@ cek_admin();
   <script src="../assets/js/main.js" defer></script>
   <script type="module" src="../assets/js/index.js" defer></script>
   <script type="module" src="../utils/user.js" defer></script>
+  </script>
 </head>
 
 <body class="min-vh-100 d-flex flex-column" data-user-id=<?= $_SESSION["userID"] ?>>
@@ -57,7 +58,7 @@ cek_admin();
                     </button>
                   </div>
 
-                  <table class="table table-responsive table-borderless table-user align-middle">
+                  <table id="tableUser" class="table table-responsive table-borderless table-user align-middle">
                     <thead>
                       <tr>
                         <th scope="col">No</th>
