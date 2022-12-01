@@ -61,11 +61,11 @@ cek_admin();
                   <table id="tableUser" class="table table-responsive table-borderless table-user align-middle">
                     <thead>
                       <tr>
-                        <th scope="col">No</th>
+                        <th scope="col" class="text-center">No</th>
                         <th scope="col">Nama</th>
                         <th scope="col">Username</th>
                         <th scope="col">Role</th>
-                        <th scope="col">Aksi</th>
+                        <th scope="col" class="text-center">Aksi</th>
                         <th scope="col"></th>
                       </tr>
                     </thead>

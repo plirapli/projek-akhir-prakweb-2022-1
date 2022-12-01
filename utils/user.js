@@ -119,7 +119,7 @@ const getUser = () => {
 
       const element = `
         <tr data-user-id = ${user.id_user}>
-          <th scope="row" class="w-table-min">${i++}</th>
+          <th scope="row" class="w-table-min text-center">${i++}</th>
           <td>${user.nama}</td>
           <td>${user.username}</td>
           <td class="text-capitalize">${user.role}</td>

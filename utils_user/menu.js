@@ -7,7 +7,10 @@ import {
   getTransactionById,
 } from '../controller/order.js';
 import { getUserId } from '../controller/user.js';
-import { showFormattedDate } from '../utils/convertDate.js';
+import {
+  showFormattedDate,
+  showFormattedDateDetail,
+} from '../utils/convertDate.js';
 
 // Global Variable
 const CartMenus = [];
@@ -313,7 +316,7 @@ const getAllTransactionHandler = () => {
 
     const promises = orders.map(async (order) => {
       const { id_pesanan: id_order } = order;
-      const created_at = showFormattedDate(order.created_at);
+      const created_at = showFormattedDateDetail(order.created_at);
 
       const subTable = getTransactionById(id_order).then((data) => {
         const transactions = data.data;
@@ -372,7 +375,7 @@ const getAllTransactionHandler = () => {
       const element = async () => {
         return `
           <tr data-order-id=${id_order}>
-            <th scope="row" class="w-table-min">${i++}</th>
+            <th scope="row" class="w-table-min text-center">${i++}</th>
             <td>#${id_order}</td>
             <td>${created_at}</td>
             <td class="w-table-min accordion-header" id="flush-heading-${id_order}">

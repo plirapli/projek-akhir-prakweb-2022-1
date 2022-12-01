@@ -70,7 +70,7 @@ const getAllOrderHandler = () => {
       const element = async () => {
         return `
           <tr data-order-id=${id_order}>
-            <th scope="row" class="w-table-min">${i++}</th>
+            <th scope="row" class="w-table-min text-center">${i++}</th>
             <td>#${id_order}</td>
             <td>${created_at}</td>
             <td>${order.nama}</td>
