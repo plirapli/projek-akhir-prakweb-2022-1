@@ -74,10 +74,4 @@
     window.addEventListener('load', toggleBacktotop);
     onscroll(document, toggleBacktotop);
   }
-
-  // Initiate Datatables
-  const datatables = select('.datatable', true);
-  datatables.forEach((datatable) => {
-    new simpleDatatables.DataTable(datatable);
-  });
 })();
