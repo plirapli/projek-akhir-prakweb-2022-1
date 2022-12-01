@@ -118,7 +118,6 @@ const RENDER_EVENT = 'render-cart';
 
 const checkButton = () => {
   const pesanBtn = document.querySelector('#processTransaction');
-  console.log(pesanBtn);
   pesanBtn.disabled = !CartMenus.length;
 };
 
@@ -230,7 +229,6 @@ const changeInputQty = (id, stok) => {
   const min = document.querySelector(`[data-menu-id="${id}"] .qty-min`);
   const plus = document.querySelector(`[data-menu-id="${id}"] .qty-plus`);
   let qtyValue = cartMenuTarget.qty;
-  console.log();
 
   min.addEventListener('click', () => {
     if (qtyValue <= 1) {
