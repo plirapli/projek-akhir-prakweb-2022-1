@@ -319,37 +319,51 @@ const getAllTransactionHandler = () => {
 
       const subTable = getTransactionById(id_order).then((data) => {
         const transactions = data.data;
-        let subTableEelement = '';
+        let subTableElement = { element: '', totalCost: 0 };
 
         transactions.forEach((transaction) => {
+          const { id_transaksi: id, menu, qty, harga } = transaction;
           const subElement = `
-            <tr data-transaction-id=${transaction.id_transaksi}>
-              <td>${transaction.menu}</td>
-              <td class="text-center">${transaction.qty}</td>
-              <td>Rp${transaction.harga}</td>
+            <tr data-transaction-id=${id}>
+              <td>${menu}</td>
+              <td class="text-center">${qty}</td>
+              <td class="text-center">Rp${harga}</td>
+              <td class="text-center">Rp${qty * harga}</td>
             </tr>
           `;
-          subTableEelement += subElement;
+
+          subTableElement.totalCost += qty * harga;
+          subTableElement.element += subElement;
         });
 
-        return subTableEelement;
+        return subTableElement;
       });
 
       const accordionBody = async () => {
+        const { totalCost, element } = await subTable;
+
         return `
           <tr class="collapse collapse-detail-${id_order} py-3">
             <td></td>
             <td colspan="3" class="py-2">
               <div class="collapse collapse-detail-${id_order}">
-                  <table id="transactionList" class="table table-borderless table-responsive align-middle">
+                <table id="transactionList" class="table table-sm table-responsive align-middle">
                   <thead>
                     <tr>
                       <th scope="col">Nama Menu</th>
                       <th scope="col" class="text-center">Jumlah</th>
-                      <th scope="col">Harga</th>
+                      <th scope="col" class="text-center">Harga</th>
+                      <th scope="col" class="text-center">Subtotal</th>
                     </tr>
                   </thead>
-                  <tbody>${await subTable}</tbody>
+                  <tbody>
+                    ${await element}
+                    <tr>
+                      <th colspan=2></th>
+                      <th scope="row" class="text-center">Total</th>
+                      <th scope="row" class="text-center">Rp${totalCost}</th>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </td>
