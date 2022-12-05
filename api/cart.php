@@ -43,6 +43,42 @@ function get_cart()
   echo json_encode($response);
 }
 
+// GET ORDER
+function get_cart_id()
+{
+  global $connection;
+
+  $id = $_GET["id"];
+  $query = "SELECT * FROM cart INNER JOIN menu ON cart.id_menu = menu.id_menu WHERE id_cart=$id";
+  $result = mysqli_query($connection, $query);
+
+  if ($query) {
+    $data = mysqli_fetch_object($result);
+
+    if (isset($data)) {
+      $response = [
+        'status' => 1,
+        'message' => 'Success',
+        'data' => $data
+      ];
+    } else {
+      $response = [
+        'status' => 1,
+        'message' => 'Data Kosong',
+        'data' => []
+      ];
+    }
+  } else {
+    $response = [
+      'status' => 0,
+      'message' => 'Error: ' . mysqli_error($connection),
+    ];
+  }
+
+  header('Content-Type: application/json');
+  echo json_encode($response);
+}
+
 // POST ORDER
 function add_cart()
 {
@@ -65,6 +101,33 @@ function add_cart()
     $response = [
       'status' => 0,
       'message' => 'Error: ' . mysqli_error($connection)
+    ];
+  }
+
+  header('Content-Type: application/json');
+  echo json_encode($response);
+}
+
+function update_qty()
+{
+  global $connection;
+
+  $req_body = json_decode(file_get_contents('php://input'), true);
+  $id = $_GET["id"];
+  $qty = $req_body["qty"];
+
+  $command = "UPDATE cart SET qty = $qty WHERE id_cart = $id";
+  $query = mysqli_query($connection, $command);
+
+  if ($query) {
+    $response = [
+      'status' => 1,
+      'message' => 'Update Success'
+    ];
+  } else {
+    $response = [
+      'status' => 0,
+      'message' => 'Error: ' + mysqli_error($connection)
     ];
   }
 
