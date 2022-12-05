@@ -94,12 +94,21 @@ const generateSidebar = () => {
     
     <ul class="sidebar-nav">
       <li class="nav-item">
+        <a 
+          href="../pages_user/index.php"
+          target="_blank"
+          class="nav-link collapsed border border-2 d-flex justify-content-between align-items-center" 
+        >
+          <span>Halaman Pelanggan</span>
+          <iconify-icon icon="material-symbols:open-in-new-rounded" width="18"></iconify-icon>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link collapsed text-danger" href="logout.php">
           <iconify-icon icon="material-symbols:exit-to-app-rounded" width="18"></iconify-icon>
           <span class="ms-2">Keluar</span>
         </a>
       </li>
-      <!-- End Blank Page Nav -->
     </ul>
   `;
 };
