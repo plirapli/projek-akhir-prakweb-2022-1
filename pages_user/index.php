@@ -49,7 +49,7 @@ cek_session();
     </div>
   </div>
 
-  <div class="col container pb-3">
+  <div class="col container pb-5">
     <div class="tab-content" id="borderedTabJustifiedContent">
       <div class="tab-pane fade mt-4 show active" id="menu" role="tabpanel" aria-labelledby="menu-tab">
         <div class="col-lg-12">
@@ -63,7 +63,10 @@ cek_session();
         <div class="customer-info"></div>
         <div class="mt-3">
           <h5>Keranjang</h5>
+
+          <!-- Shpping Cart Table -->
           <div id="shoppingCart"></div>
+
           <div class="text-end mt-3">
             <span>Total: </span>
             <span class="fw-bold">
@@ -71,9 +74,10 @@ cek_session();
             </span>
           </div>
         </div>
-        <button href="pesan.php" id="processTransaction" class="btn btn-primary w-100 mt-4">Pesan Sekarang</button>
+        <button type="button" id="processTransaction" class="btn btn-primary w-100 mt-4" data-bs-toggle="modal" data-bs-target="#orderModal">
+          Pesan Sekarang
+        </button>
       </div>
-
 
       <div class="tab-pane fade mt-4" id="transaksi" role="tabpanel" aria-labelledby="transaction-tab">
         <h5>Transaksi</h5>
@@ -89,7 +93,39 @@ cek_session();
           <tbody></tbody>
         </table>
       </div>
+    </div>
+  </div>
 
+  <!-- Modal -->
+  <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="orderModalLabel">Sedang Memesan Makanan</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div id="orderLoading" class="modal-body">
+          <div class="d-flex justify-content-center my-4">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+        <div id="orderSuccess" class="d-none">
+          <div class="modal-body">
+            <div class="d-flex flex-column place-center">
+              <div class="bg-gray d-flex place-center mb-3 rounded-pill bg-success-sub text-success">
+                <iconify-icon icon="material-symbols:check-small-rounded" width="80"></iconify-icon>
+              </div>
+              <div>Makanan anda telah berhasil dipesan.</div>
+              <div>Selamat menikmati!</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-gray w-100" data-bs-dismiss="modal">Tutup</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
