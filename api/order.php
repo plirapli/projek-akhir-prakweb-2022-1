@@ -11,7 +11,7 @@ function get_order()
 {
   global $connection;
 
-  $query = "SELECT * FROM pesanan INNER JOIN user ON pesanan.id_user = user.id_user";
+  $query = "SELECT pesanan.*, user.nama FROM pesanan LEFT JOIN user ON pesanan.id_user = user.id_user";
   $result = mysqli_query($connection, $query);
 
   if ($query) {
