@@ -25,7 +25,9 @@ const getAllOrderHandler = () => {
               <td>${menu}</td>
               <td class="text-center">${qty}</td>
               <td class="text-center">Rp${harga}</td>
-              <td class="text-center">Rp${qty * harga}</td>
+              <td class="d-flex justify-content-between gap-5 ps-2">
+                <span>Rp</span>${qty * harga}
+              </td>
             </tr>
           `;
 
@@ -41,7 +43,7 @@ const getAllOrderHandler = () => {
         return `
           <tr class="collapse collapse-detail-${id_order} py-3">
             <td></td>
-            <td colspan="3" class="py-2">
+            <td colspan="4" class="py-2">
               <div class="collapse collapse-detail-${id_order}">
                 <table id="transactionList" class="table table-sm table-responsive align-middle">
                   <thead>
@@ -49,7 +51,7 @@ const getAllOrderHandler = () => {
                       <th scope="col">Nama Menu</th>
                       <th scope="col" class="text-center">Jumlah</th>
                       <th scope="col" class="text-center">Harga</th>
-                      <th scope="col" class="text-center">Subtotal</th>
+                      <th scope="col" class="text-center w-table-min">Subtotal</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -57,7 +59,9 @@ const getAllOrderHandler = () => {
                     <tr>
                       <th colspan=2></th>
                       <th scope="row" class="text-center">Total</th>
-                      <th scope="row" class="text-center">Rp${totalCost}</th>
+                      <th scope="row" class="d-flex justify-content-between gap-5 ps-2">
+                        <span>Rp</span>${totalCost}
+                      </th>
                     </tr>
                   </tbody>
                 </table>
