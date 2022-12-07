@@ -51,4 +51,11 @@ const deleteCart = async (menuID, userID) => {
     .then((data) => data);
 };
 
-export { getCart, getCartByMenu, addCart, updateQty, deleteCart };
+const purgeCart = async (userID) => {
+  const endpoint = `${baseURL}=purge_cart&id_user=${userID}`;
+  return fetch(endpoint, { method: 'DELETE' })
+    .then((res) => res.json())
+    .then((data) => data);
+};
+
+export { getCart, getCartByMenu, addCart, updateQty, deleteCart, purgeCart };

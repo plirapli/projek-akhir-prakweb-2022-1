@@ -170,3 +170,26 @@ function delete_cart()
   header('Content-Type: application/json');
   echo json_encode($response);
 }
+
+function purge_cart()
+{
+  global $connection;
+
+  $user = $_GET["id_user"];
+  $query = "DELETE FROM cart WHERE id_user = $user";
+
+  if (mysqli_query($connection, $query)) {
+    $response = [
+      'status' => 1,
+      'message' => 'Delete Success'
+    ];
+  } else {
+    $response = [
+      'status' => 0,
+      'message' => mysqli_error($connection)
+    ];
+  }
+
+  header('Content-Type: application/json');
+  echo json_encode($response);
+}

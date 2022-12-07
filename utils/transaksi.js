@@ -53,7 +53,7 @@ const getAllOrderHandler = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    ${await element}
+                    ${element}
                     <tr>
                       <th colspan=2></th>
                       <th scope="row" class="text-center">Total</th>
@@ -73,7 +73,7 @@ const getAllOrderHandler = () => {
             <th scope="row" class="w-table-min text-center">${i++}</th>
             <td>#${id_order}</td>
             <td>${created_at}</td>
-            <td>${order.nama}</td>
+            <td>${order?.nama || '[User Telah Dihapus]'}</td>
             <td class="w-table-min accordion-header" id="flush-heading-${id_order}">
               <button class="btn btn-gray btn-sm mb-1" type="button" data-bs-toggle="collapse" data-bs-target=".collapse-detail-${id_order}">
                 Detail
@@ -93,29 +93,6 @@ const getAllOrderHandler = () => {
       });
       tableBody.innerHTML = tableElement || emptyTable;
     });
-
-    // orders.forEach((order) => {
-    //   const created_at = showFormattedDate(order.created_at);
-    //   const { id_pesanan: id_order } = order;
-
-    //   const element = `
-    //     <tr data-order-id = ${id_order}>
-    //       <th scope="row" class="w-table-min text-center">${i++}</th>
-    //       <td>#${id_order}</td>
-    //       <td>${created_at}</td>
-    //       <td>${order.nama}</td>
-    //       <td class="w-table-min accordion-header" id="flush-heading-${id_order}">
-    //         <button class="btn btn-gray btn-sm mb-1" type="button" data-bs-toggle="collapse" data-bs-target=".collapse-detail-${id_order}">
-    //           Detail
-    //         </button>
-    //       </td>
-    //     </tr>
-    //   `;
-
-    //   tableElement += element;
-    // });
-
-    // tableBody.innerHTML = tableElement;
   });
 };
 

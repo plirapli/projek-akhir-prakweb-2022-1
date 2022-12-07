@@ -119,10 +119,7 @@ function get_transaction_id()
   global $connection;
 
   $id_order = $_GET["id_order"];
-  $query = "SELECT id_transaksi, id_pesanan, menu.menu AS menu, qty, t.harga AS harga
-            FROM transaksi t
-            INNER JOIN menu ON t.id_menu = menu.id_menu 
-            WHERE t.id_pesanan = $id_order";
+  $query = "SELECT * FROM transaksi t WHERE t.id_pesanan = $id_order";
   $result = mysqli_query($connection, $query);
 
   if ($query) {
@@ -161,7 +158,7 @@ function add_transaction()
 
   $check = [
     'id_order' => '',
-    'id_menu' => '',
+    'menu' => '',
     'qty' => '',
     'harga' => '',
   ];
@@ -170,12 +167,12 @@ function add_transaction()
 
   if ($check_match == count($check)) {
     $id_order = $req_body['id_order'];
-    $id_menu = $req_body['id_menu'];
+    $menu = $req_body['menu'];
     $qty = $req_body['qty'];
     $harga = $req_body['harga'];
 
     $command = "INSERT INTO transaksi 
-                VALUE ( '', '$id_order', '$id_menu', '$qty', $harga )";
+                VALUE ( '', '$id_order', '$menu', '$qty', $harga )";
     $query = mysqli_query($connection, $command);
 
     if ($query) {

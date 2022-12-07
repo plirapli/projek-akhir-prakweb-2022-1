@@ -16,6 +16,9 @@ a:hover {
 .bg-gray {
   background-color: var(--color-gray);
 }
+.bg-success-sub {
+  background-color: var(--color-success-sub);
+}
 
 .text-primary {
   color: var(--color-primary) !important;

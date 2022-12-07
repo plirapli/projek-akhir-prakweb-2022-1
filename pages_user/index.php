@@ -111,7 +111,7 @@ cek_session();
             </div>
           </div>
         </div>
-        <div id="orderSuccess" class="d-none">
+        <div id="orderSuccess" style="display: none;">
           <div class="modal-body">
             <div class="d-flex flex-column place-center">
               <div class="bg-gray d-flex place-center mb-3 rounded-pill bg-success-sub text-success">

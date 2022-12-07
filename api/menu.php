@@ -183,12 +183,12 @@ function edit_menu_stock()
 
   $req_body = json_decode(file_get_contents('php://input'), true);
 
-  $id = $req_body["id"];
+  $id_menu = $req_body["id_menu"];
   $stok = $req_body["qty"];
 
   $command = "UPDATE menu 
               SET stok = stok - '$stok', updated_at = current_timestamp()
-              WHERE id_menu = $id";
+              WHERE id_menu = $id_menu";
   $query = mysqli_query($connection, $command);
 
   if ($query) {

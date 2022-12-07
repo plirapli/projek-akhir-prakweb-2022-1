@@ -11,3 +11,6 @@ Content-Type: application/json
 {
   "qty": 3
 }
+
+### PURGE
+http://localhost/projek-akhir-prakweb-2022-1/api/cart.php?function=purge_cart&id_user=2
