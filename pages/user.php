@@ -45,7 +45,8 @@ cek_admin();
       <div class="row">
         <div class="col-lg-12">
           <div class="row">
-            <div class="row card-info"></div>
+            <div class="d-flex gap-4 card-info"></div>
+
             <!-- Tabel User -->
             <div class="col-12">
               <div class="card recent-sales overflow-auto">

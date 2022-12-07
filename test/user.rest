@@ -46,6 +46,6 @@ http://localhost/olive-chicken/api/role.php?function=get_role_total
 
 ### DASHBOARD
 ### GET
-http://localhost/olive-chicken/api/total.php?function=get_total
+http://localhost/projek-akhir-prakweb-2022-1/api/total.php?function=get_total
 
 

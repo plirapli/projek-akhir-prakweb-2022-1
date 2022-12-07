@@ -134,9 +134,10 @@ const getMenu = () => {
                   <iconify-icon icon="akar-icons:money" width="20"></iconify-icon>
                   Harga
                 </div>
-                <span>
-                  Rp
-                  <b class="harga">${menu.harga}</b>
+                <span class="fw-bold">
+                  Rp<span class="harga">${showFormattedCurrency(
+                    menu.harga
+                  )}</span>
                 </span>
               </li>
               ${await checkMenuOnCartHandler}
@@ -160,7 +161,6 @@ const getMenu = () => {
 };
 
 /* CART PROCESS */
-const CartMenus = [];
 const RENDER_EVENT = 'render-cart';
 const pathMenuImg = `/${rootURL}/assets/img/menu`;
 
@@ -196,14 +196,14 @@ document.addEventListener(RENDER_EVENT, async () => {
               <span class="fw-bold">
                 ${menu} 
               </span>
-              (Rp${harga})
+              (Rp${showFormattedCurrency(harga)})
               </div>
               <div class="text-gray">
                 Qty: <span class="text-black">${qty}</span>
               </div>
             </div>
             <div style="font-weight: 500;">
-              Rp<span>${subtotal}</span>
+              Rp<span>${showFormattedCurrency(subtotal)}</span>
             </div>
           </div>
         </div>`;
@@ -212,7 +212,7 @@ document.addEventListener(RENDER_EVENT, async () => {
       cartElement += element;
     }
 
-    cartTotal.innerHTML = total;
+    cartTotal.innerHTML = showFormattedCurrency(total);
     cartListTable.innerHTML = cartElement;
     checkButton(carts.length);
   });
@@ -359,7 +359,11 @@ const getAllTransactionHandler = () => {
 
   getOrderById(userID).then(async (data) => {
     const orders = data.data;
-    const emptyTable = '<div class="mt-3">Anda belum pernah memesan</div>';
+    const emptyTable = `
+      <tr>
+        <td colspan="4" class="">Anda belum pernah memesan</td>
+      </tr>
+    `;
     let tableElement = '';
     let i = 1;
 

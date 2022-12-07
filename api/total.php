@@ -29,7 +29,7 @@ function get_total()
   $query_total_transaksi = "SELECT 'total transaksi' AS name, 
                             'transaksi.php' AS url,
                             'mingcute:bill-fill' AS icon,
-                            CONCAT('Rp', SUM(qty * harga)) AS total FROM transaksi";
+                            SUM(qty * harga) AS total FROM transaksi";
 
 
   $res_user = mysqli_query($connection, $query_user);

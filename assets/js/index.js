@@ -54,7 +54,7 @@ const generateSidebar = () => {
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
         <a class="nav-link d-flex align-items-center ${
-          sidebar.dataset.activeNav != 'dashboard' && 'collapsed'
+          url != 'dashboard' && 'collapsed'
         }" href="index.php">
           <iconify-icon icon="material-symbols:window" width="18"></iconify-icon>
           <span class="ms-2">Dashboard</span>
@@ -64,7 +64,7 @@ const generateSidebar = () => {
       
       <li class="nav-item">
         <a class="nav-link d-flex align-items-center ${
-          sidebar.dataset.activeNav != 'menu' && 'collapsed'
+          url != 'menu' && 'collapsed'
         }" href="menu_makanan.php">
           <iconify-icon icon="mdi:food-drumstick" width="18"></iconify-icon>
           <span class="ms-2">Menu Makanan</span>
@@ -74,7 +74,7 @@ const generateSidebar = () => {
       <li class="nav-heading">Daftar Pengguna</li>
       <li class="nav-item">
         <a class="nav-link d-flex align-items-center ${
-          sidebar.dataset.activeNav != 'user_list' && 'collapsed'
+          url != 'user_list' && 'collapsed'
         }" href="user.php">
           <iconify-icon icon="mdi:user" width="18"></iconify-icon>
           <span class="ms-2">User</span>
@@ -84,7 +84,7 @@ const generateSidebar = () => {
       <li class="nav-heading">Transaksi</li>
       <li class="nav-item">
         <a class="nav-link ${
-          sidebar.dataset.activeNav != 'transaksi' && 'collapsed'
+          url != 'transaksi' && 'collapsed'
         }" href="transaksi.php">
           <iconify-icon icon="mdi:clipboard-text" width="18"></iconify-icon>
           <span class="ms-2">Riwayat Transaksi</span>

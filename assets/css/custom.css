@@ -84,6 +84,14 @@ a:hover {
   background: rgba(0, 0, 0, 0.1);
 }
 
+.btn-gray-transparent {
+  color: var(--color-black);
+  background: var(--color-gray);
+}
+.btn-gray-transparent:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
 .btn-dark-gray {
   background: var(--color-dark-gray);
   color: #fff;

@@ -84,7 +84,7 @@ cek_session();
         <table id="orderList" class="table table-responsive align-middle">
           <thead>
             <tr>
-              <th scope="col" class="text-center">No</th>
+              <th scope="col" class="w-table-min text-center">No</th>
               <th scope="col">Nomor Order</th>
               <th scope="col">Waktu Order</th>
               <th scope="col" class="text-center">Aksi</th>

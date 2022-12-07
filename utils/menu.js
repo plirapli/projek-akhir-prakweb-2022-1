@@ -1,5 +1,6 @@
 import { rootURL } from '../config/config.js';
 import * as controllerMenu from '../controller/menu.js';
+import { showFormattedCurrency } from './convertDate.js';
 
 /* API CALL */
 // Get Menu
@@ -41,9 +42,10 @@ const getMenu = () => {
                 <iconify-icon icon="akar-icons:money" width="20"></iconify-icon>
                 Harga
               </div>
-              <span>
-                Rp
-                <b class="harga">${menu.harga}</b>
+              <span class="fw-bold">
+                Rp<span class="harga">${showFormattedCurrency(
+                  menu.harga
+                )}</span>
               </span>
             </li>
             <li class="list-group-item py-3 d-flex">

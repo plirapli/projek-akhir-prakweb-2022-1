@@ -28,7 +28,7 @@ getUserId(id).then((data) => {
         </li>
         <li class="nav-item dropdown pe-3 position-relative">
           <div class="nav-link nav-profile d-flex align-items-center pe-0">
-            <a href="../pages/logout.php" class="btn btn-gray d-flex align-items-center p-2">
+            <a href="../pages/logout.php" class="btn btn-gray-transparent d-flex align-items-center p-2">
               <iconify-icon icon="material-symbols:exit-to-app-rounded" width="24"></iconify-icon>
             </a>
           </div>

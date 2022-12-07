@@ -2,11 +2,11 @@
 
 require_once '../api/connection.php';
 
-$nama = $_POST["nama"];
-$email = $_POST["email"];
-$username = $_POST["username"];
-$password = $_POST["password"];
-$conf_password = $_POST["confirm_password"];
+$nama = strip_tags($_POST["nama"]);
+$email = strip_tags($_POST["email"]);
+$username = strip_tags($_POST["username"]);
+$password = strip_tags($_POST["password"]);
+$conf_password = strip_tags($_POST["confirm_password"]);
 
 // Query Data dari TB user (SELECT ALL)
 $query_check = "SELECT * FROM user WHERE `username` = '$username' OR email = '$email'";

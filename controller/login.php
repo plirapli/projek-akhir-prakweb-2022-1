@@ -2,8 +2,8 @@
 
 require_once '../api/connection.php';
 
-$emailUsername = $_POST["email_username"];
-$password = $_POST["password"];
+$emailUsername = mysqli_real_escape_string($connection, $_POST["email_username"]);
+$password = mysqli_real_escape_string($connection, $_POST["password"]);
 
 $query = "SELECT * FROM user WHERE (username = '$emailUsername' OR email = '$emailUsername') AND password = '$password'";
 $result = mysqli_query($connection, $query);

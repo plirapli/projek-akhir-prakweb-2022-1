@@ -1,4 +1,5 @@
 import { URL } from '../config/config.js';
+import { nFormatter } from './convertDate.js';
 
 // Get Total
 const getTotal = () => {
@@ -13,6 +14,12 @@ const getTotal = () => {
 
       for (const totalData of totals) {
         const { name, total, icon, url } = totalData;
+        const totalDigit = total.toString().length;
+        const formattedTotal =
+          name == 'total transaksi'
+            ? `Rp${nFormatter(total, totalDigit)}`
+            : total;
+
         const element = `
         <div class="col-md-6">
           <div class="card info-card revenue-card">
@@ -23,7 +30,7 @@ const getTotal = () => {
                   <iconify-icon icon="${icon}" width="32"></iconify-icon>
                 </div>
                 <div class="ps-3">
-                  <h6>${total}</h6>
+                  <h6>${formattedTotal}</h6>
                   <span class="text-muted small text-capitalize">${name}</span>
                 </div>
               </div>
