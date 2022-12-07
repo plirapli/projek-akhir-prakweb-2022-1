@@ -18,19 +18,6 @@ const getMenuId = async (id) => {
     .catch((err) => console.log('Error: ' + err));
 };
 
-const editMenu = async (req) => {
-  return fetch(`${baseURL}=edit_menu`, {
-    method: 'PUT',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(req),
-  })
-    .then((res) => res.json())
-    .then((data) => data);
-};
-
 const editMenuStock = async (req) => {
   return fetch(`${baseURL}=edit_menu_stock`, {
     method: 'PUT',
@@ -51,4 +38,4 @@ const deleteMenu = async (id) => {
     .catch((err) => console.log('Error: ' + err));
 };
 
-export { getMenu, getMenuId, editMenu, editMenuStock, deleteMenu };
+export { getMenu, getMenuId, editMenuStock, deleteMenu };

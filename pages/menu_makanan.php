@@ -129,7 +129,7 @@ cek_admin();
         </div>
 
         <!-- Isi Modal -->
-        <form method="POST" id="editMenuForm">
+        <form method="POST" action="" enctype="multipart/form-data" id="editMenuForm">
           <div class="modal-body">
             <div class="mb-3">
               <label for="editMenu" class="form-label"> Nama Menu </label>
@@ -138,6 +138,10 @@ cek_admin();
             <div class="mb-3">
               <label for="editDeskripsi" class="form-label"> Deskripsi </label>
               <textarea class="form-control" id="editDeskripsi" name="deskripsi" rows="3" placeholder="Deksripsi" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="editImg" class="mb-1">Gambar Menu</label>
+              <input type="file" name="img" accept="image/png, image/jpeg" id="editImg" class="form-control" />
             </div>
             <div class="mb-3 d-flex gap-3">
               <div class="w-25">

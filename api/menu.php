@@ -84,8 +84,7 @@ function add_menu()
 {
   global $connection;
 
-  $filename = $_FILES["img"]["name"];
-  $extension  = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+  $extension  = strtolower(pathinfo($_FILES["img"]["name"], PATHINFO_EXTENSION));
   $uploadOk = 1;
 
   // Check file size
@@ -143,38 +142,74 @@ function edit_menu()
 {
   global $connection;
 
-  $req_body = json_decode(file_get_contents('php://input'), true);
+  $file = $_FILES['img']['tmp_name'];
+  $extension  = strtolower(pathinfo($_FILES["img"]["name"], PATHINFO_EXTENSION));
+  $uploadOk = 1;
 
-  $id = $req_body["id"];
-  $menu = $req_body["menu"];
-  $desc = $req_body["desc"];
-  $stok = $req_body["stok"];
-  $harga = $req_body['harga'];
+  $newFilename = "menu-" .  uniqid() . "-" . time() . "." . $extension;
+  $target_dir = "../assets/img/menu/";
+  $destination = $target_dir . $newFilename;
 
-  $command = "UPDATE menu 
+  if ($file != '') {
+    // Check file size
+    if ($_FILES["img"]["size"] > 5000000) {
+      $error = "File is too large. " . $_FILES["img"]["size"] . "<br/>";
+      $uploadOk = 0;
+    }
+
+    // Allow certain file formats
+    if ($extension != "jpg" && $extension != "png" && $extension != "jpeg") {
+      $error = "Only JPG, JPEG, PNG & GIF files are allowed.";
+      $uploadOk = 0;
+    }
+  }
+
+  if ($uploadOk == 1) {
+    $id = $_GET["id"];
+    $menu = htmlspecialchars($_POST["menu"]);
+    $deskripsi = htmlspecialchars($_POST["deskripsi"]);
+    $stok = htmlspecialchars($_POST["stok"]);
+    $harga = htmlspecialchars($_POST["harga"]);
+
+    if ($file != '') {
+      $res = mysqli_query($connection, "SELECT * from menu WHERE id_menu = $id LIMIT 1");
+      if ($row = mysqli_fetch_array($res)) {
+        $deleteimage = $row['img_menu'];
+      }
+
+      unlink($target_dir . $deleteimage);
+      move_uploaded_file($file, $destination);
+
+      $sql = "UPDATE menu 
               SET 
                 menu = '$menu', 
-                deskripsi = '$desc',
+                deskripsi = '$deskripsi',
+                img_menu = '$newFilename',
                 stok = '$stok', 
                 harga = '$harga', 
                 updated_at = current_timestamp()
               WHERE id_menu = $id";
-  $query = mysqli_query($connection, $command);
+    } else {
+      $sql = "UPDATE menu 
+              SET 
+                menu = '$menu', 
+                deskripsi = '$deskripsi',
+                stok = '$stok', 
+                harga = '$harga', 
+                updated_at = current_timestamp()
+              WHERE id_menu = $id";
+    }
 
-  if ($query) {
-    $response = [
-      'status' => 1,
-      'message' => 'Update Success'
-    ];
+    $query = mysqli_query($connection, $sql);
+
+    if ($query) {
+      header("Location: ../pages/menu_makanan.php");
+    } else {
+      echo 'Error: ' . mysqli_error($connection);
+    }
   } else {
-    $response = [
-      'status' => 0,
-      'message' => 'Error: ' . mysqli_error($connection)
-    ];
+    echo "Error" . $error;
   }
-
-  header('Content-Type: application/json');
-  echo json_encode($response);
 }
 
 function edit_menu_stock()

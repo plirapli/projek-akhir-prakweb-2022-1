@@ -70,37 +70,11 @@ const editMenu = (id) => {
     const { menu, deskripsi, stok, harga } = data.data;
 
     // Mengambil elemen form
+    editForm.action = `../api/menu.php?function=edit_menu&id=${id}`;
     editForm.querySelector('#editMenu').value = menu;
     editForm.querySelector('#editDeskripsi').value = deskripsi;
     editForm.querySelector('#editStok').value = stok;
     editForm.querySelector('#editHarga').value = harga;
-
-    editForm.addEventListener(
-      'submit',
-      (e) => {
-        e.preventDefault();
-        const editedUser = {
-          id: id,
-          menu: editForm.querySelector('#editMenu').value,
-          desc: editForm.querySelector('#editDeskripsi').value,
-          stok: editForm.querySelector('#editStok').value,
-          harga: editForm.querySelector('#editHarga').value,
-        };
-
-        // Dikirim ke database
-        controllerMenu
-          .editMenu(editedUser)
-          .then((data) => {
-            const modalElement = document.querySelector('#editMenuModal');
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            modal.hide();
-
-            getMenu();
-          })
-          .catch((err) => console.log(err));
-      },
-      { once: true }
-    );
   });
 };
 
