@@ -1,12 +1,12 @@
 ############# MENU #############
 ### GET
-http://localhost/olive-chicken/api/order.php?function=get_order
+http://localhost/projek-akhir-prakweb-2022-1/api/order.php?function=get_order
 
 ### GET BY ID
-http://localhost/projek-akhir-prakweb-2022-1/api/order.php?function=get_order_id&id_user=5
+http://localhost/projek-akhir-prakweb-2022-1/api/order.php?function=get_order_id&id_user=2
 
 ### GET TRANSACTION BY ID
-http://localhost/projek-akhir-prakweb-2022-1/api/order.php?function=get_transaction_id&id_order=42
+http://localhost/projek-akhir-prakweb-2022-1/api/order.php?function=get_transaction_id&id_order=56
 
 ### POST ORDER
 http://localhost/olive-chicken/api/order.php?function=add_order

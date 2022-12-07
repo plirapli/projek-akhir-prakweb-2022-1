@@ -348,6 +348,7 @@ const getAllTransactionHandler = () => {
 
   getOrderById(userID).then(async (data) => {
     const orders = data.data;
+    console.log(orders);
     const emptyTable = '<div class="mt-3">Anda belum pernah memesan</div>';
     let tableElement = '';
     let i = 1;
@@ -355,6 +356,7 @@ const getAllTransactionHandler = () => {
     const promises = orders.map(async (order) => {
       const { id_pesanan: id_order } = order;
       const created_at = showFormattedDateDetail(order.created_at);
+      console.log(order.created_at);
 
       const subTable = getTransactionById(id_order).then((data) => {
         const transactions = data.data;
@@ -367,7 +369,9 @@ const getAllTransactionHandler = () => {
               <td>${menu}</td>
               <td class="text-center">${qty}</td>
               <td class="text-center">Rp${harga}</td>
-              <td class="text-center">Rp${qty * harga}</td>
+              <td class="d-flex justify-content-between gap-5 ps-2">
+                <span>Rp</span>${qty * harga}
+              </td>
             </tr>
           `;
 
@@ -392,7 +396,7 @@ const getAllTransactionHandler = () => {
                       <th scope="col">Nama Menu</th>
                       <th scope="col" class="text-center">Jumlah</th>
                       <th scope="col" class="text-center">Harga</th>
-                      <th scope="col" class="text-center">Subtotal</th>
+                      <th scope="col" class="text-center w-table-min">Subtotal</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -400,7 +404,9 @@ const getAllTransactionHandler = () => {
                     <tr>
                       <th colspan=2></th>
                       <th scope="row" class="text-center">Total</th>
-                      <th scope="row" class="text-center">Rp${totalCost}</th>
+                      <th scope="row" class="d-flex justify-content-center gap-5 ps-2">
+                        <span>Rp</span>${totalCost}
+                      </th>
                     </tr>
                   </tbody>
                 </table>

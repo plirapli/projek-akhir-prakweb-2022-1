@@ -49,7 +49,7 @@ function get_order_id()
   global $connection;
 
   $id_user = $_GET["id_user"];
-  $query = "SELECT * FROM pesanan INNER JOIN user ON pesanan.id_user = user.id_user WHERE pesanan.id_user = $id_user";
+  $query = "SELECT pesanan.* FROM pesanan INNER JOIN user ON pesanan.id_user = user.id_user WHERE pesanan.id_user = $id_user";
   $result = mysqli_query($connection, $query);
 
   if ($query) {
