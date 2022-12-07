@@ -1,0 +1,10 @@
+### GET
+http://localhost/projek-akhir-prakweb-2022-1/api/cart.php?function=get_cart
+
+### UPDATE QTY
+http://localhost/projek-akhir-prakweb-2022-1/api/cart.php?function=update_qty&id=1
+Content-Type: application/json
+
+{
+  "qty": 3
+}

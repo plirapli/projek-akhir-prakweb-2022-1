@@ -1,4 +1,5 @@
 import { rootURL } from '../config/config.js';
+import { addCart, getCartByMenu, updateQty } from '../controller/cart.js';
 import * as controllerMenu from '../controller/menu.js';
 import {
   addOrder,
@@ -13,7 +14,6 @@ import {
 } from '../utils/convertDate.js';
 
 // Global Variable
-const CartMenus = [];
 const userID = document.querySelector('body').dataset.idUser;
 const pathMenuImg = `/${rootURL}/assets/img/menu`;
 
@@ -117,6 +117,7 @@ const getMenu = () => {
 };
 
 /* CART PROCESS */
+const CartMenus = [];
 const RENDER_EVENT = 'render-cart';
 
 const checkButton = () => {
@@ -125,9 +126,9 @@ const checkButton = () => {
 };
 
 document.addEventListener(RENDER_EVENT, async () => {
-  const cartList = document.getElementById('shoppingCart');
+  const cartListTable = document.getElementById('shoppingCart');
   const cartTotal = document.getElementById('cartTotal');
-  cartList.innerHTML = '';
+  cartListTable.innerHTML = '';
 
   let total = 0;
   let cartElement = '';
@@ -172,43 +173,44 @@ document.addEventListener(RENDER_EVENT, async () => {
   }
 
   cartTotal.innerHTML = total;
-  cartList.innerHTML = cartElement;
+  cartListTable.innerHTML = cartElement;
   checkButton();
 });
 
 const addCartHandler = () => {
   const addCartBtn = document.querySelectorAll('.add-to-cart');
-  addCartBtn.forEach((addCart) => {
-    const card = addCart.parentElement.parentElement.parentElement;
-    const id = card.dataset.menuId;
-    const harga = parseInt(card.querySelector('.harga').textContent);
+  addCartBtn.forEach((addBtn) => {
+    const card = addBtn.parentElement.parentElement.parentElement;
+    const id_menu = card.dataset.menuId;
     const stok = card.dataset.stok;
     const qtyBtn = card.querySelector('.qty-btn');
     const deleteCartBtn = card.querySelector('.delete-cart');
 
-    addCart.addEventListener('click', () => {
-      const newMenu = { id, qty: 1, harga };
+    addBtn.addEventListener('click', () => {
+      const newMenu = { id_menu, qty: 1 };
 
-      addCart.style.display = 'none';
+      addBtn.style.display = 'none';
       qtyBtn.style.display = 'flex';
 
-      CartMenus.push(newMenu);
-      document.querySelector(`[data-menu-id="${id}"] #inputQty`).value = 1;
+      addCart(newMenu).then(() => {
+        document.querySelector(
+          `[data-menu-id="${id_menu}"] #inputQty`
+        ).value = 1;
 
-      changeInputQty(id, stok);
-      document.dispatchEvent(new Event(RENDER_EVENT));
+        changeInputQty(id_menu, stok);
+        document.dispatchEvent(new Event(RENDER_EVENT));
+      });
     });
 
     deleteCartBtn.addEventListener('click', () => {
-      addCart.style.display = 'block';
+      addBtn.style.display = 'block';
       qtyBtn.style.display = 'none';
 
-      deleteCarts(id);
+      deleteCartHandler(id);
     });
   });
 };
 
-const findCartMenu = (id) => CartMenus.find((cart) => cart.id === id) || null;
 const findCartMenuIndex = (id) => {
   for (const index in CartMenus) {
     if (CartMenus[index].id === id) {
@@ -218,7 +220,7 @@ const findCartMenuIndex = (id) => {
   return -1;
 };
 
-const deleteCarts = (id) => {
+const deleteCartHandler = (id) => {
   const cartMenuTargetIndex = findCartMenuIndex(id);
   if (cartMenuTargetIndex == -1) return;
 
@@ -228,34 +230,35 @@ const deleteCarts = (id) => {
 
 // Change Qty on Menu
 const changeInputQty = (id, stok) => {
-  const cartMenuTarget = findCartMenu(id);
   const min = document.querySelector(`[data-menu-id="${id}"] .qty-min`);
   const plus = document.querySelector(`[data-menu-id="${id}"] .qty-plus`);
-  let qtyValue = cartMenuTarget.qty;
 
-  min.addEventListener('click', () => {
-    if (qtyValue <= 1) {
-      qtyValue = 1;
-    } else {
-      qtyValue -= 1;
-      updateValue();
-    }
+  getCartByMenu(id).then((data) => {
+    let qty = parseInt(data.data.qty);
+
+    min.addEventListener('click', () => {
+      if (qty <= 1) {
+        qty = 1;
+      } else {
+        qty -= 1;
+        updateValue(qty);
+      }
+    });
+
+    plus.addEventListener('click', () => {
+      if (qty < stok) {
+        qty += 1;
+      }
+
+      updateValue(qty);
+    });
   });
 
-  plus.addEventListener('click', () => {
-    if (qtyValue < stok) {
-      qtyValue += 1;
-    }
-
-    updateValue();
-  });
-
-  const updateValue = () => {
-    cartMenuTarget.qty = qtyValue;
-
-    document.querySelector(`[data-menu-id="${id}"] #inputQty`).value = qtyValue;
-    // qtyChangeCart(qtyValue, id);
-    document.dispatchEvent(new Event(RENDER_EVENT));
+  const updateValue = (qty) => {
+    updateQty(id, qty).then(() => {
+      document.querySelector(`[data-menu-id="${id}"] #inputQty`).value = qty;
+      document.dispatchEvent(new Event(RENDER_EVENT));
+    });
   };
 };
 

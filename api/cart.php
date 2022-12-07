@@ -49,7 +49,7 @@ function get_cart_id()
   global $connection;
 
   $id = $_GET["id"];
-  $query = "SELECT * FROM cart INNER JOIN menu ON cart.id_menu = menu.id_menu WHERE id_cart=$id";
+  $query = "SELECT * FROM cart INNER JOIN menu ON cart.id_menu = menu.id_menu WHERE cart.id_menu=$id";
   $result = mysqli_query($connection, $query);
 
   if ($query) {
@@ -116,7 +116,7 @@ function update_qty()
   $id = $_GET["id"];
   $qty = $req_body["qty"];
 
-  $command = "UPDATE cart SET qty = $qty WHERE id_cart = $id";
+  $command = "UPDATE cart SET qty = $qty WHERE id_menu = $id";
   $query = mysqli_query($connection, $command);
 
   if ($query) {
