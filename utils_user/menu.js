@@ -5,6 +5,7 @@ import {
   addCart,
   updateQty,
   deleteCart,
+  purgeCart,
 } from '../controller/cart.js';
 import * as controllerMenu from '../controller/menu.js';
 import {
@@ -85,7 +86,7 @@ const getMenu = () => {
                   <input 
                     type="number" 
                     id="inputQty" 
-                    class="w-100 form-control"
+                    class="w-100 form-control text-center"
                     ${isFound && 'value=' + cart.qty}
                     readonly
                   >
@@ -152,9 +153,9 @@ const CartMenus = [];
 const RENDER_EVENT = 'render-cart';
 const pathMenuImg = `/${rootURL}/assets/img/menu`;
 
-const checkButton = () => {
+const checkButton = (cartCount) => {
   const pesanBtn = document.querySelector('#processTransaction');
-  pesanBtn.disabled = !CartMenus.length;
+  pesanBtn.disabled = cartCount <= 0;
 };
 
 document.addEventListener(RENDER_EVENT, async () => {
@@ -202,7 +203,7 @@ document.addEventListener(RENDER_EVENT, async () => {
 
     cartTotal.innerHTML = total;
     cartListTable.innerHTML = cartElement;
-    checkButton();
+    checkButton(carts.length);
   });
 });
 
@@ -222,7 +223,6 @@ const addCartHandler = () => {
     const plusBtn = document.querySelector(
       `[data-menu-id="${id_menu}"] .qty-plus`
     );
-    console.log(plusBtn);
 
     const changeQty = (qty) => {
       return (document.querySelector(
@@ -253,7 +253,7 @@ const addCartHandler = () => {
       qtyBtn.style.display = 'none';
 
       deleteCart(id_menu, userID).then(() => {
-        changeQty(0);
+        changeQty(1);
         document.dispatchEvent(new Event(RENDER_EVENT));
       });
     });
@@ -272,7 +272,6 @@ const addCartHandler = () => {
       let qty = getQty();
       if (qty < stok) {
         qty += 1;
-        console.log(qty);
         updateValue(qty);
       }
     });
@@ -293,40 +292,52 @@ const transactionBtn = document.querySelector('#processTransaction');
 transactionBtn.addEventListener('click', (e) => {
   e.preventDefault();
 
-  if (CartMenus.length) {
-    // Add to Order
-    addOrder(userID).then(async (data) => {
-      if (data.status) {
-        const { id_order } = data.data;
+  getCart(userID).then(({ data: carts }) => {
+    if (carts.length) {
+      // Add to Order
+      addOrder(userID).then(async (order) => {
+        if (order.status) {
+          const { id_order } = order.data;
 
-        // Add to transaction
-        const promises = CartMenus.map(async (cartMenu) => {
-          const { id, qty, harga } = cartMenu;
-          const newTransaction = {
-            id_order,
-            id_menu: id,
-            qty,
-            harga,
-          };
+          // Add to transaction
+          const cartPromises = carts.map(async (cartMenu) => {
+            const { id_menu, menu, qty, harga } = cartMenu;
+            const newTransaction = {
+              id_order,
+              menu,
+              qty,
+              harga,
+            };
 
-          return addTransaction(newTransaction).then((data) => {
-            if (data.status) {
-              // Reduce stock
-              return controllerMenu
-                .editMenuStock({ id, qty })
-                .then((data) => data);
-            }
+            return addTransaction(newTransaction).then((data) => {
+              if (data.status) {
+                // Reduce stock
+                return controllerMenu
+                  .editMenuStock({ id_menu, qty })
+                  .then(({ status }) => {
+                    if (status) {
+                      return purgeCart(userID).then((data) => data);
+                    }
+                  });
+              }
+            });
           });
-        });
 
-        Promise.all(promises).then((result) => {
-          window.location.href = '../pages_user/pesan.php';
-        });
-      }
-    });
-  } else {
-    console.log('Masih kosong');
-  }
+          Promise.all(cartPromises).then((result) => {
+            const loadingModal = document.querySelector('#orderLoading');
+            const successModal = document.querySelector('#orderSuccess');
+
+            loadingModal.style.display = 'none';
+            successModal.style.display = 'block';
+
+            getMenu();
+            document.dispatchEvent(new Event(RENDER_EVENT));
+            getAllTransactionHandler();
+          });
+        }
+      });
+    }
+  });
 });
 
 /* END TRANSACTION PROCESS */
@@ -385,7 +396,7 @@ const getAllTransactionHandler = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    ${await element}
+                    ${element}
                     <tr>
                       <th colspan=2></th>
                       <th scope="row" class="text-center">Total</th>
@@ -433,5 +444,5 @@ document.addEventListener('DOMContentLoaded', () => {
   getUserByID();
   getMenu();
   getAllTransactionHandler();
-  checkButton();
+  document.dispatchEvent(new Event(RENDER_EVENT));
 });
