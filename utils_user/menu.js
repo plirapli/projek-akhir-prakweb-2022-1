@@ -16,6 +16,7 @@ import {
 } from '../controller/order.js';
 import { getUserId } from '../controller/user.js';
 import {
+  showFormattedCurrency,
   showFormattedDate,
   showFormattedDateDetail,
 } from '../utils/convertDate.js';
@@ -117,12 +118,22 @@ const getMenu = () => {
               </p>
             </div>
             <ul class="list-group list-group-flush border-0">
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                Stok
-                <b class="stok">${menu.stok}</b>
+              <li class="list-group-item d-flex justify-content-between align-items-center ${
+                menu.stok > 0 ? '' : 'text-danger'
+              }">
+                <div class="d-flex align-items-center gap-2">
+                  <iconify-icon icon="mdi:food-drumstick-outline" width="20"></iconify-icon>
+                  Stok
+                </div>
+                <b class="stok">
+                  ${menu.stok}
+                </b>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                Harga
+                <div class="d-flex align-items-center gap-2">
+                  <iconify-icon icon="akar-icons:money" width="20"></iconify-icon>
+                  Harga
+                </div>
                 <span>
                   Rp
                   <b class="harga">${menu.harga}</b>
@@ -348,7 +359,6 @@ const getAllTransactionHandler = () => {
 
   getOrderById(userID).then(async (data) => {
     const orders = data.data;
-    console.log(orders);
     const emptyTable = '<div class="mt-3">Anda belum pernah memesan</div>';
     let tableElement = '';
     let i = 1;
@@ -356,7 +366,6 @@ const getAllTransactionHandler = () => {
     const promises = orders.map(async (order) => {
       const { id_pesanan: id_order } = order;
       const created_at = showFormattedDateDetail(order.created_at);
-      console.log(order.created_at);
 
       const subTable = getTransactionById(id_order).then((data) => {
         const transactions = data.data;
@@ -364,14 +373,20 @@ const getAllTransactionHandler = () => {
 
         transactions.forEach((transaction) => {
           const { id_transaksi: id, menu, qty, harga } = transaction;
+          const subtotal = showFormattedCurrency(qty * harga);
+
           const subElement = `
             <tr data-transaction-id=${id}>
               <td>${menu}</td>
               <td class="text-center">${qty}</td>
-              <td class="text-center">Rp${harga}</td>
-              <td class="d-flex justify-content-between gap-5 ps-2">
-                <span>Rp</span>${qty * harga}
-              </td>
+
+              <td class="w-table-min ps-4">Rp</td>
+              <td class="w-table-min text-end ps-2">${showFormattedCurrency(
+                harga
+              )}</td>
+              
+              <td class="w-table-min ps-4">Rp</td>
+              <td class="w-table-min text-end ps-2">${subtotal}</td>
             </tr>
           `;
 
@@ -395,17 +410,18 @@ const getAllTransactionHandler = () => {
                     <tr>
                       <th scope="col">Nama Menu</th>
                       <th scope="col" class="text-center">Jumlah</th>
-                      <th scope="col" class="text-center">Harga</th>
-                      <th scope="col" class="text-center w-table-min">Subtotal</th>
+                      <th scope="col" colspan="2" class="ps-4 text-center">Harga</th>
+                      <th scope="col" colspan="2" class="ps-4 text-center">Subtotal</th>
                     </tr>
                   </thead>
                   <tbody>
                     ${element}
                     <tr>
-                      <th colspan=2></th>
-                      <th scope="row" class="text-center">Total</th>
-                      <th scope="row" class="d-flex justify-content-center gap-5 ps-2">
-                        <span>Rp</span>${totalCost}
+                      <th colspan="2"></th>
+                      <th colspan="2" scope="row" class="ps-4 text-center">Total</th>
+                      <th scope="row" class="w-table-min ps-4">Rp</th>
+                      <th scope="row" class="w-table-min ps-2 text-end">
+                        ${showFormattedCurrency(totalCost)}
                       </th>
                     </tr>
                   </tbody>

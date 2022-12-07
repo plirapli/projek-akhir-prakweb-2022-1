@@ -1,4 +1,4 @@
-import { showFormattedDate } from './convertDate.js';
+import { showFormattedCurrency, showFormattedDate } from './convertDate.js';
 import { getAllOrder, getTransactionById } from '../controller/order.js';
 
 // Get Order
@@ -20,14 +20,20 @@ const getAllOrderHandler = () => {
 
         transactions.forEach((transaction) => {
           const { id_transaksi: id, menu, qty, harga } = transaction;
+          const subtotal = showFormattedCurrency(qty * harga);
+
           const subElement = `
             <tr data-transaction-id=${id}>
               <td>${menu}</td>
               <td class="text-center">${qty}</td>
-              <td class="text-center">Rp${harga}</td>
-              <td class="d-flex justify-content-between gap-5 ps-2">
-                <span>Rp</span>${qty * harga}
-              </td>
+
+              <td class="w-table-min ps-4">Rp</td>
+              <td class="w-table-min text-end ps-2">${showFormattedCurrency(
+                harga
+              )}</td>
+              
+              <td class="w-table-min ps-4">Rp</td>
+              <td class="w-table-min text-end ps-2">${subtotal}</td>
             </tr>
           `;
 
@@ -50,17 +56,18 @@ const getAllOrderHandler = () => {
                     <tr>
                       <th scope="col">Nama Menu</th>
                       <th scope="col" class="text-center">Jumlah</th>
-                      <th scope="col" class="text-center">Harga</th>
-                      <th scope="col" class="text-center w-table-min">Subtotal</th>
+                      <th scope="col" colspan="2" class="ps-4 text-center">Harga</th>
+                      <th scope="col" colspan="2" class="ps-4 text-center">Subtotal</th>
                     </tr>
                   </thead>
                   <tbody>
                     ${element}
                     <tr>
-                      <th colspan=2></th>
-                      <th scope="row" class="text-center">Total</th>
-                      <th scope="row" class="d-flex justify-content-between gap-5 ps-2">
-                        <span>Rp</span>${totalCost}
+                      <th colspan="2"></th>
+                      <th colspan="2" scope="row" class="ps-4 text-center">Total</th>
+                      <th scope="row" class="w-table-min ps-4">Rp</th>
+                      <th scope="row" class="w-table-min ps-2 text-end">
+                        ${showFormattedCurrency(totalCost)}
                       </th>
                     </tr>
                   </tbody>

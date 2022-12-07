@@ -14,20 +14,33 @@ const getMenu = () => {
     menus.forEach((menu) => {
       const element = `
         <div class="card card-menu-makanan" data-menu-id=${menu.id_menu}>
-          <img style="height: 20rem; object-fit: cover;" src=${pathMenuImg}/${menu.img_menu} class="card-img-top" alt="...">
+          <img style="height: 20rem; object-fit: cover;" src=${pathMenuImg}/${
+        menu.img_menu
+      } class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">${menu.menu}</h5>
             <p class="card-text">
               ${menu.deskripsi}
             </p>
           </div>
+          
           <ul class="list-group list-group-flush border-0">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Stok</span>
-              <b>${menu.stok}</b>
+            <li class="list-group-item d-flex justify-content-between align-items-center ${
+              menu.stok > 0 ? '' : 'text-danger'
+            }">
+              <div class="d-flex align-items-center gap-2">
+                <iconify-icon icon="mdi:box-outline" width="20"></iconify-icon>
+                Stok
+              </div>
+              <b class="stok">
+                ${menu.stok}
+              </b>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              Harga
+              <div class="d-flex align-items-center gap-2">
+                <iconify-icon icon="akar-icons:money" width="20"></iconify-icon>
+                Harga
+              </div>
               <span>
                 Rp
                 <b class="harga">${menu.harga}</b>

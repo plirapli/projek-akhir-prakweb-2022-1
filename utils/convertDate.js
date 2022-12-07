@@ -14,9 +14,19 @@ const showFormattedDateDetail = (date) => {
     day: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
-    second: '2-digit',
   };
   return new Date(date).toLocaleDateString('en-GB', options);
 };
 
-export { showFormattedDate, showFormattedDateDetail };
+const showFormattedCurrency = (num) => {
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    currencyDisplay: 'code',
+  })
+    .format(num)
+    .replace('IDR', '')
+    .trim();
+};
+
+export { showFormattedDate, showFormattedDateDetail, showFormattedCurrency };
