@@ -69,7 +69,7 @@ function get_cart_id()
       ];
     } else {
       $response = [
-        'status' => 1,
+        'status' => 2,
         'message' => 'Data Kosong',
         'data' => []
       ];

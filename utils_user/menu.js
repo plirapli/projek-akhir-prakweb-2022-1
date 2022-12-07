@@ -60,48 +60,33 @@ const getMenu = () => {
     const menus = data.data;
     let menuElement = '';
 
-    menus.forEach((menu) => {
-      const element = `
-        <div 
-          class="card card-menu-makanan mb-0 shadow" 
-          data-menu-id=${menu.id_menu} 
-          data-stok=${menu.stok}
-        >
-          <img style="height: 20rem; object-fit: cover;" 
-            src=${pathMenuImg}/${menu.img_menu} 
-            class="card-img-top" alt="..."
-          >
-          <div class="card-body">
-            <h5 class="card-title">${menu.menu}</h5>
-            <p class="card-text">
-              ${menu.deskripsi}
-            </p>
-          </div>
-          <ul class="list-group list-group-flush border-0">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Stok
-              <b class="stok">${menu.stok}</b>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Harga
-              <span>
-                Rp
-                <b class="harga">${menu.harga}</b>
-              </span>
-            </li>
+    const menuPromises = menus.map(async (menu) => {
+      const { id_menu } = menu;
+
+      const checkMenuOnCartHandler = getCartByMenu(id_menu, userID).then(
+        ({ data: cart }) => {
+          const isFound = cart.hasOwnProperty('qty');
+
+          return `
             <li class="list-group-item py-3">
-              <button class="w-100 btn btn-primary add-to-cart" ${
-                menu.stok == 0 ? 'disabled' : ''
-              }>
+              <button 
+                style="display: ${isFound ? 'none' : 'initial'};"
+                class="w-100 btn btn-primary add-to-cart"
+                ${menu.stok == 0 ? 'disabled' : ''}
+              >
                 Tambah
               </button>
-              <div class="w-100 flex-column gap-2 qty-btn" style="display: none;">
+              <div 
+                class="w-100 flex-column gap-2 qty-btn" 
+                style="display: ${isFound ? 'flex' : 'none'};"
+              >
                 <div class="w-100 d-flex gap-2">
                   <button class="btn btn-primary qty-min"> - </button>
                   <input 
                     type="number" 
                     id="inputQty" 
-                    class="w-100 form-control" 
+                    class="w-100 form-control"
+                    ${isFound && 'value=' + cart.qty}
                     readonly
                   >
                   <button class="btn btn-primary qty-plus"> + </button>
@@ -109,15 +94,56 @@ const getMenu = () => {
                 <button class="w-100 btn btn-sm btn-gray delete-cart"> Hapus </button>
               </div>
             </li>
-          </ul>
-        </div>
-      `;
+          `;
+        }
+      );
 
-      menuElement += element;
+      const element = async () => {
+        return `
+          <div 
+            class="card card-menu-makanan mb-0 shadow" 
+            data-menu-id=${id_menu} 
+            data-stok=${menu.stok}
+          >
+            <img style="height: 20rem; object-fit: cover;" 
+              src=${pathMenuImg}/${menu.img_menu} 
+              class="card-img-top" alt="..."
+            >
+            <div class="card-body">
+              <h5 class="card-title">${menu.menu}</h5>
+              <p class="card-text">
+                ${menu.deskripsi}
+              </p>
+            </div>
+            <ul class="list-group list-group-flush border-0">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Stok
+                <b class="stok">${menu.stok}</b>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Harga
+                <span>
+                  Rp
+                  <b class="harga">${menu.harga}</b>
+                </span>
+              </li>
+              ${await checkMenuOnCartHandler}
+            </ul>
+          </div>
+        `;
+      };
+
+      return await element();
     });
 
-    menuList.innerHTML = menuElement;
-    addCartHandler();
+    Promise.all(menuPromises).then((result) => {
+      result.forEach((res) => {
+        menuElement += res;
+      });
+
+      menuList.innerHTML = menuElement;
+      addCartHandler();
+    });
   });
 };
 
@@ -182,12 +208,33 @@ document.addEventListener(RENDER_EVENT, async () => {
 
 const addCartHandler = () => {
   const addCartBtn = document.querySelectorAll('.add-to-cart');
+
   addCartBtn.forEach((addBtn) => {
     const card = addBtn.parentElement.parentElement.parentElement;
     const id_menu = card.dataset.menuId;
     const stok = card.dataset.stok;
     const qtyBtn = card.querySelector('.qty-btn');
     const deleteCartBtn = card.querySelector('.delete-cart');
+
+    const minBtn = document.querySelector(
+      `[data-menu-id="${id_menu}"] .qty-min`
+    );
+    const plusBtn = document.querySelector(
+      `[data-menu-id="${id_menu}"] .qty-plus`
+    );
+    console.log(plusBtn);
+
+    const changeQty = (qty) => {
+      return (document.querySelector(
+        `[data-menu-id="${id_menu}"] #inputQty`
+      ).value = qty);
+    };
+
+    const getQty = () => {
+      return parseInt(
+        document.querySelector(`[data-menu-id="${id_menu}"] #inputQty`).value
+      );
+    };
 
     addBtn.addEventListener('click', () => {
       const newMenu = { id_menu, qty: 1, id_user: userID };
@@ -196,11 +243,7 @@ const addCartHandler = () => {
       qtyBtn.style.display = 'flex';
 
       addCart(newMenu).then(() => {
-        document.querySelector(
-          `[data-menu-id="${id_menu}"] #inputQty`
-        ).value = 1;
-
-        changeInputQty(id_menu, stok);
+        changeQty(1);
         document.dispatchEvent(new Event(RENDER_EVENT));
       });
     });
@@ -210,21 +253,13 @@ const addCartHandler = () => {
       qtyBtn.style.display = 'none';
 
       deleteCart(id_menu, userID).then(() => {
+        changeQty(0);
         document.dispatchEvent(new Event(RENDER_EVENT));
       });
     });
-  });
-};
 
-// Change Qty on Menu
-const changeInputQty = (menuID, stok) => {
-  const min = document.querySelector(`[data-menu-id="${menuID}"] .qty-min`);
-  const plus = document.querySelector(`[data-menu-id="${menuID}"] .qty-plus`);
-
-  getCartByMenu(menuID, userID).then((data) => {
-    let qty = parseInt(data.data.qty);
-
-    min.addEventListener('click', () => {
+    minBtn.addEventListener('click', () => {
+      let qty = getQty();
       if (qty <= 1) {
         qty = 1;
       } else {
@@ -233,22 +268,22 @@ const changeInputQty = (menuID, stok) => {
       }
     });
 
-    plus.addEventListener('click', () => {
+    plusBtn.addEventListener('click', () => {
+      let qty = getQty();
       if (qty < stok) {
         qty += 1;
+        console.log(qty);
+        updateValue(qty);
       }
-
-      updateValue(qty);
     });
+
+    const updateValue = (qty) => {
+      updateQty(id_menu, userID, qty).then(() => {
+        changeQty(qty);
+        document.dispatchEvent(new Event(RENDER_EVENT));
+      });
+    };
   });
-
-  const updateValue = (qty) => {
-    updateQty(menuID, userID, qty).then(() => {
-      document.querySelector(`[data-menu-id="${menuID}"] #inputQty`).value =
-        qty;
-      document.dispatchEvent(new Event(RENDER_EVENT));
-    });
-  };
 };
 
 /* END CART PROCESS */
