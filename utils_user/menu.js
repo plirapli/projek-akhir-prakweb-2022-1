@@ -1,5 +1,11 @@
 import { rootURL } from '../config/config.js';
-import { addCart, getCartByMenu, updateQty } from '../controller/cart.js';
+import {
+  getCart,
+  getCartByMenu,
+  addCart,
+  updateQty,
+  deleteCart,
+} from '../controller/cart.js';
 import * as controllerMenu from '../controller/menu.js';
 import {
   addOrder,
@@ -15,7 +21,6 @@ import {
 
 // Global Variable
 const userID = document.querySelector('body').dataset.idUser;
-const pathMenuImg = `/${rootURL}/assets/img/menu`;
 
 // Get User by ID
 const getUserByID = () => {
@@ -119,6 +124,7 @@ const getMenu = () => {
 /* CART PROCESS */
 const CartMenus = [];
 const RENDER_EVENT = 'render-cart';
+const pathMenuImg = `/${rootURL}/assets/img/menu`;
 
 const checkButton = () => {
   const pesanBtn = document.querySelector('#processTransaction');
@@ -128,53 +134,50 @@ const checkButton = () => {
 document.addEventListener(RENDER_EVENT, async () => {
   const cartListTable = document.getElementById('shoppingCart');
   const cartTotal = document.getElementById('cartTotal');
-  cartListTable.innerHTML = '';
-
   let total = 0;
   let cartElement = '';
 
-  for (const cartMenu of CartMenus) {
-    const { id, qty } = cartMenu;
-    const { menu, img_menu, harga } = await controllerMenu
-      .getMenuId(id)
-      .then((data) => data.data);
+  getCart(userID).then(({ data: carts }) => {
+    for (const cart of carts) {
+      const { id_cart, menu, img_menu, qty, harga } = cart;
 
-    const subtotal = harga * qty;
-    const element = `
-      <div 
-        class="card-cart bg-gray p-4 rounded-3 d-flex gap-3 align-items-center mt-3" 
-        data-menu-id=${id}
-      >
-        <img 
-          src=${pathMenuImg}/${img_menu} 
-          style="width: 4rem; height: 4rem" 
-          class="bg-black rounded-3"
+      const subtotal = harga * qty;
+      const element = `
+        <div 
+          class="card-cart bg-gray p-4 rounded-3 d-flex gap-3 align-items-center mt-3" 
+          data-menu-id=${id_cart}
         >
-        <div class="w-100 d-flex align-items-center gap-3">
-          <div class="w-100">
-          <div>
-            <span class="fw-bold">
-              ${menu} 
-            </span>
-            (Rp${harga})
+          <img 
+            src=${pathMenuImg}/${img_menu} 
+            style="width: 4rem; height: 4rem" 
+            class="bg-black rounded-3"
+          >
+          <div class="w-100 d-flex align-items-center gap-3">
+            <div class="w-100">
+            <div>
+              <span class="fw-bold">
+                ${menu} 
+              </span>
+              (Rp${harga})
+              </div>
+              <div class="text-gray">
+                Qty: <span class="text-black">${qty}</span>
+              </div>
             </div>
-            <div class="text-gray">
-              Qty: <span class="text-black">${qty}</span>
+            <div style="font-weight: 500;">
+              Rp<span>${subtotal}</span>
             </div>
           </div>
-          <div style="font-weight: 500;">
-            Rp<span>${subtotal}</span>
-          </div>
-        </div>
-      </div>`;
+        </div>`;
 
-    total += subtotal;
-    cartElement += element;
-  }
+      total += subtotal;
+      cartElement += element;
+    }
 
-  cartTotal.innerHTML = total;
-  cartListTable.innerHTML = cartElement;
-  checkButton();
+    cartTotal.innerHTML = total;
+    cartListTable.innerHTML = cartElement;
+    checkButton();
+  });
 });
 
 const addCartHandler = () => {
@@ -187,7 +190,7 @@ const addCartHandler = () => {
     const deleteCartBtn = card.querySelector('.delete-cart');
 
     addBtn.addEventListener('click', () => {
-      const newMenu = { id_menu, qty: 1 };
+      const newMenu = { id_menu, qty: 1, id_user: userID };
 
       addBtn.style.display = 'none';
       qtyBtn.style.display = 'flex';
@@ -206,34 +209,19 @@ const addCartHandler = () => {
       addBtn.style.display = 'block';
       qtyBtn.style.display = 'none';
 
-      deleteCartHandler(id);
+      deleteCart(id_menu, userID).then(() => {
+        document.dispatchEvent(new Event(RENDER_EVENT));
+      });
     });
   });
 };
 
-const findCartMenuIndex = (id) => {
-  for (const index in CartMenus) {
-    if (CartMenus[index].id === id) {
-      return index;
-    }
-  }
-  return -1;
-};
-
-const deleteCartHandler = (id) => {
-  const cartMenuTargetIndex = findCartMenuIndex(id);
-  if (cartMenuTargetIndex == -1) return;
-
-  CartMenus.splice(cartMenuTargetIndex, 1);
-  document.dispatchEvent(new Event(RENDER_EVENT));
-};
-
 // Change Qty on Menu
-const changeInputQty = (id, stok) => {
-  const min = document.querySelector(`[data-menu-id="${id}"] .qty-min`);
-  const plus = document.querySelector(`[data-menu-id="${id}"] .qty-plus`);
+const changeInputQty = (menuID, stok) => {
+  const min = document.querySelector(`[data-menu-id="${menuID}"] .qty-min`);
+  const plus = document.querySelector(`[data-menu-id="${menuID}"] .qty-plus`);
 
-  getCartByMenu(id).then((data) => {
+  getCartByMenu(menuID, userID).then((data) => {
     let qty = parseInt(data.data.qty);
 
     min.addEventListener('click', () => {
@@ -255,8 +243,9 @@ const changeInputQty = (id, stok) => {
   });
 
   const updateValue = (qty) => {
-    updateQty(id, qty).then(() => {
-      document.querySelector(`[data-menu-id="${id}"] #inputQty`).value = qty;
+    updateQty(menuID, userID, qty).then(() => {
+      document.querySelector(`[data-menu-id="${menuID}"] #inputQty`).value =
+        qty;
       document.dispatchEvent(new Event(RENDER_EVENT));
     });
   };

@@ -6,12 +6,15 @@ if (function_exists($_GET['function'])) {
   $_GET['function']();
 }
 
-// GET ORDER
+// GET ALL CART BY USER
 function get_cart()
 {
   global $connection;
 
-  $query = "SELECT * FROM cart INNER JOIN menu ON cart.id_menu = menu.id_menu";
+  $id = $_GET["id"];
+  $query = "SELECT * FROM cart 
+            INNER JOIN menu ON cart.id_menu = menu.id_menu
+            WHERE id_user = $id";
   $result = mysqli_query($connection, $query);
 
   if ($query) {
@@ -43,13 +46,16 @@ function get_cart()
   echo json_encode($response);
 }
 
-// GET ORDER
+// GET CART BY ID
 function get_cart_id()
 {
   global $connection;
 
-  $id = $_GET["id"];
-  $query = "SELECT * FROM cart INNER JOIN menu ON cart.id_menu = menu.id_menu WHERE cart.id_menu=$id";
+  $menu = $_GET["id_menu"];
+  $user = $_GET["id_user"];
+  $query = "SELECT * FROM cart c
+            INNER JOIN menu m ON c.id_menu = m.id_menu 
+            WHERE c.id_menu = $menu AND c.id_user = $user";
   $result = mysqli_query($connection, $query);
 
   if ($query) {
@@ -79,17 +85,18 @@ function get_cart_id()
   echo json_encode($response);
 }
 
-// POST ORDER
+// ADD CART BY USER
 function add_cart()
 {
   global $connection;
 
   $req_body = json_decode(file_get_contents('php://input'), true);
   $id_menu = $req_body["id_menu"];
+  $id_user = $req_body["id_user"];
   $qty = $req_body["qty"];
 
   $query = "INSERT INTO cart 
-            VALUE ( '', $id_menu, $qty)";
+            VALUE ( '', $id_menu, $qty, $id_user)";
   $result = mysqli_query($connection, $query);
 
   if ($result) {
@@ -108,15 +115,18 @@ function add_cart()
   echo json_encode($response);
 }
 
+// UPDATE CART QTY
 function update_qty()
 {
   global $connection;
 
   $req_body = json_decode(file_get_contents('php://input'), true);
-  $id = $_GET["id"];
+  $id_menu = $req_body["id_menu"];
+  $id_user = $req_body["id_user"];
   $qty = $req_body["qty"];
 
-  $command = "UPDATE cart SET qty = $qty WHERE id_menu = $id";
+  $command = "UPDATE cart SET qty = $qty 
+              WHERE id_menu = $id_menu AND id_user = $id_user";
   $query = mysqli_query($connection, $command);
 
   if ($query) {
@@ -135,12 +145,15 @@ function update_qty()
   echo json_encode($response);
 }
 
+// DELETE CART
 function delete_cart()
 {
   global $connection;
 
-  $id = $_GET['id'];
-  $query = "DELETE FROM cart WHERE id_menu=$id";
+  $menu = $_GET["id_menu"];
+  $user = $_GET["id_user"];
+  $query = "DELETE FROM cart 
+            WHERE id_menu = $menu AND id_user = $user";
 
   if (mysqli_query($connection, $query)) {
     $response = [

@@ -1,5 +1,8 @@
 ### GET
-http://localhost/projek-akhir-prakweb-2022-1/api/cart.php?function=get_cart
+http://localhost/projek-akhir-prakweb-2022-1/api/cart.php?function=get_cart&id=1
+
+### GET BY ID MENU
+http://localhost/projek-akhir-prakweb-2022-1/api/cart.php?function=get_cart_id&id_menu=2&id_user=1
 
 ### UPDATE QTY
 http://localhost/projek-akhir-prakweb-2022-1/api/cart.php?function=update_qty&id=1
