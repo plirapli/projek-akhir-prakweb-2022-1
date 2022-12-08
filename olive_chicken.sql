@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2022 at 03:28 AM
+-- Generation Time: Dec 08, 2022 at 05:03 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -34,15 +34,6 @@ CREATE TABLE `cart` (
   `id_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `cart`
---
-
-INSERT INTO `cart` (`id_cart`, `id_menu`, `qty`, `id_user`) VALUES
-(139, 1, 1, 30),
-(140, 2, 1, 2),
-(141, 1, 2, 2);
-
 -- --------------------------------------------------------
 
 --
@@ -65,7 +56,7 @@ CREATE TABLE `menu` (
 --
 
 INSERT INTO `menu` (`id_menu`, `menu`, `img_menu`, `deskripsi`, `stok`, `harga`, `created_at`, `updated_at`) VALUES
-(1, 'Paket Ayam Goreng 1 ', 'ayamgoreng.jpg', 'Ayam bagian paha bawah dan dada yang digoreng', 14, 34000, '2022-11-22 20:23:11', '2022-12-07 23:40:14'),
+(1, 'Paket Ayam Goreng 1 ', 'ayamgoreng.jpg', 'Ayam bagian paha bawah dan dada yang digoreng', 13, 34000, '2022-11-22 20:23:11', '2022-12-08 10:05:04'),
 (2, 'Ayam Spicy', 'ayampedes.jpg', 'Ayam goreng yang dibalur dengan saos spicy', 21, 11000, '2022-11-22 22:03:22', '2022-12-07 23:40:14'),
 (3, 'Ayam Geprek', 'ayamgeprek.jpg', 'Ayam goreng yang digeprek dengan cabai', 0, 12000, '2022-11-22 19:12:34', '2022-11-30 02:27:17'),
 (4, 'Ayam Goreng Sayap', 'menu-6390a8802921c-1670424704.jpeg', 'Ayam bagian sayap yang digoreng dengan lezat', 23, 9250, '2022-11-20 20:04:43', '2022-12-07 23:40:14'),
@@ -171,8 +162,7 @@ INSERT INTO `user` (`id_user`, `nama`, `email`, `username`, `password`, `telepon
 (2, 'Muhammad Rafli', 'rafli@rafli', 'plirapli', '123210078', '', '2022-11-16 21:06:40', '2022-12-01 02:40:23', 1),
 (5, 'Awang HP', 'awang@awang', 'awanghp', '12345678', '', '2022-11-18 01:34:57', '2022-11-20 14:43:44', 2),
 (17, 'Kayisa Barikina', 'kayisa@caca', 'kayisa', '12345678', '', '2022-11-20 15:15:22', '2022-11-25 00:08:14', 1),
-(28, 'Admin', 'admin@admin', 'admin', 'admin', '', '2022-11-30 14:45:24', '2022-11-30 14:45:32', 1),
-(30, 'User 1', 'user1@user.com', 'user_satu', '123210078', '', '2022-12-08 01:16:55', '2022-12-08 01:16:55', 2);
+(28, 'Admin', 'admin@admin', 'admin', 'admin', '', '2022-11-30 14:45:24', '2022-11-30 14:45:32', 1);
 
 --
 -- Indexes for dumped tables
@@ -227,19 +217,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id_cart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+  MODIFY `id_cart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
 
 --
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `pesanan`
 --
 ALTER TABLE `pesanan`
-  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -251,7 +241,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- AUTO_INCREMENT for table `user`
