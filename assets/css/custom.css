@@ -19,6 +19,9 @@ a:hover {
 .bg-success-sub {
   background-color: var(--color-success-sub);
 }
+.bg-danger-sub {
+  background-color: #f1d2d5;
+}
 
 .text-primary {
   color: var(--color-primary) !important;

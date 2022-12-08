@@ -2,6 +2,28 @@
 require '../utils/cek_session.php';
 cek_session();
 cek_admin();
+
+if (isset($_GET["pesan"])) {
+  $pesan = $_GET["pesan"];
+  $class = "bg-gray";
+
+  if ($pesan == 'stok_kurang') {
+    $msg = 'Stok yang dimasukkan kurang dari jumlah yang ada di keranjang.';
+    $class = 'bg-danger-sub text-danger';
+  } else if ($pesan == 'add_success') {
+    $msg = 'Berhasil menambahkan menu baru';
+    $class = 'bg-success-sub text-success';
+  } else if ($pesan == 'update_success') {
+    $msg = 'Update Berhasil';
+    $class = 'bg-success-sub text-success';
+  } else {
+    $msg = 'Update Gagal';
+  }
+} else {
+  $msg = '';
+  $class = '';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -52,6 +74,19 @@ cek_admin();
                 <iconify-icon icon="material-symbols:add" width="20"></iconify-icon>
               </button>
             </div>
+
+            <!-- Nampilin -->
+            <?php if ($msg != '') : ?>
+              <div id="msgHandler" class="mb-3">
+                <div class="d-flex aling-items-center justify-content-between px-3 py-3 rounded <?= $class ?>">
+                  <?= $msg ?>
+                  <button type="button" class="btn d-flex align-items-center p-1">
+                    <iconify-icon icon="material-symbols:close" width="16"></iconify-icon>
+                  </button>
+                </div>
+              </div>
+            <?php endif ?>
+
             <!-- Daftar Menu -->
             <div id="menuList" class="card-menu-container"></div>
           </div>

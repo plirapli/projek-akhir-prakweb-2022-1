@@ -147,6 +147,18 @@ const deleteMenuHandler = () => {
   });
 };
 
+const messageHandler = () => {
+  const msgElement = document.querySelector('#msgHandler');
+  const closeBtn = msgElement.querySelector('button');
+
+  closeBtn.addEventListener(
+    'click',
+    () => (msgElement.style.display = 'none'),
+    { once: true }
+  );
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   getMenu();
+  messageHandler();
 });

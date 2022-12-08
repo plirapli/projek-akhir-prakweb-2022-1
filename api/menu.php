@@ -132,7 +132,7 @@ function add_menu()
   $result = mysqli_query($connection, $query);
 
   if ($result) {
-    header("Location: ../pages/menu_makanan.php");
+    header("Location: ../pages/menu_makanan.php?pesan=add_success");
   } else {
     echo mysqli_error($connection);
   }
@@ -171,6 +171,16 @@ function edit_menu()
     $stok = htmlspecialchars($_POST["stok"]);
     $harga = htmlspecialchars($_POST["harga"]);
 
+    // Bandingin jumlah stok sama jumlah cart
+    $check_qty_sql = "SELECT SUM(qty) AS total FROM `cart` WHERE id_menu = $id";
+    $check_result = mysqli_query($connection, $check_qty_sql);
+    $qty_on_cart = mysqli_fetch_assoc($check_result)["total"];
+
+    if ($stok < $qty_on_cart) {
+      header("Location: ../pages/menu_makanan.php?pesan=stok_kurang");
+      exit;
+    }
+
     if ($file != '') {
       $res = mysqli_query($connection, "SELECT * from menu WHERE id_menu = $id LIMIT 1");
       if ($row = mysqli_fetch_array($res)) {
@@ -203,7 +213,7 @@ function edit_menu()
     $query = mysqli_query($connection, $sql);
 
     if ($query) {
-      header("Location: ../pages/menu_makanan.php");
+      header("Location: ../pages/menu_makanan.php?pesan=update_success");
     } else {
       echo 'Error: ' . mysqli_error($connection);
     }
