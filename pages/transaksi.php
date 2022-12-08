@@ -54,6 +54,9 @@ cek_admin();
                 <div class="card-body mt-2">
                   <div class="d-flex justify-content-between mb-2 align-items-center">
                     <h5 class="card-title">Daftar Transaksi</h5>
+                    <button type="button" id="refreshOrder" class="btn btn-gray d-flex align-items-center p-2 me-2">
+                      <iconify-icon icon="material-symbols:refresh-rounded" width="20"></iconify-icon>
+                    </button>
                   </div>
 
                   <table id="orderList" class="table table-responsive align-middle">

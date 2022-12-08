@@ -92,7 +92,12 @@ cek_session();
       </div>
 
       <div class="tab-pane fade mt-4" id="transaksi" role="tabpanel" aria-labelledby="transaction-tab">
-        <h5>Transaksi</h5>
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <h5 class="my-0">Transaksi</h5>
+          <button type="button" id="refreshTransaction" class="btn btn-gray d-flex align-items-center p-2 me-2">
+            <iconify-icon icon="material-symbols:refresh-rounded" width="20"></iconify-icon>
+          </button>
+        </div>
         <table id="orderList" class="table table-responsive align-middle">
           <thead>
             <tr>

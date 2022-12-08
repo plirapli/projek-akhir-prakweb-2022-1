@@ -413,7 +413,7 @@ const getAllTransactionHandler = () => {
                   <thead>
                     <tr>
                       <th scope="col">Nama Menu</th>
-                      <th scope="col" class="text-center">Jumlah</th>
+                      <th scope="col" class="text-center">Qty</th>
                       <th scope="col" colspan="2" class="ps-4 text-center">Harga</th>
                       <th scope="col" colspan="2" class="ps-4 text-center">Subtotal</th>
                     </tr>
@@ -464,11 +464,19 @@ const getAllTransactionHandler = () => {
   });
 };
 
+const refereshTransactionHandler = () => {
+  const refreshBtn = document.querySelector('#refreshTransaction');
+  refreshBtn.addEventListener('click', () => {
+    getAllTransactionHandler();
+  });
+};
+
 /* END TRANSACTION HISTORY */
 
 document.addEventListener('DOMContentLoaded', () => {
   getUserByID();
   getMenu();
   getAllTransactionHandler();
+  refereshTransactionHandler();
   document.dispatchEvent(new Event(RENDER_EVENT));
 });

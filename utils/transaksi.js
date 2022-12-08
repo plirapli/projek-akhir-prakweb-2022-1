@@ -55,7 +55,7 @@ const getAllOrderHandler = () => {
                   <thead>
                     <tr>
                       <th scope="col">Nama Menu</th>
-                      <th scope="col" class="text-center">Jumlah</th>
+                      <th scope="col" class="text-center">Qty</th>
                       <th scope="col" colspan="2" class="ps-4 text-center">Harga</th>
                       <th scope="col" colspan="2" class="ps-4 text-center">Subtotal</th>
                     </tr>
@@ -107,6 +107,14 @@ const getAllOrderHandler = () => {
   });
 };
 
+const refreshOrderHandler = () => {
+  const refreshBtn = document.querySelector('#refreshOrder');
+  refreshBtn.addEventListener('click', () => {
+    getAllOrderHandler();
+  });
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   getAllOrderHandler();
+  refreshOrderHandler();
 });
