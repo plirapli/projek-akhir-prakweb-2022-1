@@ -65,16 +65,28 @@ cek_session();
           <h5>Keranjang</h5>
 
           <!-- Shpping Cart Table -->
-          <div id="shoppingCart"></div>
+          <table id="shoppingCart" class="table">
+            <thead>
+              <th class="w-table-min text-center" scope="col">No</th>
+              <th colspan="2" scope="col" class="text-center">Menu</th>
+              <th scope="col" class="text-center">Qty</th>
+              <th scope="col" colspan="2" class="ps-4 text-center">Harga</th>
+              <th scope="col" colspan="2" class="ps-4 text-center">Subtotal</th>
+            </thead>
+            <tbody>
 
-          <div class="text-end mt-3">
-            <span>Total: </span>
-            <span class="fw-bold">
-              Rp<span id="cartTotal">0</span>
-            </span>
-          </div>
+            </tbody>
+            <thead>
+              <tr class="fs-5">
+                <th colspan="4"></th>
+                <th colspan="2" scope="row" class="ps-4 text-center">Total</th>
+                <th scope="row" class="w-table-min ps-4">Rp</th>
+                <th scope="row" id="cartTotal" class="w-table-min ps-2 text-end">0</th>
+              </tr>
+            </thead>
+          </table>
         </div>
-        <button type="button" id="processTransaction" class="btn btn-primary w-100 mt-4" data-bs-toggle="modal" data-bs-target="#orderModal">
+        <button type="button" id="processTransaction" class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#orderModal">
           Pesan Sekarang
         </button>
       </div>

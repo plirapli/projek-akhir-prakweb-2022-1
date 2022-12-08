@@ -93,7 +93,7 @@ const getMenu = () => {
                   >
                   <button class="btn btn-primary qty-plus"> + </button>
                 </div>
-                <button class="w-100 btn btn-sm btn-gray delete-cart"> Hapus </button>
+                <button class="w-100 btn btn-sm btn-gray delete-cart text-danger"> Hapus </button>
               </div>
             </li>
           `;
@@ -170,43 +170,43 @@ const checkButton = (cartCount) => {
 };
 
 document.addEventListener(RENDER_EVENT, async () => {
-  const cartListTable = document.getElementById('shoppingCart');
+  const cartListTable = document.querySelector('#shoppingCart > tbody');
   const cartTotal = document.getElementById('cartTotal');
   let total = 0;
   let cartElement = '';
 
   getCart(userID).then(({ data: carts }) => {
+    let no = 1;
+
     for (const cart of carts) {
       const { id_cart, menu, img_menu, qty, harga } = cart;
-
       const subtotal = harga * qty;
+
       const element = `
-        <div 
-          class="card-cart bg-gray p-4 rounded-3 d-flex gap-3 align-items-center mt-3" 
-          data-menu-id=${id_cart}
-        >
-          <img 
-            src=${pathMenuImg}/${img_menu} 
-            style="width: 4rem; height: 4rem" 
-            class="bg-black rounded-3"
-          >
-          <div class="w-100 d-flex align-items-center gap-3">
-            <div class="w-100">
-            <div>
-              <span class="fw-bold">
-                ${menu} 
-              </span>
-              (Rp${showFormattedCurrency(harga)})
-              </div>
-              <div class="text-gray">
-                Qty: <span class="text-black">${qty}</span>
-              </div>
-            </div>
-            <div style="font-weight: 500;">
-              Rp<span>${showFormattedCurrency(subtotal)}</span>
-            </div>
-          </div>
-        </div>`;
+        <tr data-menu-id=${id_cart} class="align-middle">
+          <th scope="row" class="text-center">${no++}</th>
+          <td class="w-table-min px-4">
+            <img 
+              src=${pathMenuImg}/${img_menu} 
+              alt="Menu Makanan"
+              style="width: 4rem; height: 4rem" 
+              class="bg-black rounded-3 my-2"
+            >
+          </td>
+          <td class="w-table-min">${menu}</td>
+          <td class="text-center">${qty}</td>
+
+          <td class="w-table-min ps-4">Rp</td>
+          <td class="w-table-min text-end ps-2">${showFormattedCurrency(
+            harga
+          )}</td>
+          
+          <td class="w-table-min ps-4">Rp</td>
+          <td class="w-table-min text-end ps-2">${showFormattedCurrency(
+            subtotal
+          )}</td>
+        </tr>
+      `;
 
       total += subtotal;
       cartElement += element;
