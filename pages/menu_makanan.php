@@ -16,8 +16,11 @@ if (isset($_GET["pesan"])) {
   } else if ($pesan == 'update_success') {
     $msg = 'Update Berhasil';
     $class = 'bg-success-sub text-success';
+  } else if ($pesan == 'delete_success') {
+    $msg = 'Berhasil menghapus menu';
+    $class = 'bg-success-sub text-success';
   } else {
-    $msg = 'Update Gagal';
+    $msg = 'Berhasil memperbarui data';
   }
 } else {
   $msg = '';
@@ -124,18 +127,18 @@ if (isset($_GET["pesan"])) {
             </div>
             <div class="mb-3">
               <label for="inputImg" class="mb-1">Gambar Menu</label>
-              <input type="file" name="img" accept="image/png, image/jpeg" id="inputImg" class="form-control" />
+              <input type="file" name="img" accept="image/png, image/jpeg" id="inputImg" class="form-control" required />
             </div>
             <div class="mb-3 d-flex gap-3">
               <div class="w-25">
                 <label for="inputStok" class="form-label"> Stok </label>
-                <input type="number" class="form-control" id="inputStok" name="stok" placeholder="Stok" required />
+                <input type="number" min="0" class="form-control" id="inputStok" name="stok" placeholder="Stok" required />
               </div>
               <div class="w-100">
                 <label for="inputHarga" class="form-label"> Harga </label>
                 <div class="d-flex align-items-center gap-2">
                   <span>Rp</span>
-                  <input type="number" class="form-control" id="inputHarga" name="harga" placeholder="Harga" required />
+                  <input min="0" type="number" class="form-control" id="inputHarga" name="harga" placeholder="Harga" required />
                 </div>
               </div>
             </div>

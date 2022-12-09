@@ -31,11 +31,4 @@ const editMenuStock = async (req) => {
     .then((data) => data);
 };
 
-const deleteMenu = async (id) => {
-  return fetch(`${baseURL}=delete_menu&id=${id}`, { method: 'DELETE' })
-    .then((res) => res.json())
-    .then((data) => data)
-    .catch((err) => console.log('Error: ' + err));
-};
-
-export { getMenu, getMenuId, editMenuStock, deleteMenu };
+export { getMenu, getMenuId, editMenuStock };

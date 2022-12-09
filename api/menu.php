@@ -258,20 +258,26 @@ function delete_menu()
   global $connection;
 
   $id = $_GET['id'];
-  $query = "DELETE FROM menu WHERE id_menu = $id";
+  $target_dir = "../assets/img/menu/";
 
-  if (mysqli_query($connection, $query)) {
-    $response = [
-      'status' => 1,
-      'message' => 'Berhasil Meghapus'
-    ];
+  $search_sql = "SELECT * from menu WHERE id_menu = $id LIMIT 1";
+  $search_query = mysqli_query($connection, $search_sql);
+
+  if ($search_query) {
+    // Delete menu image
+    $row = mysqli_fetch_array($search_query);
+    $delete_image = $row['img_menu'];
+    unlink($target_dir . $delete_image);
+
+    // Delete menu
+    $delete_sql = "DELETE FROM menu WHERE id_menu = $id";
+    $delete_query = mysqli_query($connection, $delete_sql);
+    if ($delete_query) {
+      header("Location: ../pages/menu_makanan.php?pesan=delete_success");
+    } else {
+      echo "Error: " . mysqli_error($connection);
+    }
   } else {
-    $response = [
-      'status' => 0,
-      'message' => mysqli_error($connection)
-    ];
+    echo "Error: " . mysqli_error($connection);
   }
-
-  header('Content-Type: application/json');
-  echo json_encode($response);
 }

@@ -94,7 +94,7 @@ const editMenu = (id) => {
 };
 
 // Delete Menu
-const deleteMenu = async (id, menu) => {
+const deleteMenu = (id, menu) => {
   const deleteModal = document.querySelector('#deleteMenuModal');
   const modalBody = deleteModal.querySelector('.modal-body');
   const deleteConfirm = deleteModal.querySelector('.btn-delete');
@@ -103,11 +103,7 @@ const deleteMenu = async (id, menu) => {
   deleteConfirm.addEventListener(
     'click',
     () => {
-      controllerMenu.deleteMenu(id).then((data) => {
-        const modal = bootstrap.Modal.getInstance(deleteModal);
-        modal.hide();
-        getMenu();
-      });
+      window.location.replace(`../api/menu.php?function=delete_menu&id=${id}`);
     },
     { once: true }
   );
@@ -149,13 +145,15 @@ const deleteMenuHandler = () => {
 
 const messageHandler = () => {
   const msgElement = document.querySelector('#msgHandler');
-  const closeBtn = msgElement.querySelector('button');
+  const closeBtn = msgElement?.querySelector('button');
 
-  closeBtn.addEventListener(
-    'click',
-    () => (msgElement.style.display = 'none'),
-    { once: true }
-  );
+  if (closeBtn) {
+    closeBtn.addEventListener(
+      'click',
+      () => (msgElement.style.display = 'none'),
+      { once: true }
+    );
+  }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
