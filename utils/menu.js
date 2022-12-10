@@ -6,6 +6,7 @@ import {
   showFormattedDateDetail,
   showTimeSince,
 } from './convertDate.js';
+import { enableTooltips } from './enableTooltips.js';
 
 /* API CALL */
 // Get Menu
@@ -61,7 +62,12 @@ const getMenu = () => {
                 <iconify-icon icon="ant-design:reload-time-outline" width="20"></iconify-icon>
                 Last update
               </div>
-              <span class="fw-bold text-capitalize">
+              <span 
+                class="fw-bold text-capitalize" 
+                data-bs-toggle="tooltip" 
+                data-bs-placement="bottom" 
+                data-bs-title="${showFormattedDateDetail(updated_at)}"
+              >
                 ${updatedAt}
               </span>
             </li>
@@ -89,6 +95,7 @@ const getMenu = () => {
     });
 
     menuList.innerHTML = menuElement;
+    enableTooltips();
     editMenuHandler();
     deleteMenuHandler();
   });

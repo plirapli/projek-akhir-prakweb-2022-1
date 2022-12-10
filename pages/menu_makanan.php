@@ -44,7 +44,8 @@ if (isset($_GET["pesan"])) {
   <link href="../assets/css/style.css" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/css/custom.css" />
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js" defer></script>
   <script src="../assets/js/main.js" defer></script>
   <script type="module" src="../assets/js/index.js" defer></script>
