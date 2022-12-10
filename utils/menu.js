@@ -58,7 +58,7 @@ const getMenu = () => {
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <div class="d-flex align-items-center gap-2">
-                <iconify-icon icon="akar-icons:money" width="20"></iconify-icon>
+                <iconify-icon icon="ant-design:reload-time-outline" width="20"></iconify-icon>
                 Last update
               </div>
               <span class="fw-bold text-capitalize">

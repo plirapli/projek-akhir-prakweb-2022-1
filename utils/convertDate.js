@@ -19,17 +19,29 @@ const showFormattedDateDetail = (date) => {
 };
 
 const showTimeSince = (date) => {
-  const dateNow = Math.floor(new Date() / 8.64e7);
-  const dateSelected = Math.floor(new Date(date) / 8.64e7);
-  const timeSince = dateSelected - dateNow;
-
-  const rtf1 = new Intl.RelativeTimeFormat('en', {
-    localeMatcher: 'best fit', // other values: "lookup"
-    numeric: 'auto', // other values: "auto"
-    style: 'long', // other values: "short" or "narrow"
+  const rtf = new Intl.RelativeTimeFormat('en', {
+    localeMatcher: 'best fit',
+    numeric: 'auto',
+    style: 'long',
   });
+  let unit = 'day';
+  let dateNowInMinute = Math.floor(new Date() / 60000);
+  let dateSelectedInMinute = Math.floor(new Date(date) / 60000);
+  let timeSince = dateNowInMinute - dateSelectedInMinute;
 
-  return rtf1.format(timeSince, 'day');
+  if (timeSince <= 0) {
+    unit = 'seconds';
+  } else if (timeSince < 60) {
+    unit = 'minutes';
+  } else if (timeSince / 60 < 24) {
+    timeSince /= 60;
+    unit = 'hours';
+  } else if (timeSince / (60 * 24) < 30) {
+    timeSince /= 60 * 24;
+    unit = 'days';
+  }
+
+  return rtf.format(Math.floor(timeSince * -1), unit);
 };
 
 const showFormattedCurrency = (num) => {
