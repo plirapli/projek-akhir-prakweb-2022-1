@@ -1,5 +1,5 @@
 ### GET
-http://localhost/projek-akhir-prakweb-2022-1/api/cart.php?function=get_cart&id=1
+http://localhost/projek-akhir-prakweb-2022-1/api/cart.php?function=get_cart&id=2
 
 ### GET BY ID MENU
 http://localhost/projek-akhir-prakweb-2022-1/api/cart.php?function=get_cart_id&id_menu=2&id_user=1
@@ -9,7 +9,9 @@ http://localhost/projek-akhir-prakweb-2022-1/api/cart.php?function=update_qty&id
 Content-Type: application/json
 
 {
-  "qty": 3
+  "id_menu": 1,
+  "id_user": 2,
+  "qty": 5
 }
 
 ### PURGE

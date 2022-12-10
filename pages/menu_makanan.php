@@ -7,10 +7,7 @@ if (isset($_GET["pesan"])) {
   $pesan = $_GET["pesan"];
   $class = "bg-gray";
 
-  if ($pesan == 'stok_kurang') {
-    $msg = 'Stok yang dimasukkan kurang dari jumlah yang ada di keranjang.';
-    $class = 'bg-danger-sub text-danger';
-  } else if ($pesan == 'add_success') {
+  if ($pesan == 'add_success') {
     $msg = 'Berhasil menambahkan menu baru';
     $class = 'bg-success-sub text-success';
   } else if ($pesan == 'update_success') {

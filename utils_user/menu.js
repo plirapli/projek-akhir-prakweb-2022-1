@@ -17,7 +17,6 @@ import {
 import { getUserId } from '../controller/user.js';
 import {
   showFormattedCurrency,
-  showFormattedDate,
   showFormattedDateDetail,
 } from '../utils/convertDate.js';
 
@@ -179,7 +178,14 @@ document.addEventListener(RENDER_EVENT, async () => {
     let no = 1;
 
     for (const cart of carts) {
-      const { id_cart, menu, img_menu, qty, harga } = cart;
+      const { id_cart, id_menu, menu, img_menu, harga, stok } = cart;
+
+      // Cek stok dengan qty di cart
+      let { qty } = cart;
+      if (stok < qty) {
+        qty = stok;
+        updateQty(id_menu, userID, stok).then(() => getMenu());
+      }
       const subtotal = harga * qty;
 
       const element = `

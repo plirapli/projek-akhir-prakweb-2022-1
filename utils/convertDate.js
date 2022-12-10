@@ -18,6 +18,18 @@ const showFormattedDateDetail = (date) => {
   return new Date(date).toLocaleDateString('en-GB', options);
 };
 
+const showFormattedDateDay = (date) => {
+  const options = {
+    minute: '2-digit',
+    hour: '2-digit',
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  };
+  return new Date(date).toLocaleDateString('id-ID', options);
+};
+
 const showTimeSince = (date) => {
   const rtf = new Intl.RelativeTimeFormat('en', {
     localeMatcher: 'best fit',
@@ -76,6 +88,7 @@ const nFormatter = (num, digits) => {
 export {
   showFormattedDate,
   showFormattedDateDetail,
+  showFormattedDateDay,
   showTimeSince,
   showFormattedCurrency,
   nFormatter,
