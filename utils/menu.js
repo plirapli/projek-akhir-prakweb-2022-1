@@ -1,6 +1,11 @@
 import { rootURL } from '../config/config.js';
 import * as controllerMenu from '../controller/menu.js';
-import { showFormattedCurrency } from './convertDate.js';
+import {
+  showFormattedCurrency,
+  showFormattedDate,
+  showFormattedDateDetail,
+  showTimeSince,
+} from './convertDate.js';
 
 /* API CALL */
 // Get Menu
@@ -13,6 +18,9 @@ const getMenu = () => {
     let menuElement = '';
 
     menus.forEach((menu) => {
+      const { updated_at } = menu;
+      const updatedAt = showTimeSince(updated_at);
+
       const element = `
         <div class="card card-menu-makanan" data-menu-id=${menu.id_menu}>
           <img style="height: 20rem; object-fit: cover;" src=${pathMenuImg}/${
@@ -46,6 +54,15 @@ const getMenu = () => {
                 Rp<span class="harga">${showFormattedCurrency(
                   menu.harga
                 )}</span>
+              </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center gap-2">
+                <iconify-icon icon="akar-icons:money" width="20"></iconify-icon>
+                Last update
+              </div>
+              <span class="fw-bold text-capitalize">
+                ${updatedAt}
               </span>
             </li>
             <li class="list-group-item py-3 d-flex">

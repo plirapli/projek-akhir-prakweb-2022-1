@@ -18,6 +18,20 @@ const showFormattedDateDetail = (date) => {
   return new Date(date).toLocaleDateString('en-GB', options);
 };
 
+const showTimeSince = (date) => {
+  const dateNow = Math.floor(new Date() / 8.64e7);
+  const dateSelected = Math.floor(new Date(date) / 8.64e7);
+  const timeSince = dateSelected - dateNow;
+
+  const rtf1 = new Intl.RelativeTimeFormat('en', {
+    localeMatcher: 'best fit', // other values: "lookup"
+    numeric: 'auto', // other values: "auto"
+    style: 'long', // other values: "short" or "narrow"
+  });
+
+  return rtf1.format(timeSince, 'day');
+};
+
 const showFormattedCurrency = (num) => {
   return new Intl.NumberFormat('id-ID', {
     style: 'currency',
@@ -50,6 +64,7 @@ const nFormatter = (num, digits) => {
 export {
   showFormattedDate,
   showFormattedDateDetail,
+  showTimeSince,
   showFormattedCurrency,
   nFormatter,
 };
