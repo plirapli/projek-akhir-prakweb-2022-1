@@ -312,7 +312,15 @@ const addCartHandler = () => {
   });
 };
 
-const deleteAllCartHandler = () => {};
+const deleteAllCartHandler = () => {
+  const deleteAllCartBtn = document.querySelector('#deleteAllCart');
+  deleteAllCartBtn.addEventListener('click', () => {
+    purgeCart(userID).then(() => {
+      getMenu();
+      document.dispatchEvent(new Event(RENDER_EVENT));
+    });
+  });
+};
 
 /* END CART PROCESS */
 
@@ -494,6 +502,7 @@ const refereshTransactionHandler = () => {
 document.addEventListener('DOMContentLoaded', () => {
   getUserByID();
   getMenu();
+  deleteAllCartHandler();
   getAllTransactionHandler();
   refereshTransactionHandler();
   document.dispatchEvent(new Event(RENDER_EVENT));

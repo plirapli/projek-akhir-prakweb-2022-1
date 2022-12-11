@@ -62,7 +62,12 @@ cek_session();
       <div class="tab-pane fade mt-4" id="cart" role="tabpanel" aria-labelledby="cart-tab">
         <div class="customer-info"></div>
         <div class="mt-3">
-          <h5>Keranjang</h5>
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <h5 class="my-0">Keranjang</h5>
+            <button type="button" id="deleteAllCart" class="btn btn-danger-sub">
+              Hapus Semua
+            </button>
+          </div>
 
           <!-- Shpping Cart Table -->
           <table id="shoppingCart" class="table">
