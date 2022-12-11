@@ -165,7 +165,11 @@ const pathMenuImg = `/${rootURL}/assets/img/menu`;
 
 const checkButton = (cartCount) => {
   const pesanBtn = document.querySelector('#processTransaction');
-  pesanBtn.disabled = cartCount <= 0;
+  const hapusSemuaBtn = document.querySelector('#deleteAllCart');
+  const isDisabled = cartCount <= 0;
+
+  hapusSemuaBtn.disabled = isDisabled;
+  pesanBtn.disabled = isDisabled;
 };
 
 document.addEventListener(RENDER_EVENT, async () => {
@@ -178,10 +182,11 @@ document.addEventListener(RENDER_EVENT, async () => {
     let no = 1;
 
     for (const cart of carts) {
-      const { id_cart, id_menu, menu, img_menu, harga, stok } = cart;
+      const { id_cart, id_menu, menu, img_menu, harga } = cart;
 
       // Cek stok dengan qty di cart
-      let { qty } = cart;
+      const stok = parseInt(cart.stok);
+      let qty = parseInt(cart.qty);
       if (stok < qty) {
         qty = stok;
         updateQty(id_menu, userID, stok).then(() => getMenu());
@@ -247,12 +252,14 @@ const addCartHandler = () => {
       ).value = qty);
     };
 
+    // Get qty from input
     const getQty = () => {
       return parseInt(
         document.querySelector(`[data-menu-id="${id_menu}"] #inputQty`).value
       );
     };
 
+    // Add btn event
     addBtn.addEventListener('click', () => {
       const newMenu = { id_menu, qty: 1, id_user: userID };
 
@@ -265,6 +272,7 @@ const addCartHandler = () => {
       });
     });
 
+    // Delete btn event
     deleteCartBtn.addEventListener('click', () => {
       addBtn.style.display = 'block';
       qtyBtn.style.display = 'none';
@@ -275,6 +283,7 @@ const addCartHandler = () => {
       });
     });
 
+    // Minus btn event
     minBtn.addEventListener('click', () => {
       let qty = getQty();
       if (qty <= 1) {
@@ -285,6 +294,7 @@ const addCartHandler = () => {
       }
     });
 
+    // Plus btn event
     plusBtn.addEventListener('click', () => {
       let qty = getQty();
       if (qty < stok) {
@@ -301,6 +311,8 @@ const addCartHandler = () => {
     };
   });
 };
+
+const deleteAllCartHandler = () => {};
 
 /* END CART PROCESS */
 
