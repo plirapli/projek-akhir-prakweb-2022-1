@@ -102,7 +102,7 @@ if (isset($_GET["pesan"])) {
   </a>
 
   <!-- Modal Add Menu -->
-  <div class="modal fade" id="inputMenuModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="inputUserModal" aria-hidden="true">
+  <div class="modal fade" id="inputMenuModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="inputUserModal" aria-hidden="true" aria-modal="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -154,7 +154,7 @@ if (isset($_GET["pesan"])) {
   </div>
 
   <!-- Modal Edit Menu -->
-  <div class="modal fade" id="editMenuModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editMenuModal" aria-hidden="true">
+  <div class="modal fade" id="editMenuModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editMenuModal" aria-hidden="true" aria-modal="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -206,7 +206,7 @@ if (isset($_GET["pesan"])) {
   </div>
 
   <!-- Modal Delete Menu -->
-  <div class="modal fade" id="deleteMenuModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal fade" id="deleteMenuModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" aria-modal="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
