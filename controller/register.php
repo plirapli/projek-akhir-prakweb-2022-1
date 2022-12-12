@@ -37,10 +37,10 @@ if ($is_found === 0) {
       echo "Error: " . mysqli_error($connection);
     }
   } else {
-    header("Location: ../register.php?pesan=password_beda");
+    header("Location: ../index.php?pesan=password_beda");
     exit;
   }
 } else {
-  header("Location: ../register.php?pesan=username_ada");
+  header("Location: ../index.php?pesan=username_ada");
   exit;
 }

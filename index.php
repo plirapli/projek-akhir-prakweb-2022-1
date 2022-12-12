@@ -19,6 +19,10 @@ if (isset($_GET["pesan"])) {
     $msg = 'Berhasil melakukan pendaftaran. <br/> Silakan login';
   } else if ($pesan == 'logout') {
     $msg = 'Anda telah berhasil logout.';
+  } else if ($pesan == 'username_ada') {
+    $msg = 'Username telah terdaftar.';
+  } else if ($pesan == 'password_beda') {
+    $msg = 'Pastikan isi password dan konfirmasi password sudah benar.';
   } else {
     $msg = 'Login Gagal';
   }
@@ -51,6 +55,7 @@ if (isset($_GET["pesan"])) {
   <!-- BS & Libs -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" defer></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js" defer></script>
+  <script src="./utils/login.js" defer></script>
 </head>
 
 <body class="min-vh-100 d-flex flex-column">
@@ -65,23 +70,24 @@ if (isset($_GET["pesan"])) {
                   <img style="max-width: 8rem;" src="./assets/img/olive-chicken-logo-brand.jpg" alt="">
                 </div>
                 <div class="p-4 pt-0">
-                  <h5 class="card-title text-center mb-0 fs-4 fw-bold text-primary pb-1">LOGIN</h5>
+                  <h5 id="headerTitle" class="card-title text-center mb-0 fs-4 fw-bold text-primary pb-1">LOGIN</h5>
                   <p class="mb-4 text-center text-secondary"><?= $msg ?></p>
 
-                  <form class="row needs-validation" method="POST" action="./controller/login.php">
+                  <!-- Login Form -->
+                  <form id="loginForm" class="inputForm row" method="POST" action="./controller/login.php">
                     <div class="w-100 mb-3">
-                      <label for="yourUsername" class="form-label text-black fw-bold">Email atau Username</label>
+                      <label for="loginUsername" class="form-label text-black fw-bold">Email atau Username</label>
                       <div class="input-container">
                         <iconify-icon icon="mdi:user" width="20"></iconify-icon>
-                        <input type="text" name="email_username" class="form-control-custom w-100" id="yourUsername" placeholder="Email atau username" required>
+                        <input type="text" name="email_username" class="form-control-custom w-100" id="loginUsername" placeholder="Email atau username" required>
                       </div>
                     </div>
 
                     <div class="w-100 mb-3">
-                      <label for="yourPassword" class="form-label text-black fw-bold">Password</label>
+                      <label for="loginPassword" class="form-label text-black fw-bold">Password</label>
                       <div class="input-container">
                         <iconify-icon icon="mdi:password" width="20"></iconify-icon>
-                        <input type="password" name="password" class="form-control-custom w-100" id="yourPassword" placeholder="********" required>
+                        <input type="password" name="password" class="form-control-custom w-100" id="loginPassword" placeholder="********" required>
                       </div>
                     </div>
 
@@ -89,7 +95,59 @@ if (isset($_GET["pesan"])) {
                       <button class="btn btn-primary w-100" type="submit">Masuk</button>
                     </div>
                     <div class="w-100">
-                      <p class="small mb-0">Belum mempunyai akun? <a href="register.php">Daftar</a></p>
+                      <p class="small mb-0">Belum mempunyai akun? <a href="">Daftar</a></p>
+                    </div>
+                  </form>
+
+                  <!-- Register Form -->
+                  <form id="registerForm" class="inputForm row d-none" method="POST" action="./controller/register.php">
+                    <div class="mb-3">
+                      <label for="yourName" class="form-label text-black fw-bold">Nama</label>
+                      <div class="input-container">
+                        <iconify-icon icon="bxs:id-card" width="20"></iconify-icon>
+                        <input type="text" name="nama" class="form-control-custom w-100" id="yourName" placeholder="Nama Lengkap" required>
+                      </div>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="yourEmail" class="form-label text-black fw-bold">Email</label>
+                      <div class="input-container">
+                        <iconify-icon icon="material-symbols:alternate-email-rounded" width="20"></iconify-icon>
+                        <input type="email" name="email" class="form-control-custom w-100" id="yourEmail" placeholder="Email" required>
+                      </div>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="yourUsername" class="form-label text-black fw-bold">Username</label>
+                      <div class="input-container">
+                        <iconify-icon icon="mdi:user" width="20"></iconify-icon>
+                        <input type="text" name="username" class="form-control-custom w-100" id="yourUsername" placeholder="Username" required>
+                      </div>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="yourPassword" class="form-label text-black fw-bold">Password</label>
+                      <div class="input-container">
+                        <iconify-icon icon="mdi:password" width="20"></iconify-icon>
+                        <input type="password" name="password" class="form-control-custom w-100" id="yourPassword" placeholder="********" required>
+                      </div>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="yourPasswordConfirm" class="form-label text-black fw-bold">Confirm Password</label>
+                      <div class="input-container">
+                        <iconify-icon icon="mdi:password" width="20"></iconify-icon>
+                        <input type="password" name="confirm_password" class="form-control-custom w-100" id="yourPasswordConfirm" placeholder="********" required>
+                      </div>
+                    </div>
+
+                    <div class="mb-3">
+                      <button class="btn btn-primary w-100" type="submit">Daftar</button>
+                    </div>
+                    <div class="">
+                      <p class="small mb-0">
+                        Sudah mempunyai akun? <a href="">Masuk</a>
+                      </p>
                     </div>
                   </form>
 
