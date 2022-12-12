@@ -1,6 +1,12 @@
-import { showFormattedDate } from './convertDate.js';
-import { getUserId, getUsers, getUserTotalByRole } from '../controller/user.js';
 import { URL } from '../config/config.js';
+import {
+  editUserRole,
+  getUserId,
+  getUsers,
+  getUserTotalByRole,
+} from '../controller/user.js';
+import { getUserRole } from '../controller/role.js';
+import { showFormattedDate } from './convertDate.js';
 
 /* UTILITIES */
 const generateObject = (
@@ -67,20 +73,21 @@ const getUserTotal = () => {
 const getUser = () => {
   const tableBody = document.querySelector('.table-user > tbody');
 
-  getUsers().then((data) => {
-    const users = data.data;
+  getUsers().then(async ({ data: users }) => {
     let tableElement = '';
     let i = 1;
 
-    users.forEach((user) => {
+    for (const user of users) {
+      const { id_user, nama, email, username, telepon, id_role, role } = user;
       const created_at = showFormattedDate(user.created_at);
       const updated_at = showFormattedDate(user.updated_at);
+      const roleOption = await createStatusEl(id_role).then((data) => data);
 
       const accordionBody = `
-        <tr class="collapse collapse-detail-${user.id_user}">
+        <tr class="collapse collapse-detail-${id_user}">
           <td></td>
           <td colspan="5" class="py-0">
-            <div class="collapse collapse-detail-${user.id_user}">
+            <div class="collapse collapse-detail-${id_user}">
               <div class="d-flex align-content-start gap-4">
                 <aside class="d-flex gap-4">
                   <div class="d-flex">
@@ -91,10 +98,10 @@ const getUser = () => {
                       <b>Role</b>
                     </div>
                     <div class="d-flex ms-5 flex-column">
-                      <div><span> : </span>${user.nama}</div>
-                      <div><span> : </span>${user?.email || '-'}</div>
-                      <div><span> : </span>${user.username}</div>
-                      <div><span> : </span>${user.role}</div>
+                      <div><span> : </span>${nama}</div>
+                      <div><span> : </span>${email || '-'}</div>
+                      <div><span> : </span>${username}</div>
+                      <div><span> : </span>${role}</div>
                     </div>
                   </div>
                   <div class="d-flex ms-5">
@@ -104,7 +111,7 @@ const getUser = () => {
                       <b>Diperbarui Pada</b>
                     </div>
                     <div class="d-flex ms-5 flex-column">
-                      <div><span> : </span>${user.telepon || '-'}</div>
+                      <div><span> : </span>${telepon || '-'}</div>
                       <div><span> : </span>${created_at}</div>
                       <div><span> : </span>${updated_at}</div>
                     </div>
@@ -118,11 +125,13 @@ const getUser = () => {
       `;
 
       const element = `
-        <tr data-user-id = ${user.id_user}>
+        <tr data-user-id = ${id_user}>
           <th scope="row" class="w-table-min text-center">${i++}</th>
-          <td>${user.nama}</td>
-          <td>${user.username}</td>
-          <td class="text-capitalize">${user.role}</td>
+          <td>${nama}</td>
+          <td>${username}</td>
+          <td class="d-flex justify-content-center">
+            ${roleOption}
+          </td>
           <td class="w-table-min">
             <span class="d-inline text-btn text-gray cursor-pointer edit-user" data-bs-toggle="modal" data-bs-target="#editUserModal">
               <iconify-icon icon="material-symbols:edit" width="20"></iconify-icon>
@@ -133,13 +142,13 @@ const getUser = () => {
           </td>
           <td 
             class="w-table-min accordion-header" 
-            id="flush-heading-${user.id_user}"
+            id="flush-heading-${id_user}"
           >
             <button 
               class="btn btn-gray btn-sm mb-1" 
               type="button" 
               data-bs-toggle="collapse" 
-              data-bs-target=".collapse-detail-${user.id_user}" 
+              data-bs-target=".collapse-detail-${id_user}" 
             >
               Detail
             </button>
@@ -149,11 +158,12 @@ const getUser = () => {
       `;
 
       tableElement += element;
-    });
+    }
 
     tableBody.innerHTML = tableElement;
     getUserTotal();
     editUserHandler();
+    editUserRoleHandler();
     deleteUserHandler();
   });
 };
@@ -313,7 +323,7 @@ const deleteUser = async (id, nama) => {
 
 /* END API CALL */
 
-// Add Handler
+// Add User Handler
 const addUserHandler = () => {
   const addBtn = document.querySelector('#addUserBtn');
   addBtn.addEventListener('click', () => {
@@ -321,7 +331,7 @@ const addUserHandler = () => {
   });
 };
 
-// Edit Handler
+// Edit User Handler
 const editUserHandler = () => {
   const editBtn = document.querySelectorAll('.edit-user');
   editBtn.forEach((edit) => {
@@ -332,7 +342,42 @@ const editUserHandler = () => {
   });
 };
 
-// Delete Handler
+// Create User Role Options
+const createStatusEl = async (id = '0') => {
+  return getUserRole().then(({ data: roles }) => {
+    let selectOption = '';
+
+    for (const role of roles) {
+      const { id_role, role: roleName } = role;
+      selectOption += `
+        <option value=${id_role} ${id_role == id ? 'selected' : ''}>
+          ${roleName}
+        </option>`;
+    }
+
+    return `
+      <select style="width: 7.5rem" class="form-select select-role" aria-label="Select Option for User Role">
+        ${selectOption}
+      </select>
+    `;
+  });
+};
+
+// Edit User Role Handler
+const editUserRoleHandler = () => {
+  const selectButtons = document.querySelectorAll('.select-role');
+  for (const selectBtn of selectButtons) {
+    selectBtn.addEventListener('change', (e) => {
+      const user = parseInt(
+        selectBtn.parentElement.parentElement.dataset.userId
+      );
+      const role = parseInt(e.target.value);
+      editUserRole(user, role).then(() => getUserTotal());
+    });
+  }
+};
+
+// Delete User Handler
 const deleteUserHandler = () => {
   const deleteBtn = document.querySelectorAll('.delete-user');
   deleteBtn.forEach((delBtn) => {

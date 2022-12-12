@@ -1,6 +1,7 @@
 import { URL } from '../config/config.js';
 
 const baseURL = `${URL}/api/user.php?function`;
+const baseRoleURL = `${URL}/api/role.php?function`;
 
 // Get All User
 const getUsers = async () => {
@@ -19,10 +20,25 @@ const getUserId = async (id) => {
 };
 
 const getUserTotalByRole = async () => {
-  const endpoint = `${URL}/api/role.php?function=get_role_total`;
+  const endpoint = `${baseRoleURL}=get_role_total`;
   return fetch(endpoint)
     .then((res) => res.json())
     .then((data) => data);
 };
 
-export { getUsers, getUserId, getUserTotalByRole };
+// Edit Status
+const editUserRole = async (user, role) => {
+  const endpoint = `${baseURL}=edit_user_role`;
+  return fetch(endpoint, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ user, role }),
+  })
+    .then((res) => res.json())
+    .then((data) => data);
+};
+
+export { getUsers, getUserId, getUserTotalByRole, editUserRole };

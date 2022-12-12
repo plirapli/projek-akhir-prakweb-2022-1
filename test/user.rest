@@ -34,6 +34,15 @@ Content-Type: application/json;
   "id_role": 2
 }
 
+### EDIT USER ROLE
+http://localhost/projek-akhir-prakweb-2022-1/api/user.php?function=edit_user_role
+Content-Type: application/json
+
+{
+  "user": "17",
+  "role": "1"
+}
+
 ### DELETE USER
 http://localhost/olive-chicken/api/user.php?function=delete_user&id=6
 

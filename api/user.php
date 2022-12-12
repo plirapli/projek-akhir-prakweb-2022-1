@@ -168,6 +168,34 @@ function edit_user()
   echo json_encode($response);
 }
 
+function edit_user_role()
+{
+  global $connection;
+
+  $req_body = json_decode(file_get_contents('php://input'), true);
+  $user = $req_body["user"];
+  $role = $req_body["role"];
+
+  $command = "UPDATE user SET id_role = $role
+              WHERE id_user = $user";
+  $query = mysqli_query($connection, $command);
+
+  if ($query) {
+    $response = [
+      'status' => 1,
+      'message' => 'Update Success'
+    ];
+  } else {
+    $response = [
+      'status' => 0,
+      'message' => 'Error: ' + mysqli_error($connection)
+    ];
+  }
+
+  header('Content-Type: application/json');
+  echo json_encode($response);
+}
+
 function delete_user()
 {
   global $connection;
