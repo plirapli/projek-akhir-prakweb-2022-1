@@ -26,6 +26,20 @@ const getUserTotalByRole = async () => {
     .then((data) => data);
 };
 
+const addUser = async (newUsers) => {
+  const endpoint = `${baseURL}=add_user`;
+  return fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newUsers),
+  })
+    .then((res) => res.json())
+    .then((data) => data);
+};
+
 // Edit Status
 const editUserRole = async (user, role) => {
   const endpoint = `${baseURL}=edit_user_role`;
@@ -41,4 +55,4 @@ const editUserRole = async (user, role) => {
     .then((data) => data);
 };
 
-export { getUsers, getUserId, getUserTotalByRole, editUserRole };
+export { getUsers, getUserId, getUserTotalByRole, addUser, editUserRole };
