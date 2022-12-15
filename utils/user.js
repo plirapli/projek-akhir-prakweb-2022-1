@@ -1,5 +1,6 @@
 import { URL } from '../config/config.js';
 import {
+  addUser,
   editUserRole,
   getUserId,
   getUsers,
@@ -9,24 +10,12 @@ import { getUserRole } from '../controller/role.js';
 import { showFormattedDate } from './convertDate.js';
 
 /* UTILITIES */
-const generateObject = (
-  nama,
-  email,
-  username,
-  password,
-  id_role = 2,
-  telp = '',
-  created_at = '',
-  updated_at = ''
-) => {
+const generateObject = (nama, email, username, password, id_role) => {
   return {
     nama,
     email,
     username,
     password,
-    telp,
-    created_at,
-    updated_at,
     id_role,
   };
 };
@@ -190,55 +179,6 @@ const getRole = () => {
     });
 };
 
-// Tambah User
-const addUser = () => {
-  // Ketika btn tambah diklik
-  const submitUser = document.querySelector('#addUserForm');
-  submitUser.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const endpoint = `${baseURL}=add_user`;
-    let inputNama = submitUser.querySelector('#inputNama').value;
-    let inputEmail = submitUser.querySelector('#inputEmail').value;
-    let inputUsername = submitUser.querySelector('#inputUsername').value;
-    let inputPassword = submitUser.querySelector('#inputPassword').value;
-    let selectedRole = submitUser.querySelector('.select-role').value;
-
-    const newUsers = generateObject(
-      inputNama,
-      inputEmail,
-      inputUsername,
-      inputPassword,
-      parseInt(selectedRole)
-    );
-
-    // Dikirim ke database
-    fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newUsers),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        inputNama = '';
-        inputEmail = '';
-        inputUsername = '';
-        inputPassword = '';
-        selectedRole = '';
-
-        const modalElement = document.querySelector('#inputUserModal');
-        const modal = bootstrap.Modal.getInstance(modalElement);
-        modal.hide();
-
-        getUser();
-      })
-      .catch((err) => console.log(err));
-  });
-};
-
 // Edit User
 const editUser = (id) => {
   const endpointEdit = `${baseURL}=edit_user&id=${id}`;
@@ -326,9 +266,55 @@ const deleteUser = async (id, nama) => {
 // Add User Handler
 const addUserHandler = () => {
   const addBtn = document.querySelector('#addUserBtn');
-  addBtn.addEventListener('click', () => {
-    addUser();
-  });
+
+  addBtn.addEventListener(
+    'click',
+    () => {
+      const submitBtn = document.querySelector('#addUserForm');
+
+      submitBtn.addEventListener(
+        'submit',
+        (e) => {
+          e.preventDefault();
+
+          let inputNama = submitBtn.querySelector('#inputNama');
+          let inputEmail = submitBtn.querySelector('#inputEmail');
+          let inputUsername = submitBtn.querySelector('#inputUsername');
+          let inputPassword = submitBtn.querySelector('#inputPassword');
+          let selectedRole = submitBtn.querySelector('.select-role');
+
+          const newUsers = generateObject(
+            inputNama.value,
+            inputEmail.value,
+            inputUsername.value,
+            inputPassword.value,
+            parseInt(selectedRole.value)
+          );
+
+          // Dikirim ke database
+          addUser(newUsers)
+            .then(({ status }) => {
+              if (status) {
+                inputNama.value = '';
+                inputEmail.value = '';
+                inputUsername.value = '';
+                inputPassword.value = '';
+                selectedRole.value = '';
+
+                const modalElement = document.querySelector('#inputUserModal');
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                modal.hide();
+
+                getUser();
+              }
+            })
+            .catch((err) => console.log(err));
+        },
+        { once: true }
+      );
+    },
+    { once: true }
+  );
 };
 
 // Edit User Handler

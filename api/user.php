@@ -155,7 +155,7 @@ function edit_user()
     } else {
       $response = [
         'status' => 0,
-        'message' => 'Error: ' + mysqli_error($connection)
+        'message' => 'Error: ' . mysqli_error($connection)
       ];
     }
   } else {
@@ -188,7 +188,7 @@ function edit_user_role()
   } else {
     $response = [
       'status' => 0,
-      'message' => 'Error: ' + mysqli_error($connection)
+      'message' => 'Error: ' . mysqli_error($connection)
     ];
   }
 
