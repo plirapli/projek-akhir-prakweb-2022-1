@@ -26,7 +26,7 @@ const getUserTotalByRole = async () => {
     .then((data) => data);
 };
 
-const addUser = async (newUsers) => {
+const addUser = async (newUser) => {
   const endpoint = `${baseURL}=add_user`;
   return fetch(endpoint, {
     method: 'POST',
@@ -34,7 +34,21 @@ const addUser = async (newUsers) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(newUsers),
+    body: JSON.stringify(newUser),
+  })
+    .then((res) => res.json())
+    .then((data) => data);
+};
+
+const editUser = async (id, editedUser) => {
+  const endpoint = `${baseURL}=edit_user&id=${id}`;
+  return fetch(endpoint, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(editedUser),
   })
     .then((res) => res.json())
     .then((data) => data);
@@ -55,4 +69,11 @@ const editUserRole = async (user, role) => {
     .then((data) => data);
 };
 
-export { getUsers, getUserId, getUserTotalByRole, addUser, editUserRole };
+export {
+  getUsers,
+  getUserId,
+  getUserTotalByRole,
+  addUser,
+  editUser,
+  editUserRole,
+};

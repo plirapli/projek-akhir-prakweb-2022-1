@@ -1,6 +1,7 @@
 import { URL } from '../config/config.js';
 import {
   addUser,
+  editUser,
   editUserRole,
   getUserId,
   getUsers,
@@ -10,13 +11,21 @@ import { getUserRole } from '../controller/role.js';
 import { showFormattedDate } from './convertDate.js';
 
 /* UTILITIES */
-const generateObject = (nama, email, username, password, id_role) => {
+const generateObject = (
+  nama,
+  email,
+  username,
+  password,
+  id_role,
+  telp = ''
+) => {
   return {
     nama,
     email,
     username,
     password,
     id_role,
+    telp,
   };
 };
 
@@ -25,7 +34,7 @@ const generateObject = (nama, email, username, password, id_role) => {
 const baseURL = `${URL}/api/user.php?function`;
 
 // Get Total User
-const getUserTotal = () => {
+const getUserTotalHandler = () => {
   const cardInfo = document.querySelector('.card-info');
 
   getUserTotalByRole().then((data) => {
@@ -59,7 +68,7 @@ const getUserTotal = () => {
 };
 
 // Get User
-const getUser = () => {
+const getUserHandler = () => {
   const tableBody = document.querySelector('.table-user > tbody');
 
   getUsers().then(async ({ data: users }) => {
@@ -121,13 +130,15 @@ const getUser = () => {
           <td class="d-flex justify-content-center">
             ${roleOption}
           </td>
-          <td class="w-table-min">
-            <span class="d-inline text-btn text-gray cursor-pointer edit-user" data-bs-toggle="modal" data-bs-target="#editUserModal">
+          <td class="w-table-min px-0">
+            <button class="btn d-flex align-items-center p-1 text-gray edit-user" data-bs-toggle="modal" data-bs-target="#editUserModal">
               <iconify-icon icon="material-symbols:edit" width="20"></iconify-icon>
-            </span>
-            <span class="text-danger-sub cursor-pointer delete-user" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+            </button>
+          </td>
+          <td class="w-table-min px-0">
+            <button class="btn d-flex align-items-center p-1 text-danger-sub delete-user" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
               <iconify-icon icon="material-symbols:delete" width="20"></iconify-icon>
-            </span>
+            </button>
           </td>
           <td 
             class="w-table-min accordion-header" 
@@ -150,7 +161,7 @@ const getUser = () => {
     }
 
     tableBody.innerHTML = tableElement;
-    getUserTotal();
+    getUserTotalHandler();
     editUserHandler();
     editUserRoleHandler();
     deleteUserHandler();
@@ -179,62 +190,6 @@ const getRole = () => {
     });
 };
 
-// Edit User
-const editUser = (id) => {
-  const endpointEdit = `${baseURL}=edit_user&id=${id}`;
-  const editForm = document.querySelector('#editUserForm');
-
-  getUserId(id)
-    .then((data) => {
-      const { nama, email, username, password, telepon, id_role } = data.data;
-
-      // Mengambil elemen form
-      editForm.querySelector('#editNama').value = nama;
-      editForm.querySelector('#editEmail').value = email;
-      editForm.querySelector('#editUsername').value = username;
-      editForm.querySelector('#editPassword').value = password;
-      editForm.querySelector('#editPhoneNumber').value = telepon;
-      editForm.querySelector('.select-role').value = id_role;
-
-      editForm.addEventListener(
-        'submit',
-        async (e) => {
-          e.preventDefault();
-          const selectedRole = editForm.querySelector('.select-role').value;
-          const editedUser = generateObject(
-            editForm.querySelector('#editNama').value,
-            editForm.querySelector('#editEmail').value,
-            editForm.querySelector('#editUsername').value,
-            editForm.querySelector('#editPassword').value,
-            parseInt(editForm.querySelector('.select-role').value),
-            editForm.querySelector('#editPhoneNumber').value
-          );
-
-          // Dikirim ke database
-          fetch(endpointEdit, {
-            method: 'PUT',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(editedUser),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              const modalElement = document.querySelector('#editUserModal');
-              const modal = bootstrap.Modal.getInstance(modalElement);
-              modal.hide();
-
-              getUser();
-            })
-            .catch((err) => console.log(err));
-        },
-        { once: true }
-      );
-    })
-    .catch((err) => console.log(err));
-};
-
 // Delete User
 const deleteUser = async (id, nama) => {
   const endpoint = `${baseURL}=delete_user&id=${id}`;
@@ -253,7 +208,7 @@ const deleteUser = async (id, nama) => {
           const modal = bootstrap.Modal.getInstance(modalElement);
           modal.hide();
 
-          getUser();
+          getUserHandler();
         })
         .catch((err) => console.log('Error: ' + err));
     },
@@ -266,7 +221,6 @@ const deleteUser = async (id, nama) => {
 // Add User Handler
 const addUserHandler = () => {
   const addBtn = document.querySelector('#addUserBtn');
-
   addBtn.addEventListener(
     'click',
     () => {
@@ -305,7 +259,7 @@ const addUserHandler = () => {
                 const modal = bootstrap.Modal.getInstance(modalElement);
                 modal.hide();
 
-                getUser();
+                getUserHandler();
               }
             })
             .catch((err) => console.log(err));
@@ -319,13 +273,81 @@ const addUserHandler = () => {
 
 // Edit User Handler
 const editUserHandler = () => {
-  const editBtn = document.querySelectorAll('.edit-user');
-  editBtn.forEach((edit) => {
-    edit.addEventListener('click', () => {
-      const id = edit.parentElement.parentElement.dataset.userId;
-      editUser(parseInt(id));
+  const userRows = document.querySelectorAll('tr[data-user-id]');
+
+  for (const userRow of userRows) {
+    const userID = userRow.dataset.userId;
+    const editBtn = userRow.querySelector('.edit-user');
+    const editForm = document.querySelector('#editUserForm');
+
+    editBtn.addEventListener('click', () => {
+      const closeBtn = editForm.querySelector('.modal-close');
+      editForm.setAttribute('data-user-id', userID);
+
+      getUserId(userID)
+        .then(({ data: user }) => {
+          const { nama, email, username, password, telepon, id_role } = user;
+
+          // Mengambil elemen form
+          let editNama = editForm.querySelector('#editNama');
+          let editEmail = editForm.querySelector('#editEmail');
+          let editUsername = editForm.querySelector('#editUsername');
+          let editPasswd = editForm.querySelector('#editPassword');
+          let editRole = editForm.querySelector('.select-role');
+          let editPhoneNum = editForm.querySelector('#editPhoneNumber');
+
+          editNama.value = nama;
+          editEmail.value = email;
+          editUsername.value = username;
+          editPasswd.value = password;
+          editRole.value = id_role;
+          editPhoneNum.value = telepon;
+
+          editForm.addEventListener(
+            'submit',
+            (e) => {
+              e.preventDefault();
+
+              if (editForm.dataset.userId == userID) {
+                console.log('submitted');
+                const editedUser = generateObject(
+                  editNama.value,
+                  editEmail.value,
+                  editUsername.value,
+                  editPasswd.value,
+                  editRole.value,
+                  editPhoneNum.value
+                );
+
+                console.log(editForm.dataset.userId, userID);
+
+                // Dikirim ke database
+                editUser(userID, editedUser)
+                  .then(({ status }) => {
+                    if (status) {
+                      const modalElement =
+                        document.querySelector('#editUserModal');
+                      const modal = bootstrap.Modal.getInstance(modalElement);
+                      modal.hide();
+
+                      getUserHandler();
+                    }
+                  })
+                  .catch((err) => console.log(err));
+              }
+            },
+            { once: true }
+          );
+        })
+        .catch((err) => console.log(err));
     });
-  });
+  }
+};
+
+const closeEditModalHandler = () => {
+  const editForm = document.querySelector('#editUserForm');
+  const closeBtn = editForm.querySelector('.modal-close');
+  closeBtn.addEventListener('click', () => {});
 };
 
 // Create User Role Options
@@ -358,7 +380,10 @@ const editUserRoleHandler = () => {
         selectBtn.parentElement.parentElement.dataset.userId
       );
       const role = parseInt(e.target.value);
-      editUserRole(user, role).then(() => getUserTotal());
+      editUserRole(user, role).then(() => {
+        getUserHandler();
+        getUserTotalHandler();
+      });
     });
   }
 };
@@ -378,7 +403,7 @@ const deleteUserHandler = () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  getUser();
+  getUserHandler();
   getRole();
   addUserHandler();
 });

@@ -34,7 +34,9 @@ function get_user_id()
   global $connection;
 
   $id = $_GET['id'];
-  $query = "SELECT * FROM user INNER JOIN role ON user.id_role = role.id_role WHERE user.id_user = $id LIMIT 1";
+  $query = "SELECT * FROM user 
+            INNER JOIN role ON user.id_role = role.id_role 
+            WHERE user.id_user = $id LIMIT 1";
   $result = mysqli_query($connection, $query);
 
   if ($result) {

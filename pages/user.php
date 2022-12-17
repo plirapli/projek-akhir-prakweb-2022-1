@@ -66,7 +66,7 @@ cek_admin();
                         <th scope="col">Nama</th>
                         <th scope="col">Username</th>
                         <th scope="col" class="text-center">Role</th>
-                        <th scope="col" class="text-center">Aksi</th>
+                        <th scope="col" colspan="2" class="text-center">Aksi</th>
                         <th scope="col"></th>
                       </tr>
                     </thead>
@@ -183,7 +183,7 @@ cek_admin();
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-gray" data-bs-dismiss="modal">
+            <button type="button" class="btn btn-gray modal-close" data-bs-dismiss="modal">
               Tutup
             </button>
             <button type="submit" class="btn btn-primary">Simpan</button>
