@@ -1,4 +1,3 @@
-import { URL } from '../config/config.js';
 import {
   addUser,
   deleteUser,
@@ -76,7 +75,7 @@ const getUserHandler = () => {
       const { id_user, nama, email, username, telepon, id_role, role } = user;
       const created_at = showFormattedDate(user.created_at);
       const updated_at = showFormattedDate(user.updated_at);
-      const roleOption = await createStatusEl(id_role).then((data) => data);
+      const roleOption = await createRoleElement(id_role).then((data) => data);
 
       const accordionBody = `
         <tr class="collapse collapse-detail-${id_user}">
@@ -162,28 +161,6 @@ const getUserHandler = () => {
     editDeleteUserHandler();
     editUserRoleHandler();
   });
-};
-
-// Get Role
-const getRole = () => {
-  const selectElement = document.querySelectorAll('.select-role');
-  const endpoint = `${URL}/api/role.php?function=get_role`;
-
-  fetch(endpoint)
-    .then((res) => res.json())
-    .then((data) => {
-      const roles = data.data;
-
-      selectElement.forEach((selectEl) => {
-        let options = `<option value="" hidden selected>Role</option>`;
-
-        roles.forEach((role) => {
-          const element = `<option value=${role.id_role} class="text-capitalize">${role.role}</option>`;
-          options += element;
-        });
-        selectEl.innerHTML = options;
-      });
-    });
 };
 
 // Add User Handler
@@ -341,7 +318,7 @@ const editDeleteUserHandler = () => {
 };
 
 // Create User Role Options
-const createStatusEl = async (id = '0') => {
+const createRoleElement = async (id = '0') => {
   return getUserRole().then(({ data: roles }) => {
     let selectOption = '';
 
@@ -358,6 +335,24 @@ const createStatusEl = async (id = '0') => {
         ${selectOption}
       </select>
     `;
+  });
+};
+
+// Create User Role Options on Modal
+const createRoleElementOnModal = () => {
+  const formSelectElement = document.querySelectorAll('form .select-role');
+  getUserRole().then(({ data: roles }) => {
+    for (const formSelectEl of formSelectElement) {
+      let options = `<option value="" hidden selected>Role</option>`;
+      for (const role of roles) {
+        const { id_role, role: roleName } = role;
+        options += `
+          <option value=${id_role} class="text-capitalize">
+            ${roleName}
+          </option>`;
+      }
+      formSelectEl.innerHTML = options;
+    }
   });
 };
 
@@ -380,6 +375,6 @@ const editUserRoleHandler = () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   getUserHandler();
-  getRole();
   addUserHandler();
+  createRoleElementOnModal();
 });
