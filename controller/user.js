@@ -69,6 +69,13 @@ const editUserRole = async (user, role) => {
     .then((data) => data);
 };
 
+const deleteUser = async (id) => {
+  const endpoint = `${baseURL}=delete_user&id=${id}`;
+  return fetch(endpoint, { method: 'DELETE' })
+    .then((res) => res.json())
+    .then((data) => data);
+};
+
 export {
   getUsers,
   getUserId,
@@ -76,4 +83,5 @@ export {
   addUser,
   editUser,
   editUserRole,
+  deleteUser,
 };

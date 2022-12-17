@@ -1,6 +1,7 @@
 import { URL } from '../config/config.js';
 import {
   addUser,
+  deleteUser,
   editUser,
   editUserRole,
   getUserId,
@@ -28,10 +29,6 @@ const generateObject = (
     telp,
   };
 };
-
-/* API CALL */
-// Base URL
-const baseURL = `${URL}/api/user.php?function`;
 
 // Get Total User
 const getUserTotalHandler = () => {
@@ -162,9 +159,8 @@ const getUserHandler = () => {
 
     tableBody.innerHTML = tableElement;
     getUserTotalHandler();
-    editUserHandler();
+    editDeleteUserHandler();
     editUserRoleHandler();
-    deleteUserHandler();
   });
 };
 
@@ -189,34 +185,6 @@ const getRole = () => {
       });
     });
 };
-
-// Delete User
-const deleteUser = async (id, nama) => {
-  const endpoint = `${baseURL}=delete_user&id=${id}`;
-  const deleteModal = document.querySelector('#deleteUserModal');
-  const modalBody = deleteModal.querySelector('.modal-body');
-  const deleteConfirm = deleteModal.querySelector('.btn-delete');
-
-  modalBody.innerHTML = `Apakah anda ingin menghapus user bernama <b>${nama}</b>?`;
-  deleteConfirm.addEventListener(
-    'click',
-    () => {
-      fetch(endpoint, { method: 'DELETE' })
-        .then((res) => res.json())
-        .then((data) => {
-          const modalElement = document.querySelector('#deleteUserModal');
-          const modal = bootstrap.Modal.getInstance(modalElement);
-          modal.hide();
-
-          getUserHandler();
-        })
-        .catch((err) => console.log('Error: ' + err));
-    },
-    { once: true }
-  );
-};
-
-/* END API CALL */
 
 // Add User Handler
 const addUserHandler = () => {
@@ -272,16 +240,17 @@ const addUserHandler = () => {
 };
 
 // Edit User Handler
-const editUserHandler = () => {
+const editDeleteUserHandler = () => {
   const userRows = document.querySelectorAll('tr[data-user-id]');
 
   for (const userRow of userRows) {
     const userID = userRow.dataset.userId;
     const editBtn = userRow.querySelector('.edit-user');
-    const editForm = document.querySelector('#editUserForm');
+    const delBtn = userRow.querySelector('.delete-user');
 
+    // Edit user handler
     editBtn.addEventListener('click', () => {
-      const closeBtn = editForm.querySelector('.modal-close');
+      const editForm = document.querySelector('#editUserForm');
       editForm.setAttribute('data-user-id', userID);
 
       getUserId(userID)
@@ -309,7 +278,6 @@ const editUserHandler = () => {
               e.preventDefault();
 
               if (editForm.dataset.userId == userID) {
-                console.log('submitted');
                 const editedUser = generateObject(
                   editNama.value,
                   editEmail.value,
@@ -318,8 +286,6 @@ const editUserHandler = () => {
                   editRole.value,
                   editPhoneNum.value
                 );
-
-                console.log(editForm.dataset.userId, userID);
 
                 // Dikirim ke database
                 editUser(userID, editedUser)
@@ -341,13 +307,37 @@ const editUserHandler = () => {
         })
         .catch((err) => console.log(err));
     });
-  }
-};
 
-const closeEditModalHandler = () => {
-  const editForm = document.querySelector('#editUserForm');
-  const closeBtn = editForm.querySelector('.modal-close');
-  closeBtn.addEventListener('click', () => {});
+    // Delete user handler
+    delBtn.addEventListener('click', () => {
+      const name = userRow.querySelector('td').textContent;
+
+      const deleteModal = document.querySelector('#deleteUserModal');
+      const modalBody = deleteModal.querySelector('.modal-body');
+      const deleteConfirm = deleteModal.querySelector('.btn-delete');
+
+      deleteModal.setAttribute('data-user-id', userID);
+      modalBody.innerHTML = `Apakah anda ingin menghapus user bernama <b>${name}</b>?`;
+
+      deleteConfirm.addEventListener(
+        'click',
+        () => {
+          if (deleteModal.dataset.userId == userID) {
+            deleteUser(userID)
+              .then(() => {
+                const modalElement = document.querySelector('#deleteUserModal');
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                modal.hide();
+
+                getUserHandler();
+              })
+              .catch((err) => console.log('Error: ' + err));
+          }
+        },
+        { once: true }
+      );
+    });
+  }
 };
 
 // Create User Role Options
@@ -386,20 +376,6 @@ const editUserRoleHandler = () => {
       });
     });
   }
-};
-
-// Delete User Handler
-const deleteUserHandler = () => {
-  const deleteBtn = document.querySelectorAll('.delete-user');
-  deleteBtn.forEach((delBtn) => {
-    delBtn.addEventListener('click', () => {
-      const id = delBtn.parentElement.parentElement.dataset.userId;
-      const name =
-        delBtn.parentElement.parentElement.querySelector('td').textContent;
-
-      deleteUser(parseInt(id), name);
-    });
-  });
 };
 
 document.addEventListener('DOMContentLoaded', () => {
