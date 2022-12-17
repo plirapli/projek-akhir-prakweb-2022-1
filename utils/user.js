@@ -363,7 +363,7 @@ const createStatusEl = async (id = '0') => {
 
 // Edit User Role Handler
 const editUserRoleHandler = () => {
-  const selectButtons = document.querySelectorAll('.select-role');
+  const selectButtons = document.querySelectorAll('td .select-role');
   for (const selectBtn of selectButtons) {
     selectBtn.addEventListener('change', (e) => {
       const user = parseInt(
